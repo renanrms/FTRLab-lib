@@ -1,4 +1,4 @@
-from sensor import Sensor
+from lib.sensor import Sensor
 
 import hc_sr04
 

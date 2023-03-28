@@ -1,6 +1,6 @@
 class Sensor:
   def __init__(self, module, ports):
-    # TODO: adicionar kwargs para opções extrar a serem passadas ao módulo
+    # TODO: adicionar kwargs para opções extras a serem passadas ao módulo
     self.module = module.Module(ports)
     self.isActive = True # False
     self.measurements = []
@@ -10,6 +10,6 @@ class Sensor:
     self.measurements.append(self.module.measurement())
   
   def get(self):
-    tmp = [*self.measurements]
+    tmp = self.measurements.copy()
     self.measurements = []
     return tmp

@@ -1,5 +1,5 @@
 from machine import Pin
-from network import WLAN, STA_IF
+import network
 
 # import esp
 # esp.osdebug(None)
@@ -7,11 +7,16 @@ from network import WLAN, STA_IF
 # import gc
 # gc.collect()
 
-ssid = 'estrelinha'
-password = '12345678'
+# network.hostname('aaa.ftr-lab.local')
 
-station = WLAN(STA_IF)
+print('oi')
 
+ssid = 'ITANET-CASTELO'
+password = 'c45t310a2'
+
+station = network.WLAN(network.STA_IF)
+
+station.config(hostname='aaa.ftr-lab.local')
 station.isActive(True)
 station.connect(ssid, password)
 
@@ -20,5 +25,3 @@ while station.isconnected() == False:
 
 print('Connection successful')
 print(station.ifconfig())
-
-# 
