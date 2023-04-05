@@ -3,28 +3,28 @@
 #include <ESPmDNS.h>
 
 #define MAC_ADDRESS_BUF_SIZE 18
-#define CHIP_ID_BUF_SIZE     11
+#define CHIP_ID_BUF_SIZE 11
 
-const char* ssid     = "ITANET-CASTELO";
-const char* password = "c45t310a2";
+const char *ssid = "ITANET-CASTELO";
+const char *password = "c45t310a2";
 char macAddress[MAC_ADDRESS_BUF_SIZE];
 char chipId[CHIP_ID_BUF_SIZE];
 
 void printBoardAndNetworkInfo(WiFiClass);
 String getChipId();
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
   WiFi.macAddress().toCharArray(macAddress, MAC_ADDRESS_BUF_SIZE);
   getChipId().toCharArray(chipId, CHIP_ID_BUF_SIZE);
-  Serial.println();
-  Serial.print("Chip Id: ");
-  Serial.println(chipId);
+  Serial.printf("\nChip Id: %s\n", chipId);
 
   WiFi.begin(ssid, password);
   Serial.printf("Connecting to %s ", ssid);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(250);
     Serial.print(".");
   }
@@ -32,36 +32,49 @@ void setup() {
 
   printBoardAndNetworkInfo(WiFi);
 
-  if (!MDNS.begin(chipId)) {
+  if (!MDNS.begin(chipId))
+  {
     Serial.println("Error setting up MDNS responder!");
-    while(1){
+    while (1)
+    {
       delay(1000);
     }
   }
 
   MDNS.addService("_ftr-lab", "_tcp", 3333);
   Serial.println("\nServiço MDS adicionado");
-  Serial.print("Nome: ");
-  Serial.println("_ftr-lab");
-  Serial.print("Protocolo: ");
-  Serial.println("_tcp");
-  Serial.print("Porta: ");
-  Serial.println(3333);
+  Serial.println("Nome: _ftr-lab");
+  Serial.println("Protocolo: _tcp");
+  Serial.println("Porta: 3333");
+
+  mdns_txt_item_t serviceTxtData[5] = {
+      {"name", "Física Básica"},
+      {"available", "true"},
+      // Item opcional sobre bateria, presente apenas quando houver bateria.
+      {"battery", "{\"level\":70,\"charging\":true}"},
+      {"sensor", "{\"quantity\":\"distance\"}"},
+      {"sensor", "{\"quantity\":\"temperature\"}"}};
+
+  mdns_service_txt_set("_ftr-lab", "_tcp", serviceTxtData, 5);
 }
 
-void loop() {
+void loop()
+{
 }
 
-String getChipId() {
+String getChipId()
+{
   uint32_t chipIdAsNumber = 0;
-	for(int i=0; i<17; i=i+8) {
-	  chipIdAsNumber |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
-	}
+  for (int i = 0; i < 17; i = i + 8)
+  {
+    chipIdAsNumber |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
+  }
 
   return String(chipIdAsNumber);
 }
 
-void printBoardAndNetworkInfo(WiFiClass Wifi) {
+void printBoardAndNetworkInfo(WiFiClass Wifi)
+{
   Serial.print("Connected to ");
   Serial.println(ssid);
   Serial.print("MAC address: ");
@@ -73,7 +86,7 @@ void printBoardAndNetworkInfo(WiFiClass Wifi) {
   Serial.print("Gateway: ");
   Serial.println(WiFi.gatewayIP());
   Serial.print("Broadcast: ");
-  Serial.println(WiFi.broadcastIP());  
+  Serial.println(WiFi.broadcastIP());
   Serial.print("DNS 1: ");
   Serial.println(WiFi.dnsIP(0));
   Serial.print("DNS 2: ");
