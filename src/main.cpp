@@ -5,6 +5,15 @@
 #define MAC_ADDRESS_BUF_SIZE 18
 #define CHIP_ID_BUF_SIZE 11
 
+const uint16_t timerDivider = 80;
+const unsigned clockFrequency = 800000000;
+enum timers
+{
+  mdnsUpdate
+};
+const unsigned mdnsUpdateInterval = 30;
+hw_timer_t *mdnsUpdateTimer = NULL;
+
 const char *ssid = "ITANET-CASTELO";
 const char *password = "c45t310a2";
 char macAddress[MAC_ADDRESS_BUF_SIZE];
@@ -12,6 +21,7 @@ char chipId[CHIP_ID_BUF_SIZE];
 
 void printBoardAndNetworkInfo(WiFiClass);
 String getChipId();
+void IRAM_ATTR forceMdnsUpdate();
 
 void setup()
 {
@@ -56,10 +66,17 @@ void setup()
       {"sensor", "{\"quantity\":\"temperature\"}"}};
 
   mdns_service_txt_set("_ftr-lab", "_tcp", serviceTxtData, 5);
+
+  // Configura um timer para periodicamente setar o nome e forçar uma nova resposta MDNS.
+  mdnsUpdateTimer = timerBegin(timers::mdnsUpdate, timerDivider, true);
+  timerAttachInterrupt(mdnsUpdateTimer, &forceMdnsUpdate, true);
+  timerAlarmWrite(mdnsUpdateTimer, mdnsUpdateInterval * clockFrequency / timerDivider, true);
+  timerAlarmEnable(mdnsUpdateTimer);
 }
 
 void loop()
 {
+  delay(10000);
 }
 
 String getChipId()
@@ -91,4 +108,11 @@ void printBoardAndNetworkInfo(WiFiClass Wifi)
   Serial.println(WiFi.dnsIP(0));
   Serial.print("DNS 2: ");
   Serial.println(WiFi.dnsIP(1));
+}
+
+void IRAM_ATTR forceMdnsUpdate()
+{
+  Serial.print("Configurando nome... ");
+  MDNS.setInstanceName(chipId);
+  Serial.println("ok");
 }
