@@ -22,6 +22,10 @@ char chipId[CHIP_ID_BUF_SIZE];
 void printBoardAndNetworkInfo(WiFiClass);
 String getChipId();
 void IRAM_ATTR forceMdnsUpdate();
+void tcp();
+
+WiFiServer sv(3333); // Cria o objeto servidor na porta 555
+WiFiClient cl;       // Cria o objeto cliente.
 
 void setup()
 {
@@ -72,11 +76,13 @@ void setup()
   timerAttachInterrupt(mdnsUpdateTimer, &forceMdnsUpdate, true);
   timerAlarmWrite(mdnsUpdateTimer, mdnsUpdateInterval * clockFrequency / timerDivider, true);
   timerAlarmEnable(mdnsUpdateTimer);
+
+  sv.begin(); // Inicia o servidor TCP na porta declarada no começo.
 }
 
 void loop()
 {
-  delay(10000);
+  tcp(); //Funçao que gerencia os pacotes e clientes TCP.
 }
 
 String getChipId()
@@ -115,4 +121,35 @@ void IRAM_ATTR forceMdnsUpdate()
   Serial.print("Configurando nome... ");
   MDNS.setInstanceName(chipId);
   Serial.println("ok");
+}
+
+void tcp()
+{
+  if (cl.connected()) // Detecta se há clientes conectados no servidor.
+  {
+    if (cl.available() > 0) // Verifica se o cliente conectado tem dados para serem lidos.
+    {
+      String req = "";
+      while (cl.available() > 0) // Armazena cada Byte (letra/char) na String para formar a mensagem recebida.
+      {
+        char z = cl.read();
+        req += z;
+      }
+      // Mostra a mensagem recebida do cliente no Serial Monitor.
+      Serial.print("\nUm cliente enviou uma mensagem");
+      Serial.print("\n...IP do cliente: ");
+      Serial.print(cl.remoteIP());
+      Serial.print("\n...Mensagem do cliente: " + req + "\n");
+      // Envia uma resposta para o cliente
+      cl.print("\nO servidor recebeu sua mensagem");
+      cl.print("\n...Seu IP: ");
+      cl.print(cl.remoteIP());
+      cl.print("\n...Sua mensagem: " + req + "\n");
+    }
+  }
+  else // Se nao houver cliente conectado,
+  {
+    cl = sv.available(); // Disponabiliza o servidor para o cliente se conectar.
+    delay(1);
+  }
 }
