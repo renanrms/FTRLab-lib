@@ -1,6 +1,18 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <ESPmDNS.h>
+#include <queue>
+#include "time.h"
+
+typedef struct
+{
+  time_t timestamp;
+  String measure;
+  operator String() const
+  {
+    return String("{\"sensor\":0,\"timestamp\":") + String(timestamp) + String(",\"value\":") + measure + String("}");
+  }
+} measurement;
 
 #define MAC_ADDRESS_BUF_SIZE 18
 #define CHIP_ID_BUF_SIZE 11
@@ -18,14 +30,16 @@ const char *ssid = "ITANET-CASTELO";
 const char *password = "c45t310a2";
 char macAddress[MAC_ADDRESS_BUF_SIZE];
 char chipId[CHIP_ID_BUF_SIZE];
+WiFiServer sv(3333); // Cria o objeto servidor na porta 555
+WiFiClient cl;       // Cria o objeto cliente.
+std::queue<measurement> measurements;
 
 void printBoardAndNetworkInfo(WiFiClass);
 String getChipId();
 void IRAM_ATTR forceMdnsUpdate();
 void tcp();
-
-WiFiServer sv(3333); // Cria o objeto servidor na porta 555
-WiFiClient cl;       // Cria o objeto cliente.
+void getInternalHallMeasurement();
+void sendData();
 
 void setup()
 {
@@ -82,7 +96,15 @@ void setup()
 
 void loop()
 {
-  tcp(); //Funçao que gerencia os pacotes e clientes TCP.
+  tcp(); // Funçao que gerencia os pacotes e clientes TCP.
+  if (cl.connected())
+  {
+    getInternalHallMeasurement();
+    getInternalHallMeasurement();
+    getInternalHallMeasurement();
+    sendData();
+  }
+  delay(500);
 }
 
 String getChipId()
@@ -153,3 +175,49 @@ void tcp()
     delay(1);
   }
 }
+
+void sendData()
+{
+  String menssage = "\n{\"measurements\":[";
+  String measurementString;
+
+  while (!measurements.empty() && menssage.length() < 500)
+  {
+    measurementString = String(measurements.front());
+    if (measurementString.length() + menssage.length() > 500)
+      continue;
+    menssage += measurementString;
+    menssage += ",";
+    measurements.pop();
+  }
+
+  menssage = menssage.substring(0, menssage.length() - 1);
+  menssage += "]}\n";
+
+  cl.print(menssage);
+  Serial.println(menssage);
+}
+
+void getInternalHallMeasurement()
+{
+  time_t t1, t2, timestamp;
+
+  time(&t1);
+  String measure = String(hallRead());
+  time(&t2);
+
+  timestamp = (t1 + t2) / 2;
+
+  measurements.push({timestamp, measure});
+}
+
+// unsigned long getTime() {
+//   time_t now;
+//   struct tm timeinfo;
+//   if (!getLocalTime(&timeinfo)) {
+//     //Serial.println("Failed to obtain time");
+//     return(0);
+//   }
+//   time(&now);
+//   return now;
+// }
