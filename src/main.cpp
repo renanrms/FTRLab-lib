@@ -10,7 +10,7 @@ typedef struct
   String measure;
   operator String() const
   {
-    return String("{\"sensor\":0,\"timestamp\":") + String(timestamp) + String(",\"value\":") + measure + String("}");
+    return String("{\"sensorIndex\":\"0\",\"timestamp\":") + String(timestamp) + String(",\"value\":") + measure + String("}");
   }
 } measurement;
 
@@ -75,15 +75,16 @@ void setup()
   Serial.println("Protocolo: _tcp");
   Serial.println("Porta: 3333");
 
-  mdns_txt_item_t serviceTxtData[5] = {
+  mdns_txt_item_t serviceTxtData[6] = {
       {"name", "Física Básica"},
       {"available", "true"},
       // Item opcional sobre bateria, presente apenas quando houver bateria.
       {"battery", "{\"level\":70,\"charging\":true}"},
-      {"sensor", "{\"quantity\":\"distance\"}"},
-      {"sensor", "{\"quantity\":\"temperature\"}"}};
+      {"sensor", "{\"index\":\"0\",\"quantity\":\"hall\"}"},
+      {"sensor", "{\"index\":\"1\",\"quantity\":\"distance\"}"},
+      {"sensor", "{\"index\":\"2\",\"quantity\":\"temperature\"}"}};
 
-  mdns_service_txt_set("_ftr-lab", "_tcp", serviceTxtData, 5);
+  mdns_service_txt_set("_ftr-lab", "_tcp", serviceTxtData, 6);
 
   // Configura um timer para periodicamente setar o nome e forçar uma nova resposta MDNS.
   mdnsUpdateTimer = timerBegin(timers::mdnsUpdate, timerDivider, true);
@@ -100,11 +101,9 @@ void loop()
   if (cl.connected())
   {
     getInternalHallMeasurement();
-    getInternalHallMeasurement();
-    getInternalHallMeasurement();
     sendData();
   }
-  delay(500);
+  delay(1000);
 }
 
 String getChipId()
