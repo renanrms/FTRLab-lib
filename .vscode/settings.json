@@ -1,6 +1,16 @@
 {
-    "files.associations": {
-        "*.tcc": "cpp",
-        "cstdio": "cpp"
-    }
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "C_Cpp.autoAddFileAssociations": false,
+  "[c][cpp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "cmake.configureOnOpen": false
 }
