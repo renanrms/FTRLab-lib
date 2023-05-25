@@ -3,6 +3,8 @@
 #include <ESPmDNS.h>
 #include <queue>
 #include "time.h"
+#include "getChipId.hpp"
+#include "printNetworkInfo.hpp"
 
 typedef struct
 {
@@ -34,8 +36,6 @@ WiFiServer sv(3333); // Cria o objeto servidor na porta 555
 WiFiClient cl;       // Cria o objeto cliente.
 std::queue<measurement> measurements;
 
-void printBoardAndNetworkInfo(WiFiClass);
-String getChipId();
 void IRAM_ATTR forceMdnsUpdate();
 void tcp();
 void getInternalHallMeasurement();
@@ -58,7 +58,7 @@ void setup()
   }
   Serial.println("");
 
-  printBoardAndNetworkInfo(WiFi);
+  printNetworkInfo(WiFi, ssid);
 
   if (!MDNS.begin(chipId))
   {
@@ -104,37 +104,6 @@ void loop()
     sendData();
   }
   delay(1000);
-}
-
-String getChipId()
-{
-  uint32_t chipIdAsNumber = 0;
-  for (int i = 0; i < 17; i = i + 8)
-  {
-    chipIdAsNumber |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
-  }
-
-  return String(chipIdAsNumber);
-}
-
-void printBoardAndNetworkInfo(WiFiClass Wifi)
-{
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("MAC address: ");
-  Serial.println(WiFi.macAddress());
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.print("Subnet Mask: ");
-  Serial.println(WiFi.subnetMask());
-  Serial.print("Gateway: ");
-  Serial.println(WiFi.gatewayIP());
-  Serial.print("Broadcast: ");
-  Serial.println(WiFi.broadcastIP());
-  Serial.print("DNS 1: ");
-  Serial.println(WiFi.dnsIP(0));
-  Serial.print("DNS 2: ");
-  Serial.println(WiFi.dnsIP(1));
 }
 
 void IRAM_ATTR forceMdnsUpdate()
