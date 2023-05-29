@@ -15,8 +15,11 @@
 const unsigned PAYLOAD_MAX_LENGTH = 1024;
 const unsigned MEASUREMENT_OVERHEAD_LENGTH = 21;
 const unsigned MEASUREMENT_MAX_LENGTH = PAYLOAD_MAX_LENGTH - MEASUREMENT_OVERHEAD_LENGTH;
+const unsigned MEASUREMENT_MAX_SIZE = MEASUREMENT_MAX_LENGTH + 1;
 // const unsigned MEASURE_OVERHEAD_LENGTH = 100; // Valor majorado
 // const unsigned MEASURE_MAX_LENGTH = MEASUREMENT_MAX_LENGTH - MEASURE_OVERHEAD_LENGTH;
+const unsigned BATTERY_INFO_MAX_LENGTH = 38;
+const unsigned BATTERY_INFO_MAX_SIZE = BATTERY_INFO_MAX_LENGTH + 1;
 const unsigned MAC_ADDRESS_MAX_SIZE = 11;
 const unsigned CHIP_ID_MAX_SIZE = 18;
 
@@ -36,19 +39,32 @@ typedef struct
   /// @brief Retorna a string da medição. Caso seu length exceda MEASUREMENT_MAX_LENGTH, pode ter sido truncado.
   operator String() const
   {
-    char measurementString[MEASUREMENT_MAX_LENGTH + 2];
-    snprintf(measurementString, MEASUREMENT_MAX_LENGTH + 2, "{\"sensorIndex\":\"%u\",\"timestamp\":%li,\"value\":%s}", index, timestamp, measure);
+    char measurementString[MEASUREMENT_MAX_SIZE + 1];
+    snprintf(measurementString, MEASUREMENT_MAX_SIZE + 1, "{\"sensorIndex\":\"%u\",\"timestamp\":%li,\"value\":%s}", index, timestamp, measure);
     return String(measurementString);
   }
 } Measurement;
 
+typedef struct
+{
+  unsigned level;
+  bool charging;
+  operator String() const
+  {
+    char batteryInfoString[BATTERY_INFO_MAX_SIZE];
+    snprintf(batteryInfoString, BATTERY_INFO_MAX_SIZE, "{\"level\":%u,\"charging\":%s}", level, charging ? "true" : "false");
+    return String(batteryInfoString);
+  }
+} BatteryInfo;
+
 class Sensor
 {
-  const char *name;
-  const char *quantity;
-
 public:
-  // Sensor(){};
+  String name;
+  String quantity;
+
+  operator String() const;
+
   virtual String takeMeasure() = 0;
 
 private:
@@ -60,6 +76,7 @@ class Board
   const char *ssid = "ITANET-CASTELO";
   const char *password = "c45t310a2";
   char macAddress[MAC_ADDRESS_MAX_SIZE];
+  BatteryInfo batteryInfo = {.level = 70, .charging = true};
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
@@ -74,6 +91,7 @@ public:
 
 private:
   void setupMdns();
+  void updateMdnsServiceTxtData();
 };
 
 void IRAM_ATTR forceMdnsUpdate();

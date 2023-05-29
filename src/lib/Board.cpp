@@ -108,22 +108,14 @@ void Board::setupMdns()
   }
 
   MDNS.addService("_ftr-lab", "_tcp", 3333);
+  updateMdnsServiceTxtData();
+
+  // TODO: printar informações do serviço e dos records TXT generalizados.
+
   Serial.println("\nServiço MDS adicionado");
   Serial.println("Nome: _ftr-lab");
   Serial.println("Protocolo: _tcp");
   Serial.println("Porta: 3333");
-
-  // Função: updateMdnsServiceTxtData
-  mdns_txt_item_t serviceTxtData[6] = {
-      {"name", this->name},
-      {"available", "true"},
-      // Item opcional sobre bateria, presente apenas quando houver bateria.
-      {"battery", "{\"level\":70,\"charging\":true}"},
-      {"sensor", "{\"index\":\"0\",\"quantity\":\"hall\"}"},
-      {"sensor", "{\"index\":\"1\",\"quantity\":\"distance\"}"},
-      {"sensor", "{\"index\":\"2\",\"quantity\":\"temperature\"}"}};
-
-  mdns_service_txt_set("_ftr-lab", "_tcp", serviceTxtData, 6);
 
   // Configura um timer para periodicamente setar o nome e forçar uma nova resposta MDNS.
   mdnsUpdateTimer = timerBegin(timers::mdnsUpdate, timerDivider, true);
@@ -171,6 +163,18 @@ void Board::tcp()
   {
     client = server.available(); // Disponabiliza o servidor para o cliente se conectar.
     delay(1);
+  }
+}
+
+void Board::updateMdnsServiceTxtData()
+{
+  MDNS.addServiceTxt("_ftr-lab", "_tcp", "name", this->name);
+  MDNS.addServiceTxt("_ftr-lab", "_tcp", "available", client.connected() ? "false" : "true");
+  MDNS.addServiceTxt("_ftr-lab", "_tcp", "battery", this->batteryInfo);
+
+  for (unsigned index = 0; index < this->sensors.size(); index++)
+  {
+    MDNS.addServiceTxt("_ftr-lab", "_tcp", "sensor[" + String(index) + "]", "{\"index\":" + String(index) + ",\"quantity\":\"" + this->sensors[index]->quantity + "\"}");
   }
 }
 
