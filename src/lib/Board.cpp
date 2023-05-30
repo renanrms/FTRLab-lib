@@ -4,19 +4,24 @@
 #include "getChipId.hpp"
 #include "printNetworkInfo.hpp"
 
+void IRAM_ATTR forceMdnsUpdate();
+
 WiFiServer server = WiFiServer(3333);
 WiFiClient client;
 
 char chipId[CHIP_ID_MAX_SIZE];
 hw_timer_t *mdnsUpdateTimer = NULL;
 
-Board::Board(const char *name, const std::vector<Sensor *> sensors)
+Board::Board(const char *name)
 {
   this->name = name;
-  this->sensors = sensors;
+
   WiFi.macAddress().toCharArray(this->macAddress, MAC_ADDRESS_MAX_SIZE);
   getChipId().toCharArray(::chipId, CHIP_ID_MAX_SIZE);
+}
 
+void Board::setup()
+{
   Serial.begin(115200);
 
   // Função: printBoardInfo
@@ -183,4 +188,9 @@ void IRAM_ATTR forceMdnsUpdate()
   Serial.print("Configurando nome... ");
   MDNS.setInstanceName(chipId);
   Serial.println("ok");
+}
+
+void Board::addSensor(Sensor *sensor)
+{
+  this->sensors.push_back(sensor);
 }

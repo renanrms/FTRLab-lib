@@ -6,10 +6,9 @@ Board *board;
 
 void setup()
 {
-  std::vector<Sensor *> sensors;
-  sensors.push_back(new HallEffectSensor());
-
-  board = new Board("Física Básica", sensors);
+  board = new Board("Física Básica");
+  board->addSensor(new HallEffectSensor());
+  board->setup();
 }
 
 void loop()

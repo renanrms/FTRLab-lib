@@ -82,18 +82,18 @@ class Board
   std::queue<Measurement> measurements;
 
 public:
-  Board(const char *name, const std::vector<Sensor *> sensors);
+  Board(const char *name);
+  void addSensor(Sensor *sensor);
+  void setup();
+  void loop();
+
+private:
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
   void sendMeasurements();
-  void loop();
   void tcp();
-
-private:
   void setupMdns();
   void updateMdnsServiceTxtData();
 };
-
-void IRAM_ATTR forceMdnsUpdate();
 
 #endif
