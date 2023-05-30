@@ -2,10 +2,9 @@
 
 #include "sensors/HallEffectSensor.cpp"
 
-Board board = Board("Física Básica");
-
 void setup()
 {
+  board.setName("Física Básica");
   board.addSensor(new HallEffectSensor());
   board.setup();
 }

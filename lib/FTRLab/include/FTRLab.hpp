@@ -88,7 +88,8 @@ class Board
   std::queue<Measurement> measurements;
 
 public:
-  Board(const char *name);
+  Board();
+  void setName(const char *name);
   void addSensor(Sensor *sensor);
   void setup();
   void loop();
@@ -103,5 +104,7 @@ private:
   void printNetworkInfo();
   String getChipId();
 };
+
+extern Board board;
 
 #endif

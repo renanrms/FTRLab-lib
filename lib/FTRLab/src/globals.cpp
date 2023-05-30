@@ -5,3 +5,5 @@ WiFiClient client;
 
 char chipId[CHIP_ID_MAX_SIZE];
 hw_timer_t *mdnsUpdateTimer = NULL;
+
+Board board = Board();
