@@ -1,4 +1,4 @@
-#include "FTR-Lab.hpp"
+#include "FTRLab.hpp"
 
 String Board::getChipId()
 {

@@ -1,4 +1,4 @@
-#include "FTR-Lab.hpp"
+#include "FTRLab.hpp"
 
 void Board::takeMeasurement(Sensor *sensor, unsigned index)
 {

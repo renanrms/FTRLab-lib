@@ -1,4 +1,4 @@
-#include "FTR-Lab.hpp"
+#include "FTRLab.hpp"
 
 Board::Board(const char *name)
 {
