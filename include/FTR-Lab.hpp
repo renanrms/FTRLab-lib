@@ -73,8 +73,6 @@ public:
   String name;
   String quantity;
 
-  operator String() const;
-
   virtual String takeMeasure() = 0;
 
 private:
@@ -104,6 +102,8 @@ private:
   void tcp();
   void setupMdns();
   void updateMdnsServiceTxtData();
+  void printNetworkInfo();
+  String getChipId();
 };
 
 #endif

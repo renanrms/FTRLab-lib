@@ -18,7 +18,7 @@ void Board::setup()
   }
   Serial.println("");
 
-  printNetworkInfo(WiFi, ssid);
+  this->printNetworkInfo();
 
   // Setup MDNS
   setupMdns();

@@ -1,10 +1,9 @@
-#include <Arduino.h>
-#include <WiFi.h>
+#include "FTR-Lab.hpp"
 
-void printNetworkInfo(WiFiClass Wifi, const char *ssid)
+void Board::printNetworkInfo()
 {
   Serial.print("Connected to ");
-  Serial.println(ssid);
+  Serial.println(this->ssid);
   Serial.print("MAC address: ");
   Serial.println(WiFi.macAddress());
   Serial.print("IP address: ");
