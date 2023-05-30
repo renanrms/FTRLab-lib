@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include "printNetworkInfo.hpp"
 
 void printNetworkInfo(WiFiClass Wifi, const char *ssid)
 {

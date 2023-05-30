@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <getChipId.hpp>
 
 String getChipId()
 {

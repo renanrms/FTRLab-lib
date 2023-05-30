@@ -31,6 +31,16 @@ enum timers
 };
 const unsigned mdnsUpdateInterval = 30;
 
+void IRAM_ATTR forceMdnsUpdate();
+String getChipId();
+void printNetworkInfo(WiFiClass Wifi, const char *ssid);
+
+extern WiFiServer server;
+extern WiFiClient client;
+
+extern char chipId[CHIP_ID_MAX_SIZE];
+extern hw_timer_t *mdnsUpdateTimer;
+
 typedef struct
 {
   unsigned index;
