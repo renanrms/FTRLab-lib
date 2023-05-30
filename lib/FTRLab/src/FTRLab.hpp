@@ -32,8 +32,6 @@ enum timers
 const unsigned mdnsUpdateInterval = 30;
 
 void IRAM_ATTR forceMdnsUpdate();
-String getChipId();
-void printNetworkInfo(WiFiClass Wifi, const char *ssid);
 
 extern WiFiServer server;
 extern WiFiClient client;
