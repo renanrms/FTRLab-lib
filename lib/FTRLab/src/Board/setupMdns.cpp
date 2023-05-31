@@ -1,15 +1,13 @@
-#include <ESPmDNS.h>
-
 #include "FTRLab/Board.hpp"
 
-extern hw_timer_t *mdnsUpdateTimer;
-extern char chipId[CHIP_ID_MAX_SIZE];
-
-void IRAM_ATTR forceMdnsUpdate();
+void IRAM_ATTR forceMdnsUpdateWrapper()
+{
+  board.forceMdnsUpdate();
+}
 
 void Board::setupMdns()
 {
-  if (!MDNS.begin(::chipId))
+  if (!MDNS.begin(this->chipId))
   {
     Serial.println("Error setting up MDNS responder!");
     while (1)
@@ -30,7 +28,7 @@ void Board::setupMdns()
 
   // Configura um timer para periodicamente setar o nome e forçar uma nova resposta MDNS.
   mdnsUpdateTimer = timerBegin(timers::mdnsUpdate, timerDivider, true);
-  timerAttachInterrupt(mdnsUpdateTimer, &forceMdnsUpdate, true);
+  timerAttachInterrupt(mdnsUpdateTimer, &forceMdnsUpdateWrapper, true);
   timerAlarmWrite(mdnsUpdateTimer, mdnsUpdateInterval * clockFrequency / timerDivider, true);
   timerAlarmEnable(mdnsUpdateTimer);
 }

@@ -4,6 +4,9 @@
 #include <queue>
 #include <vector>
 
+#include <WiFi.h>
+#include <ESPmDNS.h>
+
 #include "constants.hpp"
 #include "Sensor.hpp"
 #include "BatteryInfo.hpp"
@@ -11,21 +14,27 @@
 
 class Board
 {
+public:
   const char *name;
-  const char *ssid = "ITANET-CASTELO";
+  const char *wifiSsid = "ITANET-CASTELO";
   const char *password = "c45t310a2";
+  char chipId[CHIP_ID_MAX_SIZE];
   char macAddress[MAC_ADDRESS_MAX_SIZE];
   BatteryInfo batteryInfo = {.level = 70, .charging = true};
+
+  WiFiServer server = WiFiServer(3333);
+  WiFiClient client;
+  hw_timer_t *mdnsUpdateTimer = NULL;
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
 
-public:
   Board();
   void setName(const char *name);
   void addSensor(Sensor *sensor);
   void setup();
   void loop();
+  void forceMdnsUpdate();
 
 private:
   void takeMeasurement(Sensor *sensor, unsigned index);
@@ -37,5 +46,7 @@ private:
   void printNetworkInfo();
   String getChipId();
 };
+
+extern Board board;
 
 #endif

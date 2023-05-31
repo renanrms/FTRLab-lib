@@ -1,9 +1,4 @@
-#include <ESPmDNS.h>
-
 #include "FTRLab/Board.hpp"
-
-#include <WiFi.h>
-extern WiFiClient client;
 
 void Board::updateMdnsServiceTxtData()
 {

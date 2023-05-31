@@ -12,4 +12,3 @@ void Board::takeMeasurement(Sensor *sensor, unsigned index)
 
   this->measurements.push({index, timestamp, measure});
 }
-

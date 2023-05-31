@@ -1,11 +1,9 @@
-#include <WiFi.h>
-
 #include "FTRLab/Board.hpp"
 
 void Board::printNetworkInfo()
 {
   Serial.print("Connected to ");
-  Serial.println(this->ssid);
+  Serial.println(this->wifiSsid);
   Serial.print("MAC address: ");
   Serial.println(WiFi.macAddress());
   Serial.print("IP address: ");

@@ -1,10 +1,5 @@
 #include "FTRLab/Board.hpp"
 
-#include <WiFi.h>
-
-extern WiFiClient client;
-extern WiFiServer server;
-
 void Board::tcp()
 {
   if (client.connected()) // Detecta se há clientes conectados no servidor.
