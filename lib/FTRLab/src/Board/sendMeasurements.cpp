@@ -1,4 +1,7 @@
-#include "FTRLab.hpp"
+#include "FTRLab/Board.hpp"
+
+#include <WiFi.h>
+extern WiFiClient client;
 
 void Board::sendMeasurements()
 {

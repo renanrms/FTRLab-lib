@@ -1,4 +1,8 @@
-#include "FTRLab.hpp"
+#include <WiFi.h>
+
+#include "FTRLab/Board.hpp"
+
+extern WiFiClient client;
 
 void Board::loop()
 {

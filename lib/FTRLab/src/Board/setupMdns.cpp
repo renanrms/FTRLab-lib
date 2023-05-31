@@ -1,4 +1,11 @@
-#include "FTRLab.hpp"
+#include <ESPmDNS.h>
+
+#include "FTRLab/Board.hpp"
+
+extern hw_timer_t *mdnsUpdateTimer;
+extern char chipId[CHIP_ID_MAX_SIZE];
+
+void IRAM_ATTR forceMdnsUpdate();
 
 void Board::setupMdns()
 {

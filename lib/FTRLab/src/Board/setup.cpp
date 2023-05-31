@@ -1,4 +1,9 @@
-#include "FTRLab.hpp"
+#include <WiFi.h>
+
+#include "FTRLab/Board.hpp"
+
+extern char chipId[CHIP_ID_MAX_SIZE];
+extern WiFiServer server;
 
 void Board::setup()
 {

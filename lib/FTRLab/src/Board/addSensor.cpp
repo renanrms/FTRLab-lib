@@ -1,4 +1,4 @@
-#include "FTRLab.hpp"
+#include "FTRLab/Board.hpp"
 
 void Board::addSensor(Sensor *sensor)
 {

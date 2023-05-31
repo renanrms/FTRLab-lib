@@ -1,4 +1,6 @@
-#include "FTRLab.hpp"
+#include <WiFi.h>
+
+#include "FTRLab/Board.hpp"
 
 void Board::printNetworkInfo()
 {
