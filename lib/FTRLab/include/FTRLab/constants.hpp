@@ -19,6 +19,9 @@ const unsigned BATTERY_INFO_MAX_SIZE = BATTERY_INFO_MAX_LENGTH + 1;
 const unsigned MAC_ADDRESS_MAX_SIZE = 11;
 const unsigned CHIP_ID_MAX_SIZE = 18;
 
+const uint16_t PORT = 3333;
+const String MDNS_SERVICE_NAME = "_ftr-lab";
+
 const uint16_t timerDivider = 80;
 const unsigned clockFrequency = 800000000;
 enum timers

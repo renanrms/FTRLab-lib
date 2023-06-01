@@ -22,7 +22,7 @@ public:
   char macAddress[MAC_ADDRESS_MAX_SIZE];
   BatteryInfo batteryInfo = {.level = 70, .charging = true};
 
-  WiFiServer server = WiFiServer(3333);
+  WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
   hw_timer_t *mdnsUpdateTimer = NULL;
 

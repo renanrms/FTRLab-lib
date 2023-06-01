@@ -16,15 +16,15 @@ void Board::setupMdns()
     }
   }
 
-  MDNS.addService("_ftr-lab", "_tcp", 3333);
+  MDNS.addService(MDNS_SERVICE_NAME, "_tcp", PORT);
   updateMdnsServiceTxtData();
 
   // TODO: printar informações do serviço e dos records TXT generalizados.
 
   Serial.println("\nServiço MDS adicionado");
-  Serial.println("Nome: _ftr-lab");
+  Serial.println("Nome: " + MDNS_SERVICE_NAME);
   Serial.println("Protocolo: _tcp");
-  Serial.println("Porta: 3333");
+  Serial.println("Porta: " + String(PORT));
 
   // Configura um timer para periodicamente setar o nome e forçar uma nova resposta MDNS.
   mdnsUpdateTimer = timerBegin(timers::mdnsUpdate, timerDivider, true);
