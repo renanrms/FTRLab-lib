@@ -12,6 +12,6 @@ void Board::updateMdnsServiceTxtData()
 
   for (unsigned index = 0; index < this->sensors.size(); index++)
   {
-    MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "sensor[" + String(index) + "]", "{\"index\":" + String(index) + ",\"quantity\":\"" + this->sensors[index]->quantity + "\"}");
+    MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "sensor[" + String(index) + "]", "{\"index\":" + String(index) + ",\"quantity\":\"" + this->sensors[index]->quantity + "\",\"name\":\"" + this->sensors[index]->name + "\"}");
   }
 }
