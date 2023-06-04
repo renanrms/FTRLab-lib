@@ -4,12 +4,11 @@ void Board::setup()
 {
   Serial.begin(115200);
 
-  // Função: printBoardInfo
-  Serial.printf("\nChip Id: %s\n", this->chipId);
+  this->printBoardInfo();
 
   // Função: connectToNetwork
   WiFi.begin(this->wifiSsid.c_str(), this->password.c_str());
-  Serial.printf("Connecting to %s ", wifiSsid);
+  Serial.print("Connecting to " + wifiSsid);
 
   while (WiFi.status() != WL_CONNECTED)
   {

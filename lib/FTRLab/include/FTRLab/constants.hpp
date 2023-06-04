@@ -18,7 +18,8 @@ const unsigned BATTERY_INFO_MAX_LENGTH = 38;
 const unsigned BATTERY_INFO_MAX_SIZE = BATTERY_INFO_MAX_LENGTH + 1;
 
 const uint16_t PORT = 3333;
-const String MDNS_SERVICE_NAME = "_ftr-lab";
+const String PROTOCOL = "_tcp";
+const String SERVICE_NAME = "_ftr-lab";
 
 const uint16_t timerDivider = 80;
 const unsigned clockFrequency = 800000000;

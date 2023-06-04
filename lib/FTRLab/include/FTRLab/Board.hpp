@@ -43,6 +43,7 @@ private:
   void tcp();
   void setupMdns();
   void updateMdnsServiceTxtData();
+  void printBoardInfo();
   void printNetworkInfo();
   String getChipId();
 };

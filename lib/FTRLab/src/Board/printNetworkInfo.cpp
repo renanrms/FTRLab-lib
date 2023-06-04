@@ -2,7 +2,8 @@
 
 void Board::printNetworkInfo()
 {
-  Serial.print("Connected to ");
+  Serial.println("\n===== Network info =====");
+  Serial.print("SSID: ");
   Serial.println(this->wifiSsid);
   Serial.print("MAC address: ");
   Serial.println(WiFi.macAddress());

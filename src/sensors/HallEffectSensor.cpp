@@ -2,8 +2,12 @@
 
 class HallEffectSensor : public Sensor
 {
-  const String name = String("Efeito Hall");
-  const String quantity = String("magnetic_flux");
+public:
+  HallEffectSensor()
+  {
+    this->name = "Efeito Hall";
+    this->quantity = "magnetic_flux";
+  }
 
   String takeMeasure()
   {
