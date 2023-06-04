@@ -23,11 +23,8 @@ void Board::setupMdns()
   Serial.println();
 
   MDNS.addService(SERVICE_NAME, PROTOCOL, PORT);
+
   updateMdnsServiceTxtData();
 
-  // Configura um timer para periodicamente setar o nome e forçar uma nova resposta MDNS.
-  mdnsUpdateTimer = timerBegin(timers::mdnsUpdate, timerDivider, true);
-  timerAttachInterrupt(mdnsUpdateTimer, &forceMdnsUpdateWrapper, true);
-  timerAlarmWrite(mdnsUpdateTimer, mdnsUpdateInterval * clockFrequency / timerDivider, true);
-  timerAlarmEnable(mdnsUpdateTimer);
+  this->mdnsUpdateTimer.attach_ms(10000, &forceMdnsUpdateWrapper);
 }

@@ -21,12 +21,4 @@ const uint16_t PORT = 3333;
 const String PROTOCOL = "_tcp";
 const String SERVICE_NAME = "_ftr-lab";
 
-const uint16_t timerDivider = 80;
-const unsigned clockFrequency = 800000000;
-enum timers
-{
-  mdnsUpdate
-};
-const unsigned mdnsUpdateInterval = 30;
-
 #endif

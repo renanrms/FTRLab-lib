@@ -6,6 +6,7 @@
 
 #include <WiFi.h>
 #include <ESPmDNS.h>
+#include <Ticker.h>
 
 #include "constants.hpp"
 #include "Sensor.hpp"
@@ -24,7 +25,7 @@ public:
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
-  hw_timer_t *mdnsUpdateTimer = NULL;
+  Ticker mdnsUpdateTimer;
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
