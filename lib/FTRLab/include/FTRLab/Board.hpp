@@ -15,12 +15,12 @@
 class Board
 {
 public:
-  const char *name;
-  const char *wifiSsid = "ITANET-CASTELO";
-  const char *password = "c45t310a2";
-  char chipId[CHIP_ID_MAX_SIZE];
-  char macAddress[MAC_ADDRESS_MAX_SIZE];
-  BatteryInfo batteryInfo = {.level = 70, .charging = true};
+  String name;
+  String chipId;
+  String macAddress;
+  String wifiSsid = "ITANET-CASTELO";
+  String password = "c45t310a2";
+  BatteryInfo *batteryInfo = NULL;
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
@@ -30,7 +30,7 @@ public:
   std::queue<Measurement> measurements;
 
   Board();
-  void setName(const char *name);
+  void setName(String name);
   void addSensor(Sensor *sensor);
   void setup();
   void loop();

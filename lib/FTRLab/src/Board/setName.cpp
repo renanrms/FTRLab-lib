@@ -1,6 +1,6 @@
 #include "FTRLab/Board.hpp"
 
-void Board::setName(const char *name)
+void Board::setName(String name)
 {
   this->name = name;
 }

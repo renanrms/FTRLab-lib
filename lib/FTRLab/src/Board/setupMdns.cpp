@@ -7,7 +7,7 @@ void IRAM_ATTR forceMdnsUpdateWrapper()
 
 void Board::setupMdns()
 {
-  if (!MDNS.begin(this->chipId))
+  if (!MDNS.begin(this->chipId.c_str()))
   {
     Serial.println("Error setting up MDNS responder!");
     while (1)

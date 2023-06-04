@@ -8,7 +8,7 @@ void Board::setup()
   Serial.printf("\nChip Id: %s\n", this->chipId);
 
   // Função: connectToNetwork
-  WiFi.begin(this->wifiSsid, this->password);
+  WiFi.begin(this->wifiSsid.c_str(), this->password.c_str());
   Serial.printf("Connecting to %s ", wifiSsid);
 
   while (WiFi.status() != WL_CONNECTED)

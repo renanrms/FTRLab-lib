@@ -16,8 +16,6 @@ const unsigned MEASUREMENT_MAX_SIZE = MEASUREMENT_MAX_LENGTH + 1;
 // const unsigned MEASURE_MAX_LENGTH = MEASUREMENT_MAX_LENGTH - MEASURE_OVERHEAD_LENGTH;
 const unsigned BATTERY_INFO_MAX_LENGTH = 38;
 const unsigned BATTERY_INFO_MAX_SIZE = BATTERY_INFO_MAX_LENGTH + 1;
-const unsigned MAC_ADDRESS_MAX_SIZE = 11;
-const unsigned CHIP_ID_MAX_SIZE = 18;
 
 const uint16_t PORT = 3333;
 const String MDNS_SERVICE_NAME = "_ftr-lab";
