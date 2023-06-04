@@ -3,10 +3,7 @@
 
 #include <Arduino.h>
 
-#include "FTRLab/BatteryInfo.hpp"
-#include "FTRLab/Board.hpp"
-#include "FTRLab/Measurement.hpp"
 #include "FTRLab/Sensor.hpp"
-#include "FTRLab/constants.hpp"
+#include "FTRLab/Board.hpp"
 
 #endif
