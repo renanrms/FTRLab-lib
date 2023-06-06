@@ -10,7 +10,7 @@ void Board::setup()
 
   this->printNetworkInfo();
 
-  NTP.begin();
+  this->setupNTP();
 
   this->server.begin();
 

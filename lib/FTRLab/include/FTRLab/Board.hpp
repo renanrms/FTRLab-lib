@@ -45,6 +45,7 @@ private:
   void tcp();
   void connectToNetwork();
   void setupMdns();
+  void setupNTP();
   void updateMdnsServiceTxtData();
   void printBoardInfo();
   void printNetworkInfo();
