@@ -4,8 +4,8 @@
 class Sensor
 {
 public:
-  String name;
   String quantity;
+  String method;
 
   virtual String takeMeasure() = 0;
 

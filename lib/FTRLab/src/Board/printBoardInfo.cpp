@@ -9,7 +9,7 @@ void Board::printBoardInfo()
 
   for (unsigned index = 0; index < this->sensors.size(); index++)
   {
-    Serial.println(String(index) + "\t" + this->sensors[index]->name + "\t" + this->sensors[index]->quantity);
+    Serial.println(String(index) + "\t" + this->sensors[index]->quantity + "\t" + this->sensors[index]->method);
   }
 
   Serial.println();

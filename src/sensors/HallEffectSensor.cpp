@@ -5,8 +5,8 @@ class HallEffectSensor : public Sensor
 public:
   HallEffectSensor()
   {
-    this->name = "Efeito Hall";
     this->quantity = "magnetic_flux";
+    this->method = "Efeito Hall";
   }
 
   String takeMeasure()
