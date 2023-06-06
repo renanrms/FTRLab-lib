@@ -20,8 +20,8 @@ public:
   String name;
   String chipId;
   String macAddress;
-  String wifiSsid = "ITANET-CASTELO";
-  String password = "c45t310a2";
+  String ssid = "wPESC-Visitante";
+  String password = "";
   BatteryInfo *batteryInfo = NULL;
 
   WiFiServer server = WiFiServer(PORT);
@@ -43,6 +43,7 @@ private:
   void takeAllMeasurements();
   void sendMeasurements();
   void tcp();
+  void connectToNetwork();
   void setupMdns();
   void updateMdnsServiceTxtData();
   void printBoardInfo();
