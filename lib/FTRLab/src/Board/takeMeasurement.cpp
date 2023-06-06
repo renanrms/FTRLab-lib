@@ -2,11 +2,11 @@
 
 void Board::takeMeasurement(Sensor *sensor, unsigned index)
 {
-  time_t t1, t2, timestamp;
+  float t1, t2, timestamp;
 
-  time(&t1);
+  t1 = this->getTimeFloat();
   String measure = sensor->takeMeasure();
-  time(&t2);
+  t2 = this->getTimeFloat();
 
   timestamp = (t1 + t2) / 2;
 

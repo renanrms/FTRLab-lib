@@ -19,6 +19,12 @@ void Board::setup()
 
   this->printNetworkInfo();
 
+  // Sincronizar relógio.
+  this->timeClient->begin();
+  this->timeClient->setTimeOffset(0); // Offset de fuso horário, se necessário
+
+  this->timeOffset = this->timeClient->getEpochTime() - micros() / 1000000;
+
   // Setup MDNS
   setupMdns();
 

@@ -6,13 +6,13 @@
 typedef struct
 {
   unsigned index;
-  time_t timestamp;
+  float timestamp;
   String measure;
   /// @brief Retorna a string da medição. Caso seu length exceda MEASUREMENT_MAX_LENGTH, pode ter sido truncado.
   operator String() const
   {
     char measurementString[MEASUREMENT_MAX_SIZE + 1];
-    snprintf(measurementString, MEASUREMENT_MAX_SIZE + 1, "{\"sensorIndex\":\"%u\",\"timestamp\":%li,\"value\":%s}", index, timestamp, measure);
+    snprintf(measurementString, MEASUREMENT_MAX_SIZE + 1, "{\"sensorIndex\":\"%u\",\"timestamp\":%f,\"value\":%s}", index, timestamp, measure);
     return String(measurementString);
   }
 } Measurement;

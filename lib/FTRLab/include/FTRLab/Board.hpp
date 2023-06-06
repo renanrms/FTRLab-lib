@@ -8,6 +8,9 @@
 #include <ESPmDNS.h>
 #include <Ticker.h>
 
+#include <WiFiUdp.h>
+#include <NTPClient.h>
+
 #include "constants.hpp"
 #include "Sensor.hpp"
 #include "BatteryInfo.hpp"
@@ -26,6 +29,8 @@ public:
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
   Ticker mdnsUpdateTimer;
+  NTPClient *timeClient;
+  unsigned long timeOffset;
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
@@ -46,6 +51,7 @@ private:
   void updateMdnsServiceTxtData();
   void printBoardInfo();
   void printNetworkInfo();
+  float getTimeFloat();
   String getChipId();
 };
 
