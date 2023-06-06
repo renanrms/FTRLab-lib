@@ -6,6 +6,7 @@
 
 #include <WiFi.h>
 #include <ESPmDNS.h>
+#include <ESPNtpClient.h>
 #include <Ticker.h>
 
 #include "constants.hpp"

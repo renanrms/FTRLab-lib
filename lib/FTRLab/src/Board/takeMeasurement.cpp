@@ -2,13 +2,14 @@
 
 void Board::takeMeasurement(Sensor *sensor, unsigned index)
 {
-  time_t t1, t2, timestamp;
+  int64_t t1, t2;
+  double timestamp;
 
-  time(&t1);
+  t1 = NTP.micros();
   String measure = sensor->takeMeasure();
-  time(&t2);
+  t2 = NTP.micros();
 
-  timestamp = (t1 + t2) / 2;
+  timestamp = ((double)(t1 + t2) / 2) / 1000000.0;
 
   this->measurements.push({index, timestamp, measure});
 }

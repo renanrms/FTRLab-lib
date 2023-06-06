@@ -19,8 +19,10 @@ void Board::setup()
 
   this->printNetworkInfo();
 
-  // Setup MDNS
-  setupMdns();
+  NTP.begin();
 
   this->server.begin(); // Inicia o servidor TCP na porta declarada no começo.
+
+  // Setup MDNS
+  setupMdns();
 }
