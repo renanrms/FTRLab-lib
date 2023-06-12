@@ -2,11 +2,11 @@
 
 void Board::loop()
 {
-  this->tcp(); // Funçao que gerencia os pacotes e clientes TCP.
+  this->tcp();
   if (this->client.connected())
   {
     this->takeAllMeasurements();
     this->sendMeasurements();
   }
-  delay(1000);
+  delay(200);
 }

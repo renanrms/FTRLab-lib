@@ -6,6 +6,7 @@
 
 #include <WiFi.h>
 #include <ESPmDNS.h>
+#include <ESPNtpClient.h>
 #include <Ticker.h>
 
 #include "constants.hpp"
@@ -19,8 +20,8 @@ public:
   String name;
   String chipId;
   String macAddress;
-  String wifiSsid = "ITANET-CASTELO";
-  String password = "c45t310a2";
+  String ssid = "wPESC-Visitante";
+  String password = "";
   BatteryInfo *batteryInfo = NULL;
 
   WiFiServer server = WiFiServer(PORT);
@@ -42,7 +43,9 @@ private:
   void takeAllMeasurements();
   void sendMeasurements();
   void tcp();
+  void connectToNetwork();
   void setupMdns();
+  void setupNTP();
   void updateMdnsServiceTxtData();
   void printBoardInfo();
   void printNetworkInfo();

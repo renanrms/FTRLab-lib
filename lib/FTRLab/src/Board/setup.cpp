@@ -6,21 +6,13 @@ void Board::setup()
 
   this->printBoardInfo();
 
-  // Função: connectToNetwork
-  WiFi.begin(this->wifiSsid.c_str(), this->password.c_str());
-  Serial.print("Connecting to " + wifiSsid);
-
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(250);
-    Serial.print(".");
-  }
-  Serial.println("");
+  this->connectToNetwork();
 
   this->printNetworkInfo();
 
-  // Setup MDNS
-  setupMdns();
+  this->setupNTP();
 
-  this->server.begin(); // Inicia o servidor TCP na porta declarada no começo.
+  this->server.begin();
+
+  this->setupMdns();
 }
