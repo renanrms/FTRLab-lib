@@ -16,11 +16,16 @@ void Board::connectToNetwork()
 
     for (int attempts = 0; attempts < 3 && WiFi.status() != WL_CONNECTED; attempts++)
     {
-      Serial.print(".");
       WiFi.begin(ssid.c_str(), password.c_str());
       WiFi.waitForConnectResult();
+      Serial.print(".");
     }
     Serial.println("");
+
+    if (WiFi.status() != WL_CONNECTED)
+    {
+      Serial.println("Connection failed. Wifi status code: " + String(WiFi.status()));
+    }
   }
 
   if (WiFi.status() != WL_CONNECTED)
