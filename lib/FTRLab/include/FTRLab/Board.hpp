@@ -8,6 +8,7 @@
 #include <ESPmDNS.h>
 #include <ESPNtpClient.h>
 #include <Ticker.h>
+#include <Preferences.h>
 
 #include "constants.hpp"
 #include "Sensor.hpp"
@@ -20,9 +21,8 @@ public:
   String name;
   String chipId;
   String macAddress;
-  String ssid = "wPESC-Visitante";
-  String password = "";
   BatteryInfo *batteryInfo = NULL;
+  Preferences *preferences = NULL;
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
@@ -37,6 +37,10 @@ public:
   void setup();
   void loop();
   void forceMdnsUpdate();
+  void setPreferences(Preferences *preferencesStore)
+  {
+    this->preferences = preferencesStore;
+  }
 
 private:
   void takeMeasurement(Sensor *sensor, unsigned index);

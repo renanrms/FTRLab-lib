@@ -2,23 +2,43 @@
 
 void Board::connectToNetwork()
 {
-  WiFi.mode(WIFI_AP_STA);
-  WiFi.beginSmartConfig();
-  // Wifi.softAP();
-  Serial.print("Waiting for SmartConfig ");
-  while (!WiFi.smartConfigDone())
-  {
-    delay(1000);
-    Serial.print(".");
-  }
-  Serial.println("");
+  String ssid, password;
 
-  Serial.println("SmartConfig received.");
-
-  while (WiFi.status() != WL_CONNECTED)
+  if (this->preferences->isKey("ssid") && this->preferences->isKey("password"))
   {
-    delay(1000);
-    Serial.print(".");
+    ssid = this->preferences->getString("ssid");
+    password = this->preferences->getString("password");
   }
-  Serial.println("");
+
+  if (!ssid.isEmpty())
+  {
+    Serial.print("Trying connection to " + ssid + " ");
+
+    for (int attempts = 0; attempts < 3 && WiFi.status() != WL_CONNECTED; attempts++)
+    {
+      Serial.print(".");
+      WiFi.begin(ssid.c_str(), password.c_str());
+      WiFi.waitForConnectResult();
+    }
+    Serial.println("");
+  }
+
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.beginSmartConfig();
+
+    Serial.print("Waiting for SmartConfig ");
+    while (!WiFi.smartConfigDone())
+    {
+      delay(1000);
+      Serial.print(".");
+    }
+    Serial.println("");
+
+    Serial.println("SmartConfig received.");
+
+    this->preferences->putString("ssid", WiFi.SSID());
+    this->preferences->putString("password", WiFi.psk());
+  }
 }
