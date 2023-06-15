@@ -8,6 +8,7 @@
 #include <ESPmDNS.h>
 #include <ESPNtpClient.h>
 #include <Ticker.h>
+#include <Preferences.h>
 
 #include "constants.hpp"
 #include "Sensor.hpp"
@@ -20,9 +21,8 @@ public:
   String name;
   String chipId;
   String macAddress;
-  String ssid = "wPESC-Visitante";
-  String password = "";
   BatteryInfo *batteryInfo = NULL;
+  Preferences *preferences = NULL;
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
@@ -31,12 +31,21 @@ public:
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
 
+  struct
+  {
+    uint8_t networkButton;
+    uint8_t networkLed;
+  } pins;
+
   Board();
   void setName(String name);
   void addSensor(Sensor *sensor);
+  void setDevicePins(uint8_t networkButton, uint8_t networkLed);
   void setup();
   void loop();
   void forceMdnsUpdate();
+  void connectToNetworkSmartConfig();
+  void setPreferencesStore(Preferences *preferencesStore);
 
 private:
   void takeMeasurement(Sensor *sensor, unsigned index);

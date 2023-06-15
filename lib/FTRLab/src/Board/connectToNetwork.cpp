@@ -2,13 +2,40 @@
 
 void Board::connectToNetwork()
 {
-  WiFi.begin(this->ssid.c_str(), this->password.c_str());
-  Serial.print("Connecting to " + ssid + " ");
+  String ssid, password;
 
-  while (WiFi.status() != WL_CONNECTED)
+  if (digitalRead(this->pins.networkButton) == LOW)
   {
-    delay(1000);
-    Serial.print(".");
+    connectToNetworkSmartConfig();
+    return;
   }
-  Serial.println("");
+
+  if (this->preferences->isKey("ssid") && this->preferences->isKey("password"))
+  {
+    ssid = this->preferences->getString("ssid");
+    password = this->preferences->getString("password");
+  }
+
+  if (!ssid.isEmpty())
+  {
+    Serial.print("Trying connection to " + ssid + " ");
+
+    for (int attempts = 0; attempts < 3 && WiFi.status() != WL_CONNECTED; attempts++)
+    {
+      WiFi.begin(ssid.c_str(), password.c_str());
+      WiFi.waitForConnectResult();
+      Serial.print(".");
+    }
+    Serial.println("");
+
+    if (WiFi.status() != WL_CONNECTED)
+    {
+      Serial.println("Connection failed. Wifi status code: " + String(WiFi.status()));
+    }
+  }
+
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    connectToNetworkSmartConfig();
+  }
 }
