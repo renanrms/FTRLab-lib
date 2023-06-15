@@ -4,11 +4,11 @@ void Board::loop()
 {
   if (WiFi.status() == WL_CONNECTED)
   {
-    digitalWrite(18, HIGH);
+    digitalWrite(this->pins.networkLed, HIGH);
   }
   else
   {
-    digitalWrite(18, LOW);
+    digitalWrite(this->pins.networkLed, LOW);
     board.setup();
   }
 

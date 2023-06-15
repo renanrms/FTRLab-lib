@@ -4,7 +4,7 @@ void Board::connectToNetwork()
 {
   String ssid, password;
 
-  if (digitalRead(5) == LOW)
+  if (digitalRead(this->pins.networkButton) == LOW)
   {
     connectToNetworkSmartConfig();
     return;

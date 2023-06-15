@@ -31,9 +31,16 @@ public:
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
 
+  struct
+  {
+    uint8_t networkButton;
+    uint8_t networkLed;
+  } pins;
+
   Board();
   void setName(String name);
   void addSensor(Sensor *sensor);
+  void setDevicePins(uint8_t networkButton, uint8_t networkLed);
   void setup();
   void loop();
   void forceMdnsUpdate();

@@ -8,9 +8,9 @@ void Board::connectToNetworkSmartConfig()
   Serial.print("Waiting for SmartConfig ");
   while (!WiFi.smartConfigDone())
   {
-    digitalWrite(18, HIGH);
+    digitalWrite(this->pins.networkLed, LOW);
     delay(500);
-    digitalWrite(18, LOW);
+    digitalWrite(this->pins.networkLed, HIGH);
     delay(500);
     Serial.print(".");
   }
