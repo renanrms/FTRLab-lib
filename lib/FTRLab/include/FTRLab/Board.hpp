@@ -37,10 +37,7 @@ public:
   void setup();
   void loop();
   void forceMdnsUpdate();
-  void setPreferences(Preferences *preferencesStore)
-  {
-    this->preferences = preferencesStore;
-  }
+  void setPreferences(Preferences *preferencesStore);
 
 private:
   void takeMeasurement(Sensor *sensor, unsigned index);
