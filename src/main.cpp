@@ -6,14 +6,18 @@ Preferences ftrlabPreferences;
 
 void setup()
 {
-  ftrlabPreferences.begin("FRTLab", false);
+  // Configuração de sensores e nome do dispositivo
   board.setName("Física Básica");
   board.addSensor(new HallEffectSensor());
-  board.setPreferences(&ftrlabPreferences);
+
+  // Setup do dispositivo (não alterar)
+  ftrlabPreferences.begin("FRTLab");
+  board.setPreferencesStore(&ftrlabPreferences);
   board.setup();
 }
 
 void loop()
 {
+  // A linha abaixo deve ser chamada a cada iteração do loop
   board.loop();
 }

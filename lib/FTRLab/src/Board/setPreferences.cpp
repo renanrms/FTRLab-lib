@@ -1,6 +1,6 @@
 #include "FTRLab/Board.hpp"
 
-void Board::setPreferences(Preferences *preferencesStore)
+void Board::setPreferencesStore(Preferences *preferencesStore)
 {
   this->preferences = preferencesStore;
 }
