@@ -4,6 +4,11 @@
 
 Preferences ftrlabPreferences;
 
+// enum DEVICE_PINS
+// {
+//   CONFIGURE_NETWORK_BUTTON = 18,
+// };
+
 void setup()
 {
   // Configuração de sensores e nome do dispositivo

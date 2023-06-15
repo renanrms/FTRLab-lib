@@ -37,6 +37,7 @@ public:
   void setup();
   void loop();
   void forceMdnsUpdate();
+  void connectToNetworkSmartConfig();
   void setPreferencesStore(Preferences *preferencesStore);
 
 private:

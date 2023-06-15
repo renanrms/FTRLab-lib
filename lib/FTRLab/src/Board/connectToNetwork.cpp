@@ -4,6 +4,12 @@ void Board::connectToNetwork()
 {
   String ssid, password;
 
+  if (digitalRead(5) == LOW)
+  {
+    connectToNetworkSmartConfig();
+    return;
+  }
+
   if (this->preferences->isKey("ssid") && this->preferences->isKey("password"))
   {
     ssid = this->preferences->getString("ssid");
@@ -30,20 +36,6 @@ void Board::connectToNetwork()
 
   if (WiFi.status() != WL_CONNECTED)
   {
-    WiFi.mode(WIFI_AP_STA);
-    WiFi.beginSmartConfig();
-
-    Serial.print("Waiting for SmartConfig ");
-    while (!WiFi.smartConfigDone())
-    {
-      delay(1000);
-      Serial.print(".");
-    }
-    Serial.println("");
-
-    Serial.println("SmartConfig received.");
-
-    this->preferences->putString("ssid", WiFi.SSID());
-    this->preferences->putString("password", WiFi.psk());
+    connectToNetworkSmartConfig();
   }
 }
