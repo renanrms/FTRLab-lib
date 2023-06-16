@@ -28,7 +28,12 @@ void Board::connectToNetwork()
     }
     Serial.println("");
 
-    if (WiFi.status() != WL_CONNECTED)
+    if (WiFi.status() == WL_CONNECTED)
+    {
+      Serial.println("Connection stablished. ");
+      digitalWrite(this->pins.networkLed, HIGH);
+    }
+    else
     {
       Serial.println("Connection failed. Wifi status code: " + String(WiFi.status()));
     }
