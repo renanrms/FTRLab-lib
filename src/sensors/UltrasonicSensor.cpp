@@ -1,5 +1,9 @@
 #include "FTRLab.hpp"
 
+const double SOUND_SPEED = 340;                  // Unit: m/s
+const double MAXIMUM_MEASURABLE_DISTANCE = 5;    // Unit: m
+const double MINIMUM_MEASURABLE_DISTANCE = 0.03; // Unit: m
+
 class UltrasonicSensor : public Sensor
 {
 public:
@@ -28,9 +32,12 @@ public:
     digitalWrite(triggerPin, LOW);
 
     // Obtém o tempo de duração do echo
-    double duration = (double)pulseIn(echoPin, HIGH, 5000000);
+    double duration = (double)pulseIn(echoPin, HIGH, 1000000 * MAXIMUM_MEASURABLE_DISTANCE / SOUND_SPEED);
 
-    double measure = (duration / 2) * 0.00034;
+    double measure = (duration / 2) * SOUND_SPEED / 1000000;
+
+    if (measure < MINIMUM_MEASURABLE_DISTANCE || measure > MAXIMUM_MEASURABLE_DISTANCE)
+      throw std::exception();
 
     return String(measure);
   }
