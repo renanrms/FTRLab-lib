@@ -11,7 +11,7 @@ public:
 
   String takeMeasure()
   {
-    String measure = String(hallRead());
-    return measure;
+    int measure = hallRead();
+    return String(measure);
   }
 };

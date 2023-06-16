@@ -20,5 +20,5 @@ void Board::loop()
     this->sendMeasurements();
   }
 
-  delay(200);
+  delay(250);
 }

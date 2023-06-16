@@ -1,6 +1,7 @@
 #include "FTRLab.hpp"
 
 #include "sensors/HallEffectSensor.cpp"
+#include "sensors/UltrasonicSensor.cpp"
 
 Preferences ftrlabPreferences;
 
@@ -13,6 +14,8 @@ enum DEVICE_PINS
   NETWORK_RECONFIGURATION_BUTTON = 5,
   NETWORK_STATUS_LED = 18,
   // Adicione aqui outros pinos utilizados pela placa
+  ULTRASONIC_SENSOR_TRIGGER = 12,
+  ULTRASONIC_SENSOR_ECHO = 13,
 };
 
 void setup()
@@ -20,6 +23,7 @@ void setup()
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
   board.setName("Física Básica");
   board.addSensor(new HallEffectSensor());
+  board.addSensor(new UltrasonicSensor(DEVICE_PINS::ULTRASONIC_SENSOR_TRIGGER, DEVICE_PINS::ULTRASONIC_SENSOR_ECHO));
   board.setDevicePins(
       DEVICE_PINS::NETWORK_RECONFIGURATION_BUTTON,
       DEVICE_PINS::NETWORK_STATUS_LED);

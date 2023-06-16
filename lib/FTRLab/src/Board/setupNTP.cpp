@@ -12,7 +12,10 @@ void Board::setupNTP()
   // partialSync = 1 -> NPT is synchronised but precission is below threshold
   while (NTP.syncStatus() == -1)
   {
-    delay(1000);
+    digitalWrite(this->pins.networkLed, HIGH);
+    delay(950);
+    digitalWrite(this->pins.networkLed, LOW);
+    delay(50);
     Serial.print(".");
   }
 
