@@ -39,6 +39,7 @@ public:
     if (measure < MINIMUM_MEASURABLE_DISTANCE || measure > MAXIMUM_MEASURABLE_DISTANCE)
       throw std::exception();
 
-    return String(measure);
+    // Retorna medida com 3 casas decimais (resolução de mm)
+    return String(measure, 3);
   }
 };
