@@ -2,6 +2,7 @@
 
 #include "sensors/HallEffectSensor.cpp"
 #include "sensors/UltrasonicSensor.cpp"
+#include "sensors/TemperatureBuiltInSensor.cpp"
 
 Preferences ftrlabPreferences;
 
@@ -23,6 +24,7 @@ void setup()
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
   board.setName("Física Básica");
   board.addSensor(new HallEffectSensor());
+  board.addSensor(new TemperatureBuiltInSensor());
   board.addSensor(new UltrasonicSensor(DEVICE_PINS::ULTRASONIC_SENSOR_TRIGGER, DEVICE_PINS::ULTRASONIC_SENSOR_ECHO));
   board.setDevicePins(
       DEVICE_PINS::NETWORK_RECONFIGURATION_BUTTON,
