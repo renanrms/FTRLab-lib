@@ -4,6 +4,7 @@ void Board::updateMdnsServiceTxtData()
 {
   MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "name", this->name);
   MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "available", client.connected() ? "false" : "true");
+  MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "timeSynced", this->timeSynced ? "true" : "false");
 
   if (this->batteryInfo != NULL)
   {

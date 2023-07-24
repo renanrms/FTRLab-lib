@@ -23,6 +23,7 @@ public:
   String macAddress;
   BatteryInfo *batteryInfo = NULL;
   Preferences *preferences = NULL;
+  bool timeSynced = false;
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
