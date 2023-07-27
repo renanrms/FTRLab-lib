@@ -23,12 +23,16 @@ void setup()
 {
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
   board.setName("Física Básica");
-  board.addSensor(new HallEffectSensor());
-  board.addSensor(new TemperatureBuiltInSensor());
+  // board.addSensor(new HallEffectSensor());
+  // board.addSensor(new TemperatureBuiltInSensor());
   board.addSensor(new UltrasonicSensor(DEVICE_PINS::ULTRASONIC_SENSOR_TRIGGER, DEVICE_PINS::ULTRASONIC_SENSOR_ECHO));
   board.setDevicePins(
       DEVICE_PINS::NETWORK_RECONFIGURATION_BUTTON,
       DEVICE_PINS::NETWORK_STATUS_LED);
+
+  // Se necessário descomente as linhas abaixo e altere os valores para ajustar períodos de medição e envio
+  // board.setMinimumMeasurementPeriod(10000);
+  // board.setMeasurementSendingPeriod(100000);
 
   // Setup do dispositivo (não alterar)
   ftrlabPreferences.begin("FRTLab");
