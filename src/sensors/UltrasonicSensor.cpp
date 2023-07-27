@@ -1,6 +1,6 @@
 #include "FTRLab.hpp"
 
-const double SOUND_SPEED = 340;                  // Unit: m/s
+const double SOUND_SPEED = 343;                  // Unit: m/s
 const double MAXIMUM_MEASURABLE_DISTANCE = 5;    // Unit: m
 const double MINIMUM_MEASURABLE_DISTANCE = 0.03; // Unit: m
 
@@ -32,7 +32,7 @@ public:
     digitalWrite(triggerPin, LOW);
 
     // Obtém o tempo de duração do echo
-    double duration = (double)pulseIn(echoPin, HIGH, 1000000 * MAXIMUM_MEASURABLE_DISTANCE / SOUND_SPEED);
+    double duration = (double)pulseIn(echoPin, HIGH, 1000000 * 2 * MAXIMUM_MEASURABLE_DISTANCE / SOUND_SPEED);
 
     double measure = (duration / 2) * SOUND_SPEED / 1000000;
 
