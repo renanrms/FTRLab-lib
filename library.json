@@ -1,12 +1,12 @@
 {
   "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
   "name": "FTRLab",
-  "version": "0.2.0",
-  "description": "Biblioteca para programação de dispositivos de aquisição de dados para o software FTRLab",
-  "keywords": "education, data aquisition, physics, experiment, real time, data visualization",
+  "version": "0.3.0",
+  "description": "Lib para programação de dispositivos de aquisição de dados em tempo real para experimentos didáticos. 🗠 🍎",
+  "keywords": "education, experiment, data-acquisition, real-time, science, microcontroller, physics",
   "repository": {
     "type": "git",
-    "url": "https://github.com/renanrms/FTR-Lab-Embarcado.git"
+    "url": "https://github.com/renanrms/FTRLab-lib.git"
   },
   "authors": [
     {
@@ -18,7 +18,5 @@
   ],
   "dependencies": {
     "gmag11/ESPNtpClient": "^0.2.7"
-  },
-  "frameworks": "*",
-  "platforms": "*"
+  }
 }
