@@ -30,7 +30,7 @@ void Board::connectToNetwork()
 
     if (WiFi.status() == WL_CONNECTED)
     {
-      Serial.println("Connection stablished. ");
+      Serial.println("Connection established. ");
       digitalWrite(this->pins.networkLed, HIGH);
     }
     else
