@@ -13,7 +13,7 @@ public:
   UltrasonicSensor(uint8_t triggerPin, uint8_t echoPin)
   {
     this->quantity = "distance";
-    this->method = "Ultrasônico";
+    this->method = "Ultrassônico";
 
     this->triggerPin = triggerPin;
     this->echoPin = echoPin;

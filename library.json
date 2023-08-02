@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
+  "name": "FTRLab",
+  "version": "0.3.2",
+  "description": "Lib para programação de dispositivos de aquisição de dados em tempo real para experimentos didáticos. 🗠 🍎",
+  "keywords": "education, experiment, data-acquisition, real-time, science, microcontroller, physics",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renanrms/FTRLab-lib.git"
+  },
+  "authors": [
+    {
+      "name": "Renan Passos",
+      "email": "renanvmsp@gmail.com",
+      "url": "https://github.com/renanrms",
+      "maintainer": true
+    }
+  ],
+  "dependencies": {
+    "gmag11/ESPNtpClient": "^0.2.7"
+  }
+}

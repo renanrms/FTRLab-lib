@@ -1,24 +1,54 @@
-# Biblioteca FTRLab - Sistema Embarcado
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg)](https://registry.platformio.org/libraries/renanrms/FTRLab)
 
-Esta é uma biblioteca para programação de dispositivos de aquisição de dados para o software FTRLab. Por enquanto o código está estruturado em pastas como um projeto de firmware do [PlatformIO](https://platformio.org/) e não como um projeto de biblioteca, pois está sendo desenvolvido em conjunto com um exemplo da biblioteca, mas em breve o projeto será estruturado como uma biblioteca e o exemplo disponibilizado na pasta de exemplos.
+# Biblioteca FTRLab
 
-## Como usar
+Biblioteca para programação de dispositivos de aquisição de dados em experimentos didáticos que se integram à aplicação [FTRLab desktop](https://github.com/renanrms/FTRLab-desktop). O propósito da Lib é cuidar das tarefas envolvidas por debaixo dos panos, para que o utilizador desenvolva apenas o código específico de medição de cada sensor, ou inclua um sensor previamente implementado.
 
-### Criaçao do dispositivo FTRLab
+Habilita comunicação por Wi-Fi, sincronização de tempo, descoberta do dispositivo em uma rede, perfilamento e envio de medições, geração de mensagens de log, e outras funcionalidades automaticamente.
 
-Quando a biblioteca for tranformada para a estrutura de Lib e publicada no PlatformIO, serão dadas informações mais detalhadas. Por enquanto, para criar um dispositivo FTRLab é necessário copiar este projeto e modificar o código da pasta `/src`, criando os sensores desejados e adicionando-os ao objeto `board`.
+Atualmente funcional para o microcontrolador ESP32.
 
-Com um código finalizado, fazer a compilação e o upload do firmware para um ESP32, depois conectá-lo ao conjunto de sensores projetados.
+## Primeiros passos
 
-### Compilação e upload do firmware
+### Construção de um dispositivo FTRLab
 
-O projeto foi desenvolvido usando o ambiente de desenvolvimento integrado PlatformIO, como extensão do VScode. A maneira recomendada de alterar, compilar, ou fazer upload do firmware é usar esta mesma ferramenta. Para mais informações ver a [documentação do PlatformIO](https://docs.platformio.org/en/latest/integration/ide/vscode.html#ide-vscode).
+Para criar um dispositivo será necessário montar um protótipo com ESP32 e algum sensor de interesse, e programar um firmware simples para leitura dos sensores importando a biblioteca. Ver [exemplos](#exemplos).
 
-### Limpeza da memória flash
+Recomendamos fortemente utilizar a [PlatformIO IDE](#plataformio), como extensão do VScode, para desenvolvimento, compilação e upload do firmware para o dispositivo.
+
+### Exemplos
+
+Veja a [pasta de exemplos](/examples/). Cada subpasta contém um exemplo diferente, com um arquivo `platformio.ini`, que torna o diretório um projeto de firmware PlatformIO. Assim você pode abrir a pasta no VScode e utilizar os botões da interface para fazer upload e visualização da saída no serial monitor, ou utilizar a ferramenta CLI.
+
+Perceba que em cada exemplo, a biblioteca é incluída sem especificar uma versão no arquivo `platformio.ini`. Para programar um firmware prefira indicar a versão da lib como recomendado na [seção sobre instalação](https://registry.platformio.org/libraries/renanrms/FTRLab/installation).
+
+## PlatformIO
+
+### Informações gerais
+
+Para utilizar PlatformIO como extensão do VSCode veja a [documentação do PlatformIO](https://docs.platformio.org/en/latest/integration/ide/vscode.html#installation). Ela mostra passo a passo como instalar e utilizar a interface para fazer o upload do firmware.
+
+### Ferramenta CLI
+
+PlatformIO possui uma ferramenta de linha de comando, caso prefira esta opção. Aqui serão dadas algumas informações para uma rápida utilização, mas você pode consultar mais detalhes na [documentação](https://docs.platformio.org/en/latest/core/index.html).
+
+Para instalar a ferramenta, primeiro certifique-se de ter [python](https://www.python.org/downloads/) e [pip](https://pip.pypa.io/en/stable/installation/) instalados e, então, instale a ferramenta com o comando:
+
+```shell
+pip install -U platformio
+```
+
+Para fazer upload, navegue até a pasta que contém um projeto de firmware PlatformIO e execute o comando:
+
+```shell
+pio run --target upload
+```
+
+## Limpeza da memória flash
 
 Um dispositivo com firmware do FTRLab utiliza a memória flash do microcontrolador para armazenar alguns dados de forma persistente, como credenciais de redes conectadas previamente. Estes dados permanecem na memória mesmo após fazer upload de um novo firmware, o que em geral não causa nenhum problema. Mas se for necessário apagar os dados por garantia ou por alguma alteração no formato dos dados salvos, é necessário apagar a memória flash (e o firmware consequentemente).
 
-Para isso são usadas as ferramentas da expressif. Para instalá-las, certifique-se de ter python e pip instalados e depois use os comandos:
+Para isso são usadas as ferramentas da espressif. Para instalá-las, certifique-se de ter python e pip instalados e depois use os comandos:
 
 ```shell
 pip install esptool
@@ -31,3 +61,14 @@ Depois, para zerar a memória efetivamente, pressione continuamente o botão BOO
 python -m esptool --chip esp32 erase_flash
 ```
 
+## Desenvolvimento da Lib
+
+As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos. Para se utilizar a lib na versão local sendo editada, ao invés de baixar a versão publicada, utilize um caminho local na propriedade `lib_deps` do `platformio.ini`. Nos exemplos da pasta examples, ficaria assim:
+
+```
+lib_deps = ../../
+```
+
+<!-- cspell:disable-next-line -->
+
+Além disso, é necessário apagar a pasta com um caminho como `.pio/libdeps/*/FTRLab` gerada dentro da pasta do projeto que usa a lib, para forçar a reinstalação da versão editada mais atual.
