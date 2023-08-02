@@ -2,17 +2,17 @@
 
 void Board::sendMeasurements()
 {
-  String menssage = "\n{\"measurements\":[";
+  String message = "\n{\"measurements\":[";
   String measurementString;
 
-  while (!this->measurements.empty() && menssage.length() < PAYLOAD_MAX_LENGTH - 3)
+  while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {
     measurementString = String(this->measurements.front());
 
-    if (menssage.length() + measurementString.length() <= PAYLOAD_MAX_LENGTH - 3)
+    if (message.length() + measurementString.length() <= PAYLOAD_MAX_LENGTH - 3)
     {
-      menssage += measurementString;
-      menssage += ",";
+      message += measurementString;
+      message += ",";
       this->measurements.pop();
     }
     else
@@ -27,9 +27,9 @@ void Board::sendMeasurements()
   }
 
   // Retira vírgula sobrando ao final e finaliza mensagem
-  menssage = menssage.substring(0, menssage.length() - 1);
-  menssage += "]}\n";
+  message = message.substring(0, message.length() - 1);
+  message += "]}\n";
 
-  client.print(menssage);
-  Serial.println(menssage);
+  client.print(message);
+  Serial.println(message);
 }

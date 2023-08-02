@@ -6,11 +6,6 @@ void Board::setupNTP()
 
   Serial.println("\nSynchronizing device clock with NTP. Timeout is " + String(NTP_SYNC_WAIT_TIME) + "s");
 
-  // NTPStatus_t possible values:
-  // syncd = 0       -> Time synchronized correctly
-  // unsyncd = -1    -> Time may not be valid
-  // partialSync = 1 -> NPT is synchronised but precission is below threshold
-
   time_t NtpSyncStart = NTP.getUptime();
   while (NTP.syncStatus() == -1 && NTP.getUptime() - NtpSyncStart < NTP_SYNC_WAIT_TIME)
   {
@@ -29,7 +24,7 @@ void Board::setupNTP()
   {
     // Para as tentativas de sincronização para não gerar descontinuidade nas medidas.
     NTP.stop();
-    Serial.println("NTP response not received. It's possible the network don't have acess to internet.");
+    Serial.println("NTP response not received. It's possible the network don't have access to internet.");
     Serial.println("Will continue without global time configured.");
   }
   Serial.println(String("Time: ") + NTP.getTimeDateStringUs());

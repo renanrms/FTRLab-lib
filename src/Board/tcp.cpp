@@ -26,7 +26,7 @@ void Board::tcp()
   }
   else // Se nao houver cliente conectado,
   {
-    client = server.available(); // Disponabiliza o servidor para o cliente se conectar.
+    client = server.available(); // Disponibiliza o servidor para o cliente se conectar.
     delay(1);
   }
 }

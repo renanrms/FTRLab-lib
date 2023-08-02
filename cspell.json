@@ -1,0 +1,27 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    "tsconfig.json",
+    "yarn.lock"
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "descomente",
+    "efuse",
+    "espressif",
+    "esptool",
+    "ftrlab",
+    "gmag11",
+    "gpio",
+    "mdns",
+    "microcontroller",
+    "platformio",
+    "renanrms",
+    "setuptools",
+    "ssid",
+    "wifi"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

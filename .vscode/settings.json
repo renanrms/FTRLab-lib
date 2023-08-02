@@ -12,5 +12,6 @@
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.formatOnSave": true
   },
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "cSpell.language": "en,pt-BR"
 }
