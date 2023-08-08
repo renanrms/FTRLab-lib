@@ -3,33 +3,24 @@
 void Board::loop()
 {
   int64_t lastTakingTime = NTP.micros();
-  int64_t lastSendingTime = NTP.micros();
+  int64_t remainingTime;
 
-  if (WiFi.status() == WL_CONNECTED)
+  while (true)
   {
-    digitalWrite(this->pins.networkLed, HIGH);
-  }
-  else
-  {
-    digitalWrite(this->pins.networkLed, LOW);
-    board.setup();
-  }
-
-  if (this->client.connected())
-  {
-    while (lastTakingTime - lastSendingTime < this->measurementSendingPeriod)
+    if (this->client.connected())
     {
-      int64_t remainingTime = this->minimumMeasurementPeriod - (NTP.micros() - lastTakingTime);
-      delayMicroseconds(remainingTime > 0 ? remainingTime : 0);
-      this->takeAllMeasurements();
+      remainingTime = this->minimumMeasurementPeriod - (NTP.micros() - lastTakingTime);
+      Serial.println("Measurement remainingTime = " + String(remainingTime));
+      if (remainingTime > 0)
+      {
+        delayMicroseconds(remainingTime);
+      }
       lastTakingTime = NTP.micros();
+      this->takeAllMeasurements();
     }
-    this->sendAllMeasurements();
-    lastSendingTime = NTP.micros();
-  }
-  else
-  {
-    this->client = this->server.available(); // Disponibiliza o servidor para o cliente se conectar.
-    delay(100);
+    else
+    {
+      delay(100);
+    }
   }
 }

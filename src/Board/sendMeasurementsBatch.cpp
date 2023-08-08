@@ -5,10 +5,10 @@ void Board::sendMeasurementsBatch()
   String message = "\n{\"measurements\":[";
   String measurementString;
 
+  xSemaphoreTake(this->measurementsQueue, portMAX_DELAY);
+
   while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {
-    Serial.println("message.length() = " + String(message.length()));
-
     measurementString = String(this->measurements.front());
 
     if (message.length() + measurementString.length() <= PAYLOAD_MAX_LENGTH - 3)
@@ -31,11 +31,11 @@ void Board::sendMeasurementsBatch()
     }
   }
 
+  xSemaphoreGive(this->measurementsQueue);
+
   // Retira vírgula sobrando ao final e finaliza mensagem
   message = message.substring(0, message.length() - 1);
   message += "]}\n";
-
-  Serial.println("Sent: message.length() = " + String(message.length()));
 
   client.print(message);
   // Serial.println(message);

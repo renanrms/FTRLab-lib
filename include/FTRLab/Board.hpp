@@ -30,6 +30,7 @@ public:
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
   Ticker mdnsUpdateTimer;
+  SemaphoreHandle_t measurementsQueue;
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
@@ -48,8 +49,8 @@ public:
   void setMeasurementSendingPeriod(int64_t periodUs);
   void setup();
   void loop();
+  void CommunicationHandler();
   void forceMdnsUpdate();
-  void connectToNetworkSmartConfig();
   void setPreferencesStore(Preferences *preferencesStore);
 
 private:
@@ -58,6 +59,7 @@ private:
   void sendMeasurementsBatch();
   void sendAllMeasurements();
   void connectToNetwork();
+  void connectToNetworkSmartConfig();
   void setupMdns();
   void setupNTP();
   void updateMdnsServiceTxtData();

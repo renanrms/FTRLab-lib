@@ -6,7 +6,7 @@ void Board::connectToNetwork()
 
   if (digitalRead(this->pins.networkButton) == LOW)
   {
-    connectToNetworkSmartConfig();
+    this->connectToNetworkSmartConfig();
     return;
   }
 
@@ -41,6 +41,6 @@ void Board::connectToNetwork()
 
   if (WiFi.status() != WL_CONNECTED)
   {
-    connectToNetworkSmartConfig();
+    this->connectToNetworkSmartConfig();
   }
 }
