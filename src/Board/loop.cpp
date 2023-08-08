@@ -26,7 +26,7 @@ void Board::loop()
       this->takeAllMeasurements();
       lastTakingTime = NTP.micros();
     }
-    this->sendMeasurements();
+    this->sendAllMeasurements();
     lastSendingTime = NTP.micros();
   }
   else

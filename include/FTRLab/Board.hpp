@@ -55,7 +55,8 @@ public:
 private:
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
-  void sendMeasurements();
+  void sendMeasurementsBatch();
+  void sendAllMeasurements();
   void tcp();
   void connectToNetwork();
   void setupMdns();
