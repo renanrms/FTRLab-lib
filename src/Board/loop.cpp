@@ -15,8 +15,6 @@ void Board::loop()
     board.setup();
   }
 
-  this->tcp();
-
   if (this->client.connected())
   {
     while (lastTakingTime - lastSendingTime < this->measurementSendingPeriod)
@@ -31,6 +29,7 @@ void Board::loop()
   }
   else
   {
+    this->client = this->server.available(); // Disponibiliza o servidor para o cliente se conectar.
     delay(100);
   }
 }

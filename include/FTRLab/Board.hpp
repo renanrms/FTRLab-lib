@@ -57,7 +57,6 @@ private:
   void takeAllMeasurements();
   void sendMeasurementsBatch();
   void sendAllMeasurements();
-  void tcp();
   void connectToNetwork();
   void setupMdns();
   void setupNTP();

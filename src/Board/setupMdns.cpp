@@ -24,7 +24,7 @@ void Board::setupMdns()
 
   MDNS.addService(SERVICE_NAME, PROTOCOL, PORT);
 
-  updateMdnsServiceTxtData();
+  this->updateMdnsServiceTxtData();
 
   this->mdnsUpdateTimer.attach_ms(10000, &forceMdnsUpdateWrapper);
 }
