@@ -32,7 +32,7 @@ void Board::CommunicationHandler()
 
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
     {
-      xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->measurementSendingPeriod));
+      xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetSendingPeriod));
       this->sendAllMeasurements();
     }
   }

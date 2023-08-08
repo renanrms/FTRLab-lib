@@ -9,7 +9,7 @@ void Board::loop()
   {
     while (this->client.connected())
     {
-      xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->minimumMeasurementPeriod));
+      xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetTakeingPeriod));
       this->takeAllMeasurements();
     }
     delay(100);

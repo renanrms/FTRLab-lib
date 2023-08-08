@@ -1,6 +1,6 @@
 #include "FTRLab/Board.hpp"
 
-void Board::setMeasurementSendingPeriod(int64_t periodUs)
+void Board::setMeasurementSendingPeriod(int64_t periodMs)
 {
-  this->measurementSendingPeriod = periodUs;
+  this->targetSendingPeriod = periodMs;
 }

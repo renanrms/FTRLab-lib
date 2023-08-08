@@ -24,8 +24,8 @@ public:
   BatteryInfo *batteryInfo = NULL;
   Preferences *preferences = NULL;
   bool timeSynced = false;
-  int64_t minimumMeasurementPeriod = DEFAULT_MINIMUM_MEASUREMENT_PERIOD;
-  int64_t measurementSendingPeriod = DEFAULT_MEASUREMENTS_SENDING_PERIOD;
+  int64_t targetTakeingPeriod = DEFAULT_TAKEING_PERIOD;
+  int64_t targetSendingPeriod = DEFAULT_SENDING_PERIOD;
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
@@ -45,8 +45,8 @@ public:
   void setName(String name);
   void addSensor(Sensor *sensor);
   void setDevicePins(uint8_t networkButton, uint8_t networkLed);
-  void setMinimumMeasurementPeriod(int64_t periodUs);
-  void setMeasurementSendingPeriod(int64_t periodUs);
+  void setMinimumMeasurementPeriod(int64_t periodMs);
+  void setMeasurementSendingPeriod(int64_t periodMs);
   void setup();
   void loop();
   void CommunicationHandler();

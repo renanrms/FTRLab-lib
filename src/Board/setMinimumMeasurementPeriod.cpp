@@ -1,6 +1,6 @@
 #include "FTRLab/Board.hpp"
 
-void Board::setMinimumMeasurementPeriod(int64_t periodUs)
+void Board::setMinimumMeasurementPeriod(int64_t periodMs)
 {
-  this->minimumMeasurementPeriod = periodUs;
+  this->targetTakeingPeriod = periodMs;
 }
