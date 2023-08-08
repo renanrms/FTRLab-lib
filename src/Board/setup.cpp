@@ -2,8 +2,8 @@
 
 void Board::CommunicationHandler()
 {
-  int64_t lastSendingTime = NTP.micros();
-  int64_t remainingTime;
+  TickType_t xLastWakeTime = xTaskGetTickCount();
+  BaseType_t xWasDelayed;
 
   Serial.println("CommunicationTask running on core " + String(xPortGetCoreID()));
 
@@ -13,19 +13,7 @@ void Board::CommunicationHandler()
     {
       digitalWrite(this->pins.networkLed, HIGH);
 
-      if (this->client.connected())
-      {
-        remainingTime = this->measurementSendingPeriod - (NTP.micros() - lastSendingTime);
-        Serial.println("Communication remainingTime = " + String(remainingTime));
-        if (remainingTime > 0)
-        {
-          delayMicroseconds(remainingTime);
-        }
-
-        lastSendingTime = NTP.micros();
-        this->sendAllMeasurements();
-      }
-      else
+      if (!this->client.connected())
       {
         this->client = this->server.available(); // Disponibiliza o servidor para o cliente se conectar.
         delay(100);
@@ -40,6 +28,12 @@ void Board::CommunicationHandler()
       this->setupNTP();
       this->server.begin();
       this->setupMdns();
+    }
+
+    while (WiFi.status() == WL_CONNECTED && this->client.connected())
+    {
+      xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->measurementSendingPeriod));
+      this->sendAllMeasurements();
     }
   }
 }

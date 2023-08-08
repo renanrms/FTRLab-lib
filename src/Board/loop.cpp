@@ -2,25 +2,16 @@
 
 void Board::loop()
 {
-  int64_t lastTakingTime = NTP.micros();
-  int64_t remainingTime;
+  TickType_t xLastWakeTime = xTaskGetTickCount();
+  BaseType_t xWasDelayed;
 
   while (true)
   {
-    if (this->client.connected())
+    while (this->client.connected())
     {
-      remainingTime = this->minimumMeasurementPeriod - (NTP.micros() - lastTakingTime);
-      Serial.println("Measurement remainingTime = " + String(remainingTime));
-      if (remainingTime > 0)
-      {
-        delayMicroseconds(remainingTime);
-      }
-      lastTakingTime = NTP.micros();
+      xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->minimumMeasurementPeriod));
       this->takeAllMeasurements();
     }
-    else
-    {
-      delay(100);
-    }
+    delay(100);
   }
 }
