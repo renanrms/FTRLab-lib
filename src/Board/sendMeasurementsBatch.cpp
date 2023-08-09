@@ -4,6 +4,7 @@ void Board::sendMeasurementsBatch()
 {
   String message = "\n{\"measurements\":[";
   String measurementString;
+  unsigned measurementsAdded = 0;
 
   xSemaphoreTake(this->measurementsQueue, portMAX_DELAY);
 
@@ -17,10 +18,11 @@ void Board::sendMeasurementsBatch()
       message += measurementString;
       message += ",";
       this->measurements.pop();
+      measurementsAdded++;
     }
-    else if (measurementString.length() > MEASUREMENT_MAX_LENGTH)
+    else if (measurementsAdded == 0)
     {
-      // Se a medição sozinha excede o tamanho máximo possível, é descartada.
+      // Se a medição sozinha não cabe na string, é descartada.
       Serial.println("Error: measurement string exceeded de maximum size.");
       this->measurements.pop();
     }
