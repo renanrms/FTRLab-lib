@@ -23,7 +23,7 @@ void Board::setup()
   xTaskCreatePinnedToCore(
       communicationHandlerWrapper,
       "COMM",
-      1000,
+      10000,
       NULL,
       tskIDLE_PRIORITY,
       &communicationTask,
@@ -32,7 +32,7 @@ void Board::setup()
   xTaskCreatePinnedToCore(
       measurementHandlerWrapper,
       "MEAS",
-      1000,
+      10000,
       NULL,
       configMAX_PRIORITIES,
       &measurementTask,
