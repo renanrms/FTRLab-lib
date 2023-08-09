@@ -34,7 +34,7 @@ void Board::communicationHandler()
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
     {
       BaseType_t xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetSendingPeriod));
-      this->sendAllMeasurements();
+      this->sendMeasurements();
     }
 
     delay(100);

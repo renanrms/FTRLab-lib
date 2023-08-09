@@ -57,7 +57,7 @@ private:
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
   void sendMeasurementsBatch();
-  void sendAllMeasurements();
+  void sendMeasurements();
   void connectToNetwork();
   void connectToNetworkSmartConfig();
   void setupMdns();
