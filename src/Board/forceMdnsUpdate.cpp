@@ -2,6 +2,6 @@
 
 void Board::forceMdnsUpdate()
 {
-  MDNS.setInstanceName(this->chipId);
+  this->updateMdnsServiceTxtData();
   Serial.println("New mDNS periodic response emitted.");
 }

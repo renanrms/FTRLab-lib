@@ -10,7 +10,7 @@ void Board::setupMdns()
   if (!MDNS.begin(this->chipId.c_str()))
   {
     Serial.println("Error setting up mDNS responder!");
-    while (1)
+    while (true)
     {
       delay(1000);
     }

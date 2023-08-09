@@ -11,7 +11,7 @@ void Board::communicationHandler()
     if (clientConnected != bool(this->client.connected()))
     {
       clientConnected = bool(this->client.connected());
-      // this->updateMdnsServiceTxtData();
+      this->updateMdnsServiceTxtData();
     }
 
     if (WiFi.status() != WL_CONNECTED)
