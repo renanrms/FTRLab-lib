@@ -18,7 +18,7 @@ void Board::connectToNetwork()
 
   if (!ssid.isEmpty())
   {
-    Serial.print("Trying connection to " + ssid + " ");
+    Serial.print("\nTrying connection to " + ssid + " ");
 
     for (int attempts = 0; attempts < 3 && WiFi.status() != WL_CONNECTED; attempts++)
     {

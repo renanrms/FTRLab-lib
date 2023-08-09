@@ -9,10 +9,10 @@ void Board::setupNTP()
   time_t NtpSyncStart = NTP.getUptime();
   while (NTP.syncStatus() == -1 && NTP.getUptime() - NtpSyncStart < NTP_SYNC_WAIT_TIME)
   {
-    digitalWrite(this->pins.networkLed, HIGH);
-    delay(1950);
     digitalWrite(this->pins.networkLed, LOW);
     delay(50);
+    digitalWrite(this->pins.networkLed, HIGH);
+    delay(1950);
   }
 
   if (NTP.syncStatus() != -1)
@@ -28,4 +28,6 @@ void Board::setupNTP()
     Serial.println("Will continue without global time configured.");
   }
   Serial.println(String("Time: ") + NTP.getTimeDateStringUs());
+
+  digitalWrite(this->pins.networkLed, HIGH);
 }

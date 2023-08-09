@@ -36,8 +36,5 @@ void setup()
   board.setup();
 }
 
-void loop()
-{
-  // A linha abaixo deve ser chamada a cada iteração do loop
-  board.loop();
-}
+// A função fica livre caso queira executar alguma tarefa adicional.
+void loop() {}

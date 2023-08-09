@@ -48,8 +48,8 @@ public:
   void setMinimumMeasurementPeriod(int64_t periodMs);
   void setMeasurementSendingPeriod(int64_t periodMs);
   void setup();
-  void loop();
-  void CommunicationHandler();
+  void communicationHandler();
+  void measurementHandler();
   void forceMdnsUpdate();
   void setPreferencesStore(Preferences *preferencesStore);
 

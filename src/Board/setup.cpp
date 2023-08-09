@@ -1,11 +1,18 @@
 #include "FTRLab/Board.hpp"
 
-void CommunicationHandlerWrapper(void *pvParameters)
+void communicationHandlerWrapper(void *pvParameters)
 {
-  board.CommunicationHandler();
+  board.communicationHandler();
 }
 
-TaskHandle_t CommunicationTask;
+TaskHandle_t communicationTask;
+
+void measurementHandlerWrapper(void *pvParameters)
+{
+  board.measurementHandler();
+}
+
+TaskHandle_t measurementTask;
 
 void Board::setup()
 {
@@ -14,11 +21,20 @@ void Board::setup()
   this->printBoardInfo();
 
   xTaskCreatePinnedToCore(
-      CommunicationHandlerWrapper, /* Task function. */
-      "Communication",             /* name of task. */
-      10000,                       /* Stack size of task */
-      NULL,                        /* parameter of the task */
-      tskIDLE_PRIORITY,            /* priority of the task */
-      &CommunicationTask,          /* Task handle to keep track of created task */
-      0);                          /* pin task to core 0 */
+      communicationHandlerWrapper,
+      "COMM",
+      1000,
+      NULL,
+      tskIDLE_PRIORITY,
+      &communicationTask,
+      0);
+
+  xTaskCreatePinnedToCore(
+      measurementHandlerWrapper,
+      "MEAS",
+      1000,
+      NULL,
+      configMAX_PRIORITIES,
+      &measurementTask,
+      1);
 }
