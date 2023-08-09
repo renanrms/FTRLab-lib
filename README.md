@@ -1,4 +1,4 @@
-[![PlatformIO Registry](https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg)](https://registry.platformio.org/libraries/renanrms/FTRLab)
+<a href="https://registry.platformio.org/libraries/renanrms/FTRLab"><img src="https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg" alt="PlatformIO Registry" /></a>
 
 # Biblioteca FTRLab
 
