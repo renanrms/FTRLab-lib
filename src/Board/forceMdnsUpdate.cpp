@@ -3,5 +3,5 @@
 void Board::forceMdnsUpdate()
 {
   this->updateMdnsServiceTxtData();
-  Serial.println("New mDNS periodic response emitted.");
+  Serial.println("New mDNS response emitted.");
 }
