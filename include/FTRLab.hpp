@@ -1,5 +1,5 @@
-#ifndef FTRLab_H
-#define FTRLab_H "FTRLab_H"
+#ifndef FTRLAB_H
+#define FTRLAB_H "FTRLAB_H"
 
 #include <Arduino.h>
 
