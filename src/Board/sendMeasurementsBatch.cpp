@@ -1,4 +1,5 @@
 #include "FTRLab/Board.hpp"
+#include "FTRLab/internals/SemaphoreLock.hpp"
 
 void Board::sendMeasurementsBatch()
 {
@@ -6,7 +7,7 @@ void Board::sendMeasurementsBatch()
   String measurementString;
   unsigned measurementsAdded = 0;
 
-  xSemaphoreTake(this->measurementsQueue, portMAX_DELAY);
+  SemaphoreLock lock = SemaphoreLock(this->measurementsQueue);
 
   while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {
@@ -23,7 +24,8 @@ void Board::sendMeasurementsBatch()
     else if (measurementsAdded == 0)
     {
       // Se a medição sozinha não cabe na string, é descartada.
-      Serial.println("Error: measurement string exceeded de maximum size.");
+      Serial.println("Error: measurement string exceeded de maximum size.\n" +
+                     String(this->measurements.front()));
       this->measurements.pop();
     }
     else
@@ -33,7 +35,7 @@ void Board::sendMeasurementsBatch()
     }
   }
 
-  xSemaphoreGive(this->measurementsQueue);
+  lock.~SemaphoreLock();
 
   // Retira vírgula sobrando ao final e finaliza mensagem
   message = message.substring(0, message.length() - 1);

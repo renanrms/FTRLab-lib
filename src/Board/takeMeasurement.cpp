@@ -1,4 +1,5 @@
 #include "FTRLab/Board.hpp"
+#include "FTRLab/internals/SemaphoreLock.hpp"
 
 void Board::takeMeasurement(Sensor *sensor, unsigned index)
 {
@@ -13,12 +14,9 @@ void Board::takeMeasurement(Sensor *sensor, unsigned index)
 
     timestamp = ((double)(t1 + t2) / 2) / 1000000.0;
 
-    // TODO: Resolver problema: se uma exceção for lançada entre o take e o give, a variável ficará travada para sempre.
-    // Como o C++ tem exceções, é preciso tornar isso seguro alocando um objeto com destrutor que libera a trava
-    // com seu destrutor. Ver se é melhor usar pthreads.
-    xSemaphoreTake(this->measurementsQueue, portMAX_DELAY);
+    SemaphoreLock lock = SemaphoreLock(this->measurementsQueue);
     this->measurements.push({index, timestamp, measure});
-    xSemaphoreGive(this->measurementsQueue);
+    lock.~SemaphoreLock();
   }
   catch (std::exception error)
   {
