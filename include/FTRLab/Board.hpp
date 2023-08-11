@@ -18,19 +18,27 @@
 class Board
 {
 public:
+  Board();
+  void setName(String name);
+  void addSensor(Sensor *sensor);
+  void setDevicePins(uint8_t networkButton, uint8_t networkLed);
+  void setMinimumMeasurementPeriod(int64_t periodMs);
+  void setMaximumSendingPeriod(int64_t periodMs);
+  void setup();
+  void communicationTask();
+  void measurementTask();
+  void forceMdnsUpdate();
+  void setPreferencesStore(Preferences *preferencesStore);
+
+private:
   String name;
   String chipId;
   String macAddress;
   BatteryInfo *batteryInfo = NULL;
-  Preferences *preferences = NULL;
   bool timeSynced = false;
-  int64_t targetTakeingPeriod = DEFAULT_TAKEING_PERIOD;
-  int64_t targetSendingPeriod = DEFAULT_SENDING_PERIOD;
 
   WiFiServer server = WiFiServer(PORT);
   WiFiClient client;
-  Ticker mdnsUpdateTimer;
-  SemaphoreHandle_t measurementsQueue;
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
@@ -41,19 +49,16 @@ public:
     uint8_t networkLed;
   } pins;
 
-  Board();
-  void setName(String name);
-  void addSensor(Sensor *sensor);
-  void setDevicePins(uint8_t networkButton, uint8_t networkLed);
-  void setMinimumMeasurementPeriod(int64_t periodMs);
-  void setMeasurementSendingPeriod(int64_t periodMs);
-  void setup();
-  void communicationHandler();
-  void measurementHandler();
-  void forceMdnsUpdate();
-  void setPreferencesStore(Preferences *preferencesStore);
+  Ticker mdnsUpdateTimer;
+  SemaphoreHandle_t measurementsSemaphore;
+  Preferences *preferences = NULL;
+  TaskHandle_t communicationHandle;
+  TaskHandle_t measurementHandle;
 
-private:
+  int64_t targetTakeingPeriod;
+  int64_t maximumSendingPeriod;
+  int64_t targetSendingPeriod;
+
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
   void sendMeasurementsBatch();

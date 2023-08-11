@@ -1,6 +1,6 @@
 #include "FTRLab/Board.hpp"
 
-void Board::communicationHandler()
+void Board::communicationTask()
 {
   Serial.println("Communication task running on core " + String(xPortGetCoreID()));
 

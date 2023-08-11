@@ -7,7 +7,7 @@ void Board::sendMeasurementsBatch()
   String measurementString;
   unsigned measurementsAdded = 0;
 
-  SemaphoreLock lock = SemaphoreLock(this->measurementsQueue);
+  SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
 
   while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {

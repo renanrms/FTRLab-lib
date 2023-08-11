@@ -9,7 +9,7 @@ void Board::sendMeasurements()
   while (!this->measurements.empty() &&
          (this->measurements.size() > 100 || // Prevenção de overflow
           this->measurements.front().timestamp - NTP.micros() / 1000000.0 >
-              (this->targetSendingPeriod / 2) / 1000.0)) // Garantia de tempo real
+              (this->maximumSendingPeriod / 2) / 1000.0)) // Garantia de tempo real
   {
     delay(50); // Evita sobrecarregar o software desktop.
     this->sendMeasurementsBatch();

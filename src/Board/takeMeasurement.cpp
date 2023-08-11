@@ -14,7 +14,7 @@ void Board::takeMeasurement(Sensor *sensor, unsigned index)
 
     timestamp = ((double)(t1 + t2) / 2) / 1000000.0;
 
-    SemaphoreLock lock = SemaphoreLock(this->measurementsQueue);
+    SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
     this->measurements.push({index, timestamp, measure});
     lock.~SemaphoreLock();
   }

@@ -1,6 +1,6 @@
 #include "FTRLab/Board.hpp"
 
-void Board::measurementHandler()
+void Board::measurementTask()
 {
   Serial.println("Measurement task running on core " + String(xPortGetCoreID()));
 
