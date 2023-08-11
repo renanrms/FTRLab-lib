@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::setName(String name)
+void Device::setName(String name)
 {
   this->name = name;
 }

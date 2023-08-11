@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::takeAllMeasurements()
+void Device::takeAllMeasurements()
 {
   for (unsigned index = 0; index < this->sensors.size(); index++)
   {

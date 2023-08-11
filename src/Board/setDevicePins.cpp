@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::setDevicePins(uint8_t networkButton, uint8_t networkLed)
+void Device::setDevicePins(uint8_t networkButton, uint8_t networkLed)
 {
   this->pins.networkButton = networkButton;
   this->pins.networkLed = networkLed;

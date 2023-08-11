@@ -1,5 +1,5 @@
-#ifndef FTRLAB_BOARD_H
-#define FTRLAB_BOARD_H "FTRLAB_BOARD_H"
+#ifndef FTRLAB_DEVICE_H
+#define FTRLAB_DEVICE_H "FTRLAB_DEVICE_H"
 
 #include <queue>
 #include <vector>
@@ -15,10 +15,10 @@
 #include "BatteryInfo.hpp"
 #include "Measurement.hpp"
 
-class Board
+class Device
 {
 public:
-  Board();
+  Device();
   void setName(String name);
   void addSensor(Sensor *sensor);
   void setDevicePins(uint8_t networkButton, uint8_t networkLed);
@@ -68,11 +68,11 @@ private:
   void setupMdns();
   void setupNTP();
   void updateMdnsServiceTxtData();
-  void printBoardInfo();
+  void printDeviceInfo();
   void printNetworkInfo();
   String getChipId();
 };
 
-extern Board board;
+extern Device device;
 
 #endif

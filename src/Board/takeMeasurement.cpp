@@ -1,7 +1,7 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 #include "FTRLab/internals/SemaphoreLock.hpp"
 
-void Board::takeMeasurement(Sensor *sensor, unsigned index)
+void Device::takeMeasurement(Sensor *sensor, unsigned index)
 {
   int64_t t1, t2;
   double timestamp;

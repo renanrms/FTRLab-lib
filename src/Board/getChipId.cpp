@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-String Board::getChipId()
+String Device::getChipId()
 {
   uint32_t chipIdAsNumber = 0;
   for (int i = 0; i < 17; i = i + 8)

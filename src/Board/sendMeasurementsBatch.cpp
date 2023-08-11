@@ -1,7 +1,7 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 #include "FTRLab/internals/SemaphoreLock.hpp"
 
-void Board::sendMeasurementsBatch()
+void Device::sendMeasurementsBatch()
 {
   String message = "\n{\"measurements\":[";
   String measurementString;

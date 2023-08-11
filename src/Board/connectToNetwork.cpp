@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::connectToNetwork()
+void Device::connectToNetwork()
 {
   String ssid, password;
 

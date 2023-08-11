@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::setupNTP()
+void Device::setupNTP()
 {
   NTP.begin("pool.ntp.org", false);
 

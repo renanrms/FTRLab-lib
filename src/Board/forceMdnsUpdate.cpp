@@ -1,6 +1,6 @@
 #include "FTRLab.hpp"
 
-void Board::forceMdnsUpdate()
+void Device::forceMdnsUpdate()
 {
   this->updateMdnsServiceTxtData();
   Serial.println("New mDNS response emitted.");

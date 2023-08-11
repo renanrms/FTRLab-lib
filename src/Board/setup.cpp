@@ -1,20 +1,20 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
 void communicationTaskWrapper(void *pvParameters)
 {
-  board.communicationTask();
+  device.communicationTask();
 }
 
 void measurementTaskWrapper(void *pvParameters)
 {
-  board.measurementTask();
+  device.measurementTask();
 }
 
-void Board::setup()
+void Device::setup()
 {
   Serial.begin(115200);
 
-  this->printBoardInfo();
+  this->printDeviceInfo();
 
   xTaskCreatePinnedToCore(
       communicationTaskWrapper,

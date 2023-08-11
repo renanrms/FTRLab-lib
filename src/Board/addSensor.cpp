@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::addSensor(Sensor *sensor)
+void Device::addSensor(Sensor *sensor)
 {
   this->sensors.push_back(sensor);
 }

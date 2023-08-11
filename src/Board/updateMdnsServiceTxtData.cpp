@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::updateMdnsServiceTxtData()
+void Device::updateMdnsServiceTxtData()
 {
   MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "name", this->name);
   MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "available", client.connected() ? "false" : "true");

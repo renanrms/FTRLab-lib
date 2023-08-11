@@ -1,11 +1,11 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
 void IRAM_ATTR forceMdnsUpdateWrapper()
 {
-  board.forceMdnsUpdate();
+  device.forceMdnsUpdate();
 }
 
-void Board::setupMdns()
+void Device::setupMdns()
 {
   if (!MDNS.begin(this->chipId.c_str()))
   {

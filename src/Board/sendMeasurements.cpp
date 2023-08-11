@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::sendMeasurements()
+void Device::sendMeasurements()
 {
   if (!this->measurements.empty())
     this->sendMeasurementsBatch();

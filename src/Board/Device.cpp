@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-Board::Board()
+Device::Device()
 {
   this->macAddress = WiFi.macAddress();
   this->chipId = this->getChipId();
