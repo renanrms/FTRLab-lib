@@ -18,7 +18,7 @@ enum PINS
 void setup()
 {
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("ESP32 Builtin");
+  device.setName("ESP32 Built-in");
   device.addSensor(new HallEffectSensor());
   device.addSensor(new TemperatureBuiltInSensor());
   device.setDevicePins(
