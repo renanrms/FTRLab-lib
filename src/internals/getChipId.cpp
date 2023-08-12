@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include <Arduino.h>
 
-String Board::getChipId()
+String getChipId()
 {
   uint32_t chipIdAsNumber = 0;
   for (int i = 0; i < 17; i = i + 8)

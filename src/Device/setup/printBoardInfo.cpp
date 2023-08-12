@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::printBoardInfo()
+void Device::printDeviceInfo()
 {
   Serial.println("\n===== FTRLab device infos =====");
   Serial.println("Id: " + this->chipId);

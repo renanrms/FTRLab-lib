@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::printNetworkInfo()
+void Device::printNetworkInfo()
 {
   Serial.println("\n===== Network info =====");
   Serial.print("SSID: ");

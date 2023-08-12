@@ -1,12 +1,12 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::connectToNetwork()
+void Device::connectToWifi()
 {
   String ssid, password;
 
   if (digitalRead(this->pins.networkButton) == LOW)
   {
-    connectToNetworkSmartConfig();
+    this->doSmartConfig();
     return;
   }
 
@@ -18,7 +18,7 @@ void Board::connectToNetwork()
 
   if (!ssid.isEmpty())
   {
-    Serial.print("Trying connection to " + ssid + " ");
+    Serial.print("\nTrying connection to " + ssid + " ");
 
     for (int attempts = 0; attempts < 3 && WiFi.status() != WL_CONNECTED; attempts++)
     {
@@ -41,6 +41,6 @@ void Board::connectToNetwork()
 
   if (WiFi.status() != WL_CONNECTED)
   {
-    connectToNetworkSmartConfig();
+    this->doSmartConfig();
   }
 }

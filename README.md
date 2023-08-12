@@ -1,4 +1,4 @@
-[![PlatformIO Registry](https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg)](https://registry.platformio.org/libraries/renanrms/FTRLab)
+<a href="https://registry.platformio.org/libraries/renanrms/FTRLab"><img src="https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg" alt="PlatformIO Registry" /></a>
 
 # Biblioteca FTRLab
 
@@ -69,6 +69,8 @@ As recomendações para desenvolvimento da lib são muito semelhantes às de uti
 lib_deps = ../../
 ```
 
-<!-- cspell:disable-next-line -->
+Além disso, é necessário desinstalar a lib antes de cada upload para forçar a reinstalação com a última versão editada no projeto do exemplo que está sendo testado.
 
-Além disso, é necessário apagar a pasta com um caminho como `.pio/libdeps/*/FTRLab` gerada dentro da pasta do projeto que usa a lib, para forçar a reinstalação da versão editada mais atual.
+```shell
+pio pkg uninstall -l FTRLab
+```

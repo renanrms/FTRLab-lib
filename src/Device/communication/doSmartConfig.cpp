@@ -1,6 +1,6 @@
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
-void Board::connectToNetworkSmartConfig()
+void Device::doSmartConfig()
 {
   WiFi.mode(WIFI_AP_STA);
   WiFi.beginSmartConfig();
@@ -16,7 +16,8 @@ void Board::connectToNetworkSmartConfig()
   }
   Serial.println("");
 
-  Serial.println("SmartConfig received.");
+  Serial.println("Connection established. ");
+  digitalWrite(this->pins.networkLed, HIGH);
 
   this->preferences->putString("ssid", WiFi.SSID());
   this->preferences->putString("password", WiFi.psk());

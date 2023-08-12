@@ -1,3 +1,3 @@
 #include "FTRLab.hpp"
 
-Board board = Board();
+Device device = Device();

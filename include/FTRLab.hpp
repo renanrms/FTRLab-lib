@@ -1,9 +1,9 @@
-#ifndef FTR_Lab_H
-#define FTR_Lab_H "FTR_Lab_H"
+#ifndef FTRLAB_H
+#define FTRLAB_H "FTRLAB_H"
 
 #include <Arduino.h>
 
 #include "FTRLab/Sensor.hpp"
-#include "FTRLab/Board.hpp"
+#include "FTRLab/Device.hpp"
 
 #endif
