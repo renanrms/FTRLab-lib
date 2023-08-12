@@ -9,7 +9,7 @@ void Device::communicationTask()
     if (WiFi.status() != WL_CONNECTED)
     {
       digitalWrite(this->pins.networkLed, LOW);
-      this->connectToNetwork();
+      this->connectToWifi();
       digitalWrite(this->pins.networkLed, HIGH);
 
       this->printNetworkInfo();

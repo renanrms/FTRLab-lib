@@ -2,6 +2,6 @@
 
 void Device::forceMdnsUpdate()
 {
-  this->updateMdnsServiceTxtData();
+  this->updateMdnsTxtData();
   Serial.println("New mDNS response emitted.");
 }

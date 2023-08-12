@@ -24,7 +24,7 @@ void Device::setupMdns()
 
   MDNS.addService(SERVICE_NAME, PROTOCOL, PORT);
 
-  this->updateMdnsServiceTxtData();
+  this->updateMdnsTxtData();
 
   this->mdnsUpdateTimer.attach_ms(10000, &forceMdnsUpdateWrapper);
 }

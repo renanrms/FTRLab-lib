@@ -1,12 +1,12 @@
 #include "FTRLab/Device.hpp"
 
-void Device::connectToNetwork()
+void Device::connectToWifi()
 {
   String ssid, password;
 
   if (digitalRead(this->pins.networkButton) == LOW)
   {
-    this->connectToNetworkSmartConfig();
+    this->doSmartConfig();
     return;
   }
 
@@ -41,6 +41,6 @@ void Device::connectToNetwork()
 
   if (WiFi.status() != WL_CONNECTED)
   {
-    this->connectToNetworkSmartConfig();
+    this->doSmartConfig();
   }
 }

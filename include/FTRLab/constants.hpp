@@ -18,7 +18,7 @@ const unsigned BATTERY_INFO_MAX_LENGTH = 38;
 const unsigned BATTERY_INFO_MAX_SIZE = BATTERY_INFO_MAX_LENGTH + 1;
 const time_t NTP_SYNC_WAIT_TIME = 90;
 const int64_t DEFAULT_TAKEING_PERIOD = 12;  // Unit: ms
-const int64_t DEFAULT_SENDING_PERIOD = 200; // Unit: ms
+const int64_t DEFAULT_SENDING_PERIOD = 150; // Unit: ms
 
 const uint16_t PORT = 3333;
 const String PROTOCOL = "_tcp";

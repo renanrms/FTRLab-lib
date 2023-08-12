@@ -1,6 +1,6 @@
 #include "FTRLab/Device.hpp"
 
-void Device::connectToNetworkSmartConfig()
+void Device::doSmartConfig()
 {
   WiFi.mode(WIFI_AP_STA);
   WiFi.beginSmartConfig();

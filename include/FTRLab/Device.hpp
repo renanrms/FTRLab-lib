@@ -1,6 +1,8 @@
 #ifndef FTRLAB_DEVICE_H
 #define FTRLAB_DEVICE_H "FTRLAB_DEVICE_H"
 
+#include <Arduino.h>
+
 #include <queue>
 #include <vector>
 
@@ -24,11 +26,11 @@ public:
   void setDevicePins(uint8_t networkButton, uint8_t networkLed);
   void setMinimumMeasurementPeriod(int64_t periodMs);
   void setMaximumSendingPeriod(int64_t periodMs);
+  void setPreferencesStore(Preferences *preferencesStore);
   void setup();
+  void forceMdnsUpdate();
   void communicationTask();
   void measurementTask();
-  void forceMdnsUpdate();
-  void setPreferencesStore(Preferences *preferencesStore);
 
 private:
   String name;
@@ -63,14 +65,13 @@ private:
   void takeAllMeasurements();
   void sendMeasurementsBatch();
   void sendMeasurements();
-  void connectToNetwork();
-  void connectToNetworkSmartConfig();
+  void connectToWifi();
+  void doSmartConfig();
   void setupMdns();
   void setupNTP();
-  void updateMdnsServiceTxtData();
+  void updateMdnsTxtData();
   void printDeviceInfo();
   void printNetworkInfo();
-  String getChipId();
 };
 
 extern Device device;
