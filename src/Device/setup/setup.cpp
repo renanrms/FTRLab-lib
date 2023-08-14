@@ -25,12 +25,14 @@ void Device::setup()
       &this->communicationHandle,
       0);
 
-  xTaskCreatePinnedToCore(
-      measurementTaskWrapper,
-      "MEAS",
-      10000,
-      NULL,
-      configMAX_PRIORITIES,
-      &this->measurementHandle,
-      1);
+  this->measurementTask();
+
+  // xTaskCreatePinnedToCore(
+  //     measurementTaskWrapper,
+  //     "MEAS",
+  //     10000,
+  //     NULL,
+  //     configMAX_PRIORITIES,
+  //     &this->measurementHandle,
+  //     1);
 }
