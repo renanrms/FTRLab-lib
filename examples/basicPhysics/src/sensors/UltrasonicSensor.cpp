@@ -24,22 +24,39 @@ public:
 
   String takeMeasure()
   {
-    // Gera o pulso a ser medido
-    digitalWrite(triggerPin, LOW);
-    delayMicroseconds(2);
-    digitalWrite(triggerPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(triggerPin, LOW);
+    double result = 0;
+    unsigned count = 0;
 
-    // Obtém o tempo de duração do echo
-    double duration = (double)pulseIn(echoPin, HIGH, 1000000 * 2 * MAXIMUM_MEASURABLE_DISTANCE / SOUND_SPEED);
+    for (unsigned i = 0; i < 6; i++)
+    {
 
-    double measure = (duration / 2) * SOUND_SPEED / 1000000;
+      // Gera o pulso a ser medido
+      digitalWrite(triggerPin, LOW);
+      delayMicroseconds(2);
+      digitalWrite(triggerPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(triggerPin, LOW);
 
-    if (measure < MINIMUM_MEASURABLE_DISTANCE || measure > MAXIMUM_MEASURABLE_DISTANCE)
+      // Obtém o tempo de duração do echo
+      double duration = (double)pulseIn(echoPin, HIGH, 1000000 * 2 * MAXIMUM_MEASURABLE_DISTANCE / SOUND_SPEED);
+
+      double measure = (duration / 2) * SOUND_SPEED / 1000000;
+
+      if (measure < MINIMUM_MEASURABLE_DISTANCE || measure > MAXIMUM_MEASURABLE_DISTANCE)
+      {
+      }
+      else
+      {
+        result += measure;
+        count++;
+      }
+    }
+
+    Serial.println(count);
+
+    if (count > 0)
+      return String(result / count, 5);
+    else
       throw std::exception();
-
-    // Retorna medida com 4 casas decimais (resolução de décimos de mm)
-    return String(measure, 4);
   }
 };
