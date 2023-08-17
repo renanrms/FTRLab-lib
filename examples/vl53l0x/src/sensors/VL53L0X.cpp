@@ -11,6 +11,9 @@ public:
 
   VL53L0X(uint8_t triggerPin, uint8_t echoPin)
   {
+    this->quantity = "distance";
+    this->method = "Laser";
+
     Serial.println("Adafruit VL53L0X test");
     if (!lox.begin() ||
         !lox.configSensor(Adafruit_VL53L0X::VL53L0X_SENSE_HIGH_SPEED))

@@ -20,7 +20,7 @@ enum PINS
 void setup()
 {
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("Distancia LV53X0L");
+  device.setName("Distância VL53X0L");
   device.addSensor(new VL53L0X(PINS::ULTRASONIC_SENSOR_TRIGGER, PINS::ULTRASONIC_SENSOR_ECHO));
   device.setDevicePins(
       PINS::NETWORK_RECONFIGURATION_BUTTON,
