@@ -1,7 +1,7 @@
 #include "FTRLab/Device.hpp"
 #include "FTRLab/internals/SemaphoreLock.hpp"
 
-void Device::sendMeasurementsBatch()
+unsigned int Device::sendMeasurementsBatch()
 {
   String message = "\n{\"measurements\":[";
   String measurementString;
@@ -43,4 +43,5 @@ void Device::sendMeasurementsBatch()
 
   client.print(message);
   // Serial.println(message);
+  return message.length();
 }

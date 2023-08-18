@@ -27,8 +27,8 @@ void setup()
       PINS::NETWORK_STATUS_LED);
 
   // Se necessário descomente as linhas abaixo e altere os valores para ajustar períodos de medição e envio
-  device.setMinimumMeasurementPeriod(8);
-  device.setMaximumSendingPeriod(150);
+  // device.setMinimumMeasurementPeriod(12);
+  // device.setMaximumSendingPeriod(150);
 
   // Setup do dispositivo (não alterar)
   ftrlabPreferences.begin("FRTLab");

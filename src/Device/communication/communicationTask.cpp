@@ -27,15 +27,29 @@ void Device::communicationTask()
     if (this->client.connected())
     {
       Serial.println("Connection established to client " + this->client.remoteIP().toString() + ":" + String(this->client.remotePort()));
+      this->client.setNoDelay(true);
     }
 
     this->forceMdnsUpdate();
 
-    TickType_t xLastWakeTime = xTaskGetTickCount();
+    // TickType_t xLastWakeTime = xTaskGetTickCount();
+    int64_t lastTime = NTP.millis();
+    int64_t remainingTime = 0;
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
     {
-      BaseType_t xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetSendingPeriod));
+      Serial.println("Sending remainingTime = " + String(remainingTime));
+      // Serial.println("New sending. Remaining: " + String(xTaskGetTickCount() - xLastWakeTime));
+
+      // BaseType_t xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetSendingPeriod));
+      lastTime = NTP.millis();
       this->sendMeasurements();
+
+      remainingTime = this->targetSendingPeriod - (NTP.millis() - lastTime);
+
+      if (remainingTime > 0)
+        delay(remainingTime);
+      // if (xTaskGetTickCount() - xLastWakeTime > 2 * pdMS_TO_TICKS(this->targetSendingPeriod))
+      //   xLastWakeTime = xTaskGetTickCount();
     }
 
     if (WiFi.status() == WL_CONNECTED)
