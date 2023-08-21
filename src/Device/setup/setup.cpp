@@ -23,7 +23,7 @@ void Device::setup()
   //     NULL,
   //     tskIDLE_PRIORITY,
   //     &this->communicationHandle,
-  //     0);
+  //     APP_CPU_NUM);
 
   xTaskCreatePinnedToCore(
       measurementTaskWrapper,
@@ -32,7 +32,7 @@ void Device::setup()
       NULL,
       configMAX_PRIORITIES,
       &this->measurementHandle,
-      0);
+      PRO_CPU_NUM);
 
   this->communicationTask();
   // this->measurementTask();
