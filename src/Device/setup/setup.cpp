@@ -16,23 +16,24 @@ void Device::setup()
 
   this->printDeviceInfo();
 
-  xTaskCreatePinnedToCore(
-      communicationTaskWrapper,
-      "COMM",
-      10000,
-      NULL,
-      tskIDLE_PRIORITY,
-      &this->communicationHandle,
-      0);
-
-  this->measurementTask();
-
   // xTaskCreatePinnedToCore(
-  //     measurementTaskWrapper,
-  //     "MEAS",
+  //     communicationTaskWrapper,
+  //     "COMM",
   //     10000,
   //     NULL,
-  //     configMAX_PRIORITIES,
-  //     &this->measurementHandle,
-  //     1);
+  //     tskIDLE_PRIORITY,
+  //     &this->communicationHandle,
+  //     0);
+
+  xTaskCreatePinnedToCore(
+      measurementTaskWrapper,
+      "MEAS",
+      10000,
+      NULL,
+      configMAX_PRIORITIES,
+      &this->measurementHandle,
+      0);
+
+  this->communicationTask();
+  // this->measurementTask();
 }
