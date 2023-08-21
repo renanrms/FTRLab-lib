@@ -5,11 +5,21 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
-## [UNRELEASED] - aaaa-mm-dd
+## [0.5.0] - aaaa-mm-dd
 
 ### Adicionado
 
 - Exemplo com sensor de distância baseado em laser VL53L0X.
+
+### Corrigido
+
+- Correção de problema de concorrência entre o MDNS
+- Correção de problema na lógica dos loops medição e envio. Fazia-se indesejadamente uma compensação na frequência do loop, provocando iterações em sequência após um atraso grande.
+
+### Alterado
+
+- Melhoria da medida de distância no exemplo do sensor HC-SR04, fazendo uma média de medidas.
+- Melhoria no controle do envio de medições. Como agora o software poderá receber sequências de mensagens imediatamente seguidas, o loop envia todas as medições até "quase" zerar a fila de medições. Garante melhor a rapidez de envio e edita overflow.
 
 ## [0.4.0] - 2023-08-12
 
