@@ -30,7 +30,11 @@ void Device::communicationTask()
       Serial.println("Connection established to client " + this->client.remoteIP().toString() + ":" + String(this->client.remotePort()));
 
       // this->client.setNoDelay(true);
+
       this->forceMdnsUpdate();
+      this->mdnsUpdateTimer.detach();
+      MDNS.end();
+      delay(1000);
     }
 
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
@@ -51,8 +55,7 @@ void Device::communicationTask()
     if (WiFi.status() == WL_CONNECTED)
     {
       Serial.println("Connection to client ended.");
+      this->setupMdns();
     }
-
-    this->forceMdnsUpdate();
   }
 }

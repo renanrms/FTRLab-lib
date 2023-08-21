@@ -8,7 +8,10 @@ void Device::setupMdns()
     Serial.println("Error setting up mDNS responder!");
     while (true)
     {
-      delay(1000);
+      digitalWrite(this->pins.networkLed, LOW);
+      delay(1950);
+      digitalWrite(this->pins.networkLed, HIGH);
+      delay(50);
     }
   }
 
