@@ -1,9 +1,5 @@
 #include "FTRLab/Device.hpp"
-
-void IRAM_ATTR forceMdnsUpdateWrapper()
-{
-  device.forceMdnsUpdate();
-}
+#include "FTRLab/internals/forceMdnsUpdateWrapper.hpp"
 
 void Device::setupMdns()
 {
@@ -26,5 +22,5 @@ void Device::setupMdns()
 
   this->updateMdnsTxtData();
 
-  this->mdnsUpdateTimer.attach_ms(10000, &forceMdnsUpdateWrapper);
+  this->mdnsUpdateTimer.attach_ms(MDNS_FORCED_UPDATE_INTERVAL, &forceMdnsUpdateWrapper);
 }

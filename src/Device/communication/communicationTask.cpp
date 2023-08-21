@@ -1,4 +1,5 @@
 #include "FTRLab/Device.hpp"
+#include "FTRLab/internals/forceMdnsUpdateWrapper.hpp"
 
 void Device::communicationTask()
 {
@@ -28,9 +29,10 @@ void Device::communicationTask()
     {
       Serial.println("Connection established to client " + this->client.remoteIP().toString() + ":" + String(this->client.remotePort()));
       // this->client.setNoDelay(true);
+      this->mdnsUpdateTimer.detach();
+      // this->forceMdnsUpdate();
+      // delay(1000);
     }
-
-    this->forceMdnsUpdate();
 
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
     {
@@ -52,6 +54,10 @@ void Device::communicationTask()
       Serial.println("Connection to client ended.");
     }
 
-    this->forceMdnsUpdate();
+    if (!this->mdnsUpdateTimer.active())
+    {
+      this->mdnsUpdateTimer.attach_ms(MDNS_FORCED_UPDATE_INTERVAL, &forceMdnsUpdateWrapper);
+      // this->forceMdnsUpdate();
+    }
   }
 }
