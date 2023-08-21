@@ -1,36 +1,19 @@
 #include "FTRLab/Device.hpp"
 
-void Device::sendMeasurements()
+unsigned int Device::sendMeasurements()
 {
-  unsigned long bytesSent = 0;
+  unsigned long measurementsSent = 0;
+  unsigned long accumulator = 0;
 
-  if (!this->measurements.empty())
-    bytesSent = this->sendMeasurementsBatch();
-  else
-    this->targetSendingPeriod++;
-
-  Serial.println("Bytes sent: " + String(bytesSent) + "\t targetSendingPeriod: " + String(this->targetSendingPeriod));
-
-  if (bytesSent < PAYLOAD_MAX_LENGTH / 2 && this->targetSendingPeriod < this->maximumSendingPeriod)
-    this->targetSendingPeriod++;
-
-  // Diminui período de envio se as medições estiverem se acumulando.
-  if (!this->measurements.empty() &&
-      (this->measurements.size() > 100 || // Prevenção de overflow
-       this->measurements.front().timestamp - NTP.micros() / 1000000.0 >
-           (this->maximumSendingPeriod / 2) / 1000.0)) // Garantia de tempo real
+  /**
+   * Envia medições se houverem e continua enviando se a quantidade de medições
+   * acumuladas/novas na fila for maior do que se conseguiu enviar em um envio.
+   */
+  while (this->measurements.size() > measurementsSent)
   {
-    this->targetSendingPeriod *= 0.8;
-  }
-  else
-  {
-    this->targetSendingPeriod++;
+    measurementsSent = this->sendMeasurementsBatch();
+    accumulator += measurementsSent;
   }
 
-  if (this->targetSendingPeriod > this->maximumSendingPeriod)
-    this->targetSendingPeriod = this->maximumSendingPeriod;
-  else if (this->targetSendingPeriod < DEFAULT_MINIMUM_SENDING_PERIOD)
-    this->targetSendingPeriod = DEFAULT_MINIMUM_SENDING_PERIOD;
-
-  Serial.println("Updated targetSendingPeriod: " + String(this->targetSendingPeriod));
+  return accumulator;
 }

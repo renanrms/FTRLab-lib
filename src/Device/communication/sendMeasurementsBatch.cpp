@@ -43,5 +43,5 @@ unsigned int Device::sendMeasurementsBatch()
 
   client.print(message);
   // Serial.println(message);
-  return message.length();
+  return measurementsAdded;
 }

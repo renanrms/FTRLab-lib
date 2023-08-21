@@ -64,7 +64,7 @@ private:
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
   unsigned int sendMeasurementsBatch();
-  void sendMeasurements();
+  unsigned int sendMeasurements();
   void connectToWifi();
   void doSmartConfig();
   void setupMdns();
