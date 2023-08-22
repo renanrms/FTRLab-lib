@@ -63,13 +63,18 @@ python -m esptool --chip esp32 erase_flash
 
 ## Desenvolvimento da Lib
 
-As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos. Para se utilizar a lib na versão local sendo editada, ao invés de baixar a versão publicada, utilize um caminho local na propriedade `lib_deps` do `platformio.ini`. Nos exemplos da pasta examples, ficaria assim:
+As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos.
+
+Para se utilizar a lib na versão local sendo editada, ao invés de baixar a versão publicada, utilize um caminho local na propriedade `lib_deps` do `platformio.ini`. Além disso, pode ser feito o build com modo de debug para ver erros de execução com mensagens mais completas. Nos exemplos da pasta examples, ficaria assim:
 
 ```
+[env:esp32dev]
+...
 lib_deps = ../../
+build_type = debug
 ```
 
-Além disso, é necessário desinstalar a lib antes de cada upload para forçar a reinstalação com a última versão editada no projeto do exemplo que está sendo testado.
+Além disso, quando a lib já estiver instalada, é necessário a desinstalar antes de cada upload para forçar a reinstalação e posteriormente o build com a versão local mais recente.
 
 ```shell
 pio pkg uninstall -l FTRLab
