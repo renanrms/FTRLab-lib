@@ -12,6 +12,8 @@ void measurementTaskWrapper(void *pvParameters)
 
 void Device::setup()
 {
+  digitalWrite(this->pins.networkLed, LOW);
+
   Serial.begin(115200);
 
   this->printDeviceInfo();

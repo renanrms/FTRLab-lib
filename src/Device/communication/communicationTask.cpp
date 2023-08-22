@@ -32,9 +32,9 @@ void Device::communicationTask()
       // this->client.setNoDelay(true);
 
       this->forceMdnsUpdate();
+      delay(1000);
       this->mdnsUpdateTimer.detach();
       MDNS.end();
-      delay(1000);
     }
 
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
