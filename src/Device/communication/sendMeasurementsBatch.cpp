@@ -7,7 +7,11 @@ unsigned int Device::sendMeasurementsBatch()
   String measurementString;
   unsigned measurementsAdded = 0;
 
-  SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
+  // SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
+  while (xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY) != pdTRUE)
+  {
+    delay(10);
+  }
 
   while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {
@@ -35,7 +39,8 @@ unsigned int Device::sendMeasurementsBatch()
     }
   }
 
-  lock.~SemaphoreLock();
+  // lock.~SemaphoreLock();
+  xSemaphoreGive(this->measurementsSemaphore);
 
   // Retira vírgula sobrando ao final e finaliza mensagem
   message = message.substring(0, message.length() - 1);
