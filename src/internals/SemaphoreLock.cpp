@@ -2,10 +2,20 @@
 
 SemaphoreLock::SemaphoreLock(SemaphoreHandle_t sema) : semaphore(sema)
 {
-  xSemaphoreTake(semaphore, portMAX_DELAY);
+  this->hasLock = xSemaphoreTake(semaphore, portMAX_DELAY);
+  while (hasLock != pdTRUE)
+  {
+    this->hasLock = xSemaphoreTake(semaphore, portMAX_DELAY);
+  }
 }
 
 SemaphoreLock::~SemaphoreLock()
 {
-  xSemaphoreGive(semaphore);
+  while (this->hasLock == pdTRUE)
+  {
+    if (xSemaphoreGive(semaphore))
+    {
+      this->hasLock = pdFALSE;
+    }
+  }
 }
