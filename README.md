@@ -72,6 +72,13 @@ Para se utilizar a lib na versão local sendo editada, ao invés de baixar a ver
 ...
 lib_deps = ../../
 build_type = debug
+monitor_filters = esp32_exception_decoder
+```
+
+Também é muito útil ter endereços decodificados para linhas quando ocorre um erro e o dispositivo imprime um stack trace. Para isso a última linha acima no platformio.ini deve estar presente na pasta de onde se abriu o device monitor. Isso pode ser feito abrindo o device monitor no diretório do projeto com o comando:
+
+```
+pio device monitor
 ```
 
 Além disso, quando a lib já estiver instalada, é necessário a desinstalar antes de cada upload para forçar a reinstalação e posteriormente o build com a versão local mais recente.
