@@ -1,6 +1,6 @@
 #include "FTRLab/Device.hpp"
 
-void Device::setMinimumMeasurementPeriod(int64_t periodMs)
+void Device::setTargetSampleRate(float frequency)
 {
-  this->targetTakeingPeriod = periodMs;
+  this->targetTakeingPeriod = 1000 / frequency;
 }
