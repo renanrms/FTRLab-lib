@@ -35,5 +35,5 @@ void setup()
   device.setup();
 }
 
-// A função fica livre caso queira executar alguma tarefa adicional.
+// A função loop é obrigatória, mas o código dentro dela não será alcançado.
 void loop() {}

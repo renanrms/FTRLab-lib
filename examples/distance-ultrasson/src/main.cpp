@@ -20,7 +20,7 @@ enum PINS
 void setup()
 {
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("Física Básica");
+  device.setName("Distância HC-SR04");
   device.addSensor(new UltrasonicSensor(PINS::ULTRASONIC_SENSOR_TRIGGER, PINS::ULTRASONIC_SENSOR_ECHO));
   device.setDevicePins(
       PINS::NETWORK_RECONFIGURATION_BUTTON,
@@ -35,5 +35,5 @@ void setup()
   device.setup();
 }
 
-// A função fica livre caso queira executar alguma tarefa adicional.
+// A função loop é obrigatória, mas o código dentro dela não será alcançado.
 void loop() {}
