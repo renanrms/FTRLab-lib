@@ -27,7 +27,7 @@ void setup()
       PINS::NETWORK_STATUS_LED);
 
   // Configurações opcionais
-  device.setTargetSampleRate(40);
+  device.setTargetSampleRate(30);
 
   // Setup do dispositivo (não alterar)
   ftrlabPreferences.begin("FRTLab");
