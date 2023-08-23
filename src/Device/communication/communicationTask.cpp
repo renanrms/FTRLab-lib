@@ -39,17 +39,17 @@ void Device::communicationTask()
 
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
     {
-      int64_t lastTime = NTP.millis();
+      int64_t lastTime = NTP.micros();
 
       unsigned long measurementsSent = this->sendMeasurements();
 
-      int64_t sendingTime = (NTP.millis() - lastTime);
+      int64_t sendingTime = (NTP.micros() - lastTime);
       int64_t remainingTime = this->targetSendingPeriod - sendingTime;
 
       Serial.println("Sent " + String(measurementsSent) + " measurements in " + String(this->targetSendingPeriod - remainingTime) + " ms");
 
       if (remainingTime > 0)
-        delay(remainingTime);
+        delayMicroseconds(remainingTime);
     }
 
     if (WiFi.status() == WL_CONNECTED)

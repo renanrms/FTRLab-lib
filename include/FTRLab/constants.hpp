@@ -9,7 +9,7 @@
  */
 
 const int64_t DEFAULT_SAMPLE_RATE = 40;             // Unit: Hz
-const int64_t DEFAULT_SENDING_FREQUENCY = 8;        // Unit: Hz
+const int64_t DEFAULT_SENDING_FREQUENCY = 12;       // Unit: Hz
 const time_t NTP_SYNC_WAIT_TIME = 90;               // Unit: s
 const unsigned MDNS_FORCED_UPDATE_INTERVAL = 10000; // Unit: ms
 

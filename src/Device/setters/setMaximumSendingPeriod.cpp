@@ -2,5 +2,5 @@
 
 void Device::setTargetSendingFrequency(float frequency)
 {
-  this->targetSendingPeriod = 1000 / frequency;
+  this->targetSendingPeriod = 1000000 / frequency;
 }

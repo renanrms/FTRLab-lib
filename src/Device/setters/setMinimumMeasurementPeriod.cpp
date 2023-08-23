@@ -2,5 +2,5 @@
 
 void Device::setTargetSampleRate(float frequency)
 {
-  this->targetTakeingPeriod = 1000 / frequency;
+  this->targetTakeingPeriod = 1000000 / frequency;
 }
