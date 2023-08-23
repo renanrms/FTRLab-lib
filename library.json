@@ -18,5 +18,28 @@
   ],
   "dependencies": {
     "gmag11/ESPNtpClient": "^0.2.7"
-  }
+  },
+  "examples": [
+    {
+      "name": "distance-laser",
+      "base": "examples/distance-laser",
+      "files": [
+        "**"
+      ]
+    },
+    {
+      "name": "distance-ultrasound",
+      "base": "examples/distance-ultrasound",
+      "files": [
+        "**"
+      ]
+    },
+    {
+      "name": "esp32BuiltinSensors",
+      "base": "examples/esp32BuiltinSensors",
+      "files": [
+        "**"
+      ]
+    }
+  ]
 }
