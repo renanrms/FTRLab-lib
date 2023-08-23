@@ -12,6 +12,8 @@ void measurementTaskWrapper(void *pvParameters)
 
 void Device::setup()
 {
+  digitalWrite(this->pins.networkLed, LOW);
+
   Serial.begin(115200);
 
   this->printDeviceInfo();
@@ -23,14 +25,17 @@ void Device::setup()
       NULL,
       tskIDLE_PRIORITY,
       &this->communicationHandle,
-      0);
+      PRO_CPU_NUM);
 
-  xTaskCreatePinnedToCore(
-      measurementTaskWrapper,
-      "MEAS",
-      10000,
-      NULL,
-      configMAX_PRIORITIES,
-      &this->measurementHandle,
-      1);
+  // xTaskCreatePinnedToCore(
+  //     measurementTaskWrapper,
+  //     "MEAS",
+  //     10000,
+  //     NULL,
+  //     configMAX_PRIORITIES,
+  //     &this->measurementHandle,
+  //     PRO_CPU_NUM);
+
+  // this->communicationTask();
+  this->measurementTask();
 }

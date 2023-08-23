@@ -1,7 +1,6 @@
 #include "FTRLab.hpp"
 
-#include "sensors/HallEffectSensor.cpp"
-#include "sensors/TemperatureBuiltInSensor.cpp"
+#include "sensors/VL53L0X.cpp"
 
 Preferences ftrlabPreferences;
 
@@ -13,20 +12,22 @@ enum PINS
 {
   NETWORK_RECONFIGURATION_BUTTON = 5,
   NETWORK_STATUS_LED = 18,
+  // Adicione aqui outros pinos utilizados pela placa
+  ULTRASONIC_SENSOR_TRIGGER = 12,
+  ULTRASONIC_SENSOR_ECHO = 13,
 };
 
 void setup()
 {
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("ESP32 Built-in");
-  device.addSensor(new HallEffectSensor());
-  device.addSensor(new TemperatureBuiltInSensor());
+  device.setName("Distância VL53X0L");
+  device.addSensor(new VL53L0X(PINS::ULTRASONIC_SENSOR_TRIGGER, PINS::ULTRASONIC_SENSOR_ECHO));
   device.setDevicePins(
       PINS::NETWORK_RECONFIGURATION_BUTTON,
       PINS::NETWORK_STATUS_LED);
 
   // Configurações opcionais
-  device.setTargetSampleRate(40);
+  device.setTargetSampleRate(30);
 
   // Setup do dispositivo (não alterar)
   ftrlabPreferences.begin("FRTLab");

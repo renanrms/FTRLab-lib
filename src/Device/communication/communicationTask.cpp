@@ -1,4 +1,5 @@
 #include "FTRLab/Device.hpp"
+#include "FTRLab/internals/forceMdnsUpdateWrapper.hpp"
 
 void Device::communicationTask()
 {
@@ -27,22 +28,34 @@ void Device::communicationTask()
     if (this->client.connected())
     {
       Serial.println("Connection established to client " + this->client.remoteIP().toString() + ":" + String(this->client.remotePort()));
+
+      // this->client.setNoDelay(true);
+
+      this->forceMdnsUpdate();
+      delay(1000);
+      this->mdnsUpdateTimer.detach();
+      MDNS.end();
     }
 
-    this->forceMdnsUpdate();
-
-    TickType_t xLastWakeTime = xTaskGetTickCount();
     while (WiFi.status() == WL_CONNECTED && this->client.connected())
     {
-      BaseType_t xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetSendingPeriod));
-      this->sendMeasurements();
+      int64_t lastTime = NTP.micros();
+
+      unsigned long measurementsSent = this->sendMeasurements();
+
+      int64_t sendingTime = (NTP.micros() - lastTime);
+      int64_t remainingTime = this->targetSendingPeriod - sendingTime;
+
+      Serial.println("Sent " + String(measurementsSent) + " measurements in " + String(this->targetSendingPeriod - remainingTime) + " ms");
+
+      if (remainingTime > 0)
+        delayMicroseconds(remainingTime);
     }
 
     if (WiFi.status() == WL_CONNECTED)
     {
       Serial.println("Connection to client ended.");
+      this->setupMdns();
     }
-
-    this->forceMdnsUpdate();
   }
 }

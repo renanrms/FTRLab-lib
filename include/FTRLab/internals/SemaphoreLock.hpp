@@ -12,6 +12,7 @@ public:
 
 private:
   SemaphoreHandle_t semaphore;
+  BaseType_t hasLock = pdFALSE;
 };
 
 #endif

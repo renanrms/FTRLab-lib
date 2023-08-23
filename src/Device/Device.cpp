@@ -6,8 +6,8 @@ Device::Device()
   this->macAddress = WiFi.macAddress();
   this->chipId = getChipId();
 
-  this->setMinimumMeasurementPeriod(DEFAULT_TAKEING_PERIOD);
-  this->setMaximumSendingPeriod(DEFAULT_SENDING_PERIOD);
+  this->setTargetSampleRate(DEFAULT_SAMPLE_RATE);
+  this->setTargetSendingFrequency(DEFAULT_SENDING_FREQUENCY);
 
   this->measurementsSemaphore = xSemaphoreCreateMutex();
   xSemaphoreGive(this->measurementsSemaphore);

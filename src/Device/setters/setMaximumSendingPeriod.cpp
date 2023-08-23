@@ -1,7 +1,6 @@
 #include "FTRLab/Device.hpp"
 
-void Device::setMaximumSendingPeriod(int64_t periodMs)
+void Device::setTargetSendingFrequency(float frequency)
 {
-  this->maximumSendingPeriod = periodMs;
-  this->targetSendingPeriod = periodMs;
+  this->targetSendingPeriod = 1000000 / frequency;
 }

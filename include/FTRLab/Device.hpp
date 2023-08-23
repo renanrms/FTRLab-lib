@@ -24,8 +24,8 @@ public:
   void setName(String name);
   void addSensor(Sensor *sensor);
   void setDevicePins(uint8_t networkButton, uint8_t networkLed);
-  void setMinimumMeasurementPeriod(int64_t periodMs);
-  void setMaximumSendingPeriod(int64_t periodMs);
+  void setTargetSampleRate(float frequency);
+  void setTargetSendingFrequency(float frequency);
   void setPreferencesStore(Preferences *preferencesStore);
   void setup();
   void forceMdnsUpdate();
@@ -58,13 +58,12 @@ private:
   TaskHandle_t measurementHandle;
 
   int64_t targetTakeingPeriod;
-  int64_t maximumSendingPeriod;
   int64_t targetSendingPeriod;
 
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
-  void sendMeasurementsBatch();
-  void sendMeasurements();
+  unsigned int sendMeasurementsBatch();
+  unsigned int sendMeasurements();
   void connectToWifi();
   void doSmartConfig();
   void setupMdns();

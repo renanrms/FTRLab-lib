@@ -1,9 +1,5 @@
 #include "FTRLab/Device.hpp"
-
-void IRAM_ATTR forceMdnsUpdateWrapper()
-{
-  device.forceMdnsUpdate();
-}
+#include "FTRLab/internals/forceMdnsUpdateWrapper.hpp"
 
 void Device::setupMdns()
 {
@@ -12,7 +8,10 @@ void Device::setupMdns()
     Serial.println("Error setting up mDNS responder!");
     while (true)
     {
-      delay(1000);
+      digitalWrite(this->pins.networkLed, LOW);
+      delay(1950);
+      digitalWrite(this->pins.networkLed, HIGH);
+      delay(50);
     }
   }
 
@@ -26,5 +25,5 @@ void Device::setupMdns()
 
   this->updateMdnsTxtData();
 
-  this->mdnsUpdateTimer.attach_ms(10000, &forceMdnsUpdateWrapper);
+  this->mdnsUpdateTimer.attach_ms(MDNS_FORCED_UPDATE_INTERVAL, &forceMdnsUpdateWrapper);
 }

@@ -6,11 +6,17 @@ void Device::measurementTask()
 
   while (true)
   {
-    TickType_t xLastWakeTime = xTaskGetTickCount();
+    int64_t lastTime = NTP.micros();
+    int64_t remainingTime = 0;
     while (this->client.connected())
     {
-      BaseType_t xWasDelayed = xTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(this->targetTakeingPeriod));
+      lastTime = NTP.micros();
+
       this->takeAllMeasurements();
+
+      remainingTime = this->targetTakeingPeriod - (NTP.micros() - lastTime);
+      if (remainingTime > 0)
+        delayMicroseconds(remainingTime);
     }
     delay(100);
   }

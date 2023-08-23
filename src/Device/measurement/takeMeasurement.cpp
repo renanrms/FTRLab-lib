@@ -14,9 +14,14 @@ void Device::takeMeasurement(Sensor *sensor, unsigned index)
 
     timestamp = ((double)(t1 + t2) / 2) / 1000000.0;
 
-    SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
+    while (xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY) != pdTRUE)
+    {
+      delay(10);
+    }
+    // SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
     this->measurements.push({index, timestamp, measure});
-    lock.~SemaphoreLock();
+    xSemaphoreGive(this->measurementsSemaphore);
+    // lock.~SemaphoreLock();
   }
   catch (std::exception error)
   {

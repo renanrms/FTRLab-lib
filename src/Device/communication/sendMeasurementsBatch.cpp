@@ -1,13 +1,17 @@
 #include "FTRLab/Device.hpp"
 #include "FTRLab/internals/SemaphoreLock.hpp"
 
-void Device::sendMeasurementsBatch()
+unsigned int Device::sendMeasurementsBatch()
 {
   String message = "\n{\"measurements\":[";
   String measurementString;
   unsigned measurementsAdded = 0;
 
-  SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
+  // SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
+  while (xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY) != pdTRUE)
+  {
+    delay(10);
+  }
 
   while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {
@@ -35,7 +39,8 @@ void Device::sendMeasurementsBatch()
     }
   }
 
-  lock.~SemaphoreLock();
+  // lock.~SemaphoreLock();
+  xSemaphoreGive(this->measurementsSemaphore);
 
   // Retira vírgula sobrando ao final e finaliza mensagem
   message = message.substring(0, message.length() - 1);
@@ -43,4 +48,5 @@ void Device::sendMeasurementsBatch()
 
   client.print(message);
   // Serial.println(message);
+  return measurementsAdded;
 }
