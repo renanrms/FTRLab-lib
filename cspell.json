@@ -15,6 +15,7 @@
     "ftrlab",
     "gmag11",
     "gpio",
+    "hcsr04",
     "mdns",
     "microcontroller",
     "platformio",

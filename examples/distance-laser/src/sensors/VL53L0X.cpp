@@ -5,11 +5,11 @@
 class VL53L0X : public Sensor
 {
 public:
-  uint8_t triggerPin;
-  uint8_t echoPin;
+  uint8_t sdaPin;
+  uint8_t sclPin;
   Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 
-  VL53L0X(uint8_t triggerPin, uint8_t echoPin)
+  VL53L0X(uint8_t sdaPin, uint8_t sclPin)
   {
     this->quantity = "distance";
     this->method = "Laser";

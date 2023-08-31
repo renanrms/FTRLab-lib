@@ -1,7 +1,7 @@
 #include "FTRLab.hpp"
 
 #include "sensors/HallEffectSensor.cpp"
-#include "sensors/TemperatureBuiltInSensor.cpp"
+#include "sensors/TemperatureSensor.cpp"
 
 Preferences ftrlabPreferences;
 
@@ -11,8 +11,8 @@ Preferences ftrlabPreferences;
  */
 enum PINS
 {
-  NETWORK_RECONFIGURATION_BUTTON = 5,
-  NETWORK_STATUS_LED = 18,
+  CONFIGURATION_BUTTON = 5,
+  STATUS_LED = 18,
 };
 
 void setup()
@@ -20,10 +20,8 @@ void setup()
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
   device.setName("ESP32 Built-in");
   device.addSensor(new HallEffectSensor());
-  device.addSensor(new TemperatureBuiltInSensor());
-  device.setDevicePins(
-      PINS::NETWORK_RECONFIGURATION_BUTTON,
-      PINS::NETWORK_STATUS_LED);
+  device.addSensor(new TemperatureSensor());
+  device.setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
 
   // Configurações opcionais
   device.setTargetSampleRate(40);
