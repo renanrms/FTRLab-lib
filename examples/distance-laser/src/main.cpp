@@ -10,21 +10,19 @@ Preferences ftrlabPreferences;
  */
 enum PINS
 {
-  NETWORK_RECONFIGURATION_BUTTON = 5,
-  NETWORK_STATUS_LED = 18,
+  CONFIGURATION_BUTTON = 5,
+  STATUS_LED = 18,
   // Adicione aqui outros pinos utilizados pela placa
-  ULTRASONIC_SENSOR_TRIGGER = 12,
-  ULTRASONIC_SENSOR_ECHO = 13,
+  SENSOR_SDA = 21,
+  SENSOR_SCL = 22,
 };
 
 void setup()
 {
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
   device.setName("Distância VL53X0L");
-  device.addSensor(new VL53L0X(PINS::ULTRASONIC_SENSOR_TRIGGER, PINS::ULTRASONIC_SENSOR_ECHO));
-  device.setDevicePins(
-      PINS::NETWORK_RECONFIGURATION_BUTTON,
-      PINS::NETWORK_STATUS_LED);
+  device.addSensor(new VL53L0X(PINS::SENSOR_SDA, PINS::SENSOR_SCL));
+  device.setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
 
   // Configurações opcionais
   device.setTargetSampleRate(30);

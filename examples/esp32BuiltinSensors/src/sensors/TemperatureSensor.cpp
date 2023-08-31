@@ -14,10 +14,10 @@ extern "C"
 // cspell:disable-next-line
 uint8_t temprature_sens_read();
 
-class TemperatureBuiltInSensor : public Sensor
+class TemperatureSensor : public Sensor
 {
 public:
-  TemperatureBuiltInSensor()
+  TemperatureSensor()
   {
     this->quantity = "temperature";
     this->method = "Temperatura da CPU";

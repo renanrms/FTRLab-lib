@@ -24,21 +24,28 @@
       "name": "distance-laser",
       "base": "examples/distance-laser",
       "files": [
-        "**"
+        "platformio.ini",
+        "src/main.cpp",
+        "src/sensors/VL53L0X.cpp"
       ]
     },
     {
       "name": "distance-ultrasound",
       "base": "examples/distance-ultrasound",
       "files": [
-        "**"
+        "platformio.ini",
+        "src/main.cpp",
+        "src/sensors/HCSR04.cpp"
       ]
     },
     {
       "name": "esp32BuiltinSensors",
       "base": "examples/esp32BuiltinSensors",
       "files": [
-        "**"
+        "platformio.ini",
+        "src/main.cpp",
+        "src/sensors/HallEffectSensor.cpp",
+        "src/sensors/TemperatureSensor.cpp"
       ]
     }
   ]

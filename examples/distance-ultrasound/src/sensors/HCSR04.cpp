@@ -4,13 +4,13 @@ const double SOUND_SPEED = 343;                  // Unit: m/s
 const double MAXIMUM_MEASURABLE_DISTANCE = 5;    // Unit: m
 const double MINIMUM_MEASURABLE_DISTANCE = 0.03; // Unit: m
 
-class UltrasonicSensor : public Sensor
+class HCSR04 : public Sensor
 {
 public:
   uint8_t triggerPin;
   uint8_t echoPin;
 
-  UltrasonicSensor(uint8_t triggerPin, uint8_t echoPin)
+  HCSR04(uint8_t triggerPin, uint8_t echoPin)
   {
     this->quantity = "distance";
     this->method = "Ultrassônico";
