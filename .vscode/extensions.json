@@ -5,7 +5,8 @@
     "ms-vscode.cpptools",
     "platformio.platformio-ide",
     "streetsidesoftware.code-spell-checker",
-    "streetsidesoftware.code-spell-checker-portuguese-brazilian"
+    "streetsidesoftware.code-spell-checker-portuguese-brazilian",
+    "stkb.rewrap"
   ],
   "unwantedRecommendations": [
     "ms-vscode.cpptools-extension-pack"
