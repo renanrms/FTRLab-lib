@@ -77,7 +77,7 @@ build_type = debug
 
 Também é muito útil ter endereços decodificados para linhas quando ocorre um erro e o dispositivo imprime um stack trace. Para isso `esp32_exception_decoder` deve estar listado na propriedade `monitor_filters`, como indicado acima. O serial monitor deve ser chamado na pasta que contém este platformio.ini com o filtro, o que pode ser feito navegando até o diretório e usando o comando:
 
-```
+```shell
 pio device monitor
 ```
 
