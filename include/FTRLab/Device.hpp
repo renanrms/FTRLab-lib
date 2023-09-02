@@ -17,6 +17,15 @@
 #include "BatteryInfo.hpp"
 #include "Measurement.hpp"
 
+/**
+ * Classe Device
+ *
+ * Manipula todo o funcionamento do dispositivo FTRLab.
+ *
+ * Não deve ser criada uma segunda instância desta classe, uma vez que manipula
+ * recursos globais do microcontrolador, como conexão de rede. Utilize-a através
+ * da instância declarada globalmente.
+ */
 class Device
 {
 public:
@@ -73,6 +82,15 @@ private:
   void printNetworkInfo();
 };
 
+/**
+ * Instância de dispositivo FTRLab disponível globalmente.
+ *
+ * Utilize os membros públicos para controlar o funcionamento do dispositivo.
+ * Crie e adicione sensores ao device.
+ *
+ * Para instruções mais detalhadas veja exemplos da biblioteca em:
+ * https://registry.platformio.org/libraries/renanrms/FTRLab/examples
+ */
 extern Device device;
 
 #endif
