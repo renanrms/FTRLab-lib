@@ -1,10 +1,19 @@
 #include "FTRLab/Device.hpp"
 
+void NtpEventLogger(NTPEvent_t event)
+{
+  Serial.println("[NTP] " + String(NTP.ntpEvent2str(event)));
+}
+
 void Device::setupNTP()
 {
+  NTP.onNTPSyncEvent(&NtpEventLogger);
   NTP.begin("pool.ntp.org", false);
 
   Serial.println("\nSynchronizing device clock with NTP. Timeout is " + String(NTP_SYNC_WAIT_TIME) + "s");
+  Serial.println("NPT server name: " + String(NTP.getNtpServerName()));
+  Serial.println("NPT sync interval for normal operation: " + String(NTP.getLongInterval()) + "s");
+  Serial.println("NPT sync interval while nor synced : " + String(NTP.getShortInterval()) + "s\n");
 
   time_t NtpSyncStart = NTP.getUptime();
   while (NTP.syncStatus() == -1 && NTP.getUptime() - NtpSyncStart < NTP_SYNC_WAIT_TIME)
@@ -18,7 +27,7 @@ void Device::setupNTP()
   if (NTP.syncStatus() != -1)
   {
     this->timeSynced = true;
-    Serial.println("First sync done.");
+    Serial.println("\nFirst time sync done.");
   }
   else
   {

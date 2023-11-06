@@ -34,7 +34,7 @@ unsigned int Device::sendMeasurementsBatch()
     }
     else
     {
-      // Se a medição não pode ser adicionada à string atual, é mantida para ser enviada no próximo ciclo.
+      // Se a medição não cabe na string atual, é mantida para o próximo ciclo.
       break;
     }
   }

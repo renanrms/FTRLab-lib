@@ -13,5 +13,9 @@
     "editor.formatOnSave": true
   },
   "cmake.configureOnOpen": false,
-  "cSpell.language": "en,pt-BR"
+  "cSpell.language": "en,pt-BR",
+  "rewrap.autoWrap.enabled": true,
+  "rewrap.wrappingColumn": 80,
+  "rewrap.reformat": false,
+  "rewrap.doubleSentenceSpacing": false
 }

@@ -31,12 +31,10 @@ public:
 
     if (measure.RangeStatus != 4)
     {
-      // Serial.println("takeMeasure: " + String(measure.RangeMilliMeter));
       return String((double)measure.RangeMilliMeter / 1000.0, 5);
     }
     else
     {
-      // Serial.println("fail: " + String(measure.RangeMilliMeter));
       throw std::exception();
     }
   }

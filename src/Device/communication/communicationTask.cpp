@@ -46,7 +46,7 @@ void Device::communicationTask()
       int64_t sendingTime = (NTP.micros() - lastTime);
       int64_t remainingTime = this->targetSendingPeriod - sendingTime;
 
-      Serial.println("Sent " + String(measurementsSent) + " measurements in " + String(this->targetSendingPeriod - remainingTime) + " ms");
+      Serial.println("Sent " + String(measurementsSent) + " measurements in " + String((this->targetSendingPeriod - remainingTime) / 1000.0, 3) + " ms");
 
       if (remainingTime > 0)
         delayMicroseconds(remainingTime);

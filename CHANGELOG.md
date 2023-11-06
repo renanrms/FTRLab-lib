@@ -5,6 +5,16 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [0.5.2] - 2023-11-06
+
+### Adicionado
+
+- Adicionou-se doc-strings para os elementos principais da biblioteca.
+
+### Melhorado
+
+- Melhoria nos logs relacionados à sincronização de tempo do dispositivo.
+
 ## [0.5.1] - 2023-08-31
 
 ### Corrigido
