@@ -13,7 +13,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ### Melhorado
 
-- Melhoria nos logs relacionados Á sincronização de tempo do dispositivo.
+- Melhoria nos logs relacionados à sincronização de tempo do dispositivo.
 
 ## [0.5.1] - 2023-08-31
 
