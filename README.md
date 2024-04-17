@@ -18,7 +18,7 @@ Recomendamos fortemente utilizar a [PlatformIO IDE](#plataformio), como extensã
 
 ### Exemplos
 
-Veja a [pasta de exemplos](/examples/). Cada subpasta contém um exemplo diferente, com um arquivo `platformio.ini`, que torna o diretório um projeto de firmware PlatformIO. Assim você pode abrir a pasta no VScode e utilizar os botões da interface para fazer upload e visualização da saída no serial monitor, ou utilizar a ferramenta CLI.
+Veja a [pasta de exemplos](https://github.com/renanrms/FTRLab-lib/tree/main/examples). Cada subpasta contém um exemplo diferente, com um arquivo `platformio.ini`, que torna o diretório um projeto de firmware PlatformIO. Assim você pode abrir a pasta no VScode e utilizar os botões da interface para fazer upload e visualização da saída no serial monitor, ou utilizar a ferramenta CLI.
 
 Perceba que em cada exemplo, a biblioteca é incluída sem especificar uma versão no arquivo `platformio.ini`. Para programar um firmware prefira indicar a versão da lib como recomendado na [seção sobre instalação](https://registry.platformio.org/libraries/renanrms/FTRLab/installation).
 
