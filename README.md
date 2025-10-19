@@ -26,19 +26,9 @@ Perceba que em cada exemplo, a biblioteca é incluída sem especificar uma vers�
 
 ### Informações gerais
 
-Para utilizar PlatformIO como extensão do VSCode veja a [documentação do PlatformIO](https://docs.platformio.org/en/latest/integration/ide/vscode.html#installation). Ela mostra passo a passo como instalar e utilizar a interface para fazer o upload do firmware.
+Para utilizar PlatformIO como extensão do VSCode veja a [documentação do PlatformIO](https://docs.platformio.org/en/latest/integration/ide/vscode.html#installation). Ela mostra passo a passo como instalar e utilizar a interface para fazer o upload do firmware. Após a instalação do [PlatformIO Core (CLI)](https://docs.platformio.org/en/latest/core/index.html#piocore), para ser capaz de fazer upload dos exemplos para as placas, verifique ainda a página [udev-rules](https://docs.platformio.org/en/latest/core/installation/udev-rules.html).
 
-### Ferramenta CLI
-
-PlatformIO possui uma ferramenta de linha de comando, caso prefira esta opção. Aqui serão dadas algumas informações para uma rápida utilização, mas você pode consultar mais detalhes na [documentação](https://docs.platformio.org/en/latest/core/index.html).
-
-Para instalar a ferramenta, primeiro certifique-se de ter [python](https://www.python.org/downloads/) e [pip](https://pip.pypa.io/en/stable/installation/) instalados e, então, instale a ferramenta com o comando:
-
-```shell
-pip install -U platformio
-```
-
-Para fazer upload, navegue até a pasta que contém um projeto de firmware PlatformIO e execute o comando:
+Também será útil [instalar os comandos Shell](https://docs.platformio.org/en/latest/core/installation/shell-commands.html), para facilitar build e upload via linha de comando. Feito isto, navegue até uma pasta que contém um projeto de firmware PlatformIO (como um dos exemplos) e execute o comando:
 
 ```shell
 pio run --target upload
@@ -63,7 +53,7 @@ python -m esptool --chip esp32 erase_flash
 
 ## Desenvolvimento da Lib
 
-As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos.
+As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos. Neste caso a instalação da CLI do Platformio será essencial.
 
 Para se utilizar a lib na versão local sendo editada, ao invés de baixar a versão publicada, utilize um caminho local na propriedade `lib_deps` do `platformio.ini`. Além disso, pode ser feito o build com modo de debug para ver erros de execução com mensagens mais completas. Nos exemplos da pasta examples, ficaria assim:
 
