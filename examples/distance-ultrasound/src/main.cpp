@@ -9,7 +9,7 @@
 enum PINS
 {
   CONFIGURATION_BUTTON = 5,
-  STATUS_LED = 18,
+  STATUS_LED = 2,
   // Adicione aqui outros pinos utilizados pela placa
   TRIGGER = 12,
   ECHO = 13,

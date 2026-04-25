@@ -10,7 +10,7 @@
 enum PINS
 {
   CONFIGURATION_BUTTON = 5,
-  STATUS_LED = 18,
+  STATUS_LED = 2,
 };
 
 void setup()
