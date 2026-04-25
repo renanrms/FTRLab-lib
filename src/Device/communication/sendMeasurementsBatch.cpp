@@ -6,10 +6,7 @@ unsigned int Device::sendMeasurementsBatch()
   String measurementString;
   unsigned measurementsAdded = 0;
 
-  while (xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY) != pdTRUE)
-  {
-    delay(10);
-  }
+  xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY);
 
   while (!this->measurements.empty() && message.length() < PAYLOAD_MAX_LENGTH - 3)
   {

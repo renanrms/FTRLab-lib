@@ -13,10 +13,7 @@ void Device::takeMeasurement(Sensor *sensor, unsigned index)
 
     timestamp = ((double)(t1 + t2) / 2) / 1000000.0;
 
-    while (xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY) != pdTRUE)
-    {
-      delay(10);
-    }
+    xSemaphoreTake(this->measurementsSemaphore, portMAX_DELAY);
     this->measurements.push({index, timestamp, measure});
     xSemaphoreGive(this->measurementsSemaphore);
   }
