@@ -2,8 +2,6 @@
 
 #include "sensors/VL53L0X.cpp"
 
-Preferences ftrlabPreferences;
-
 /**
  * Pinos GPIO utilizados no dispositivo.
  * Configure-os de acordo com a necessidade, observando pinos obrigatórios e restrições de hardware para os pinos escolhidos em cada função.
@@ -27,9 +25,6 @@ void setup()
   // Configurações opcionais
   device.setTargetSampleRate(30);
 
-  // Setup do dispositivo (não alterar)
-  ftrlabPreferences.begin("FRTLab");
-  device.setPreferencesStore(&ftrlabPreferences);
   device.setup();
 }
 

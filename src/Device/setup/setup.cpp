@@ -1,3 +1,4 @@
+#include <cassert>
 #include "FTRLab/Device.hpp"
 
 static void communicationTaskWrapper(void *pvParameters)
@@ -12,6 +13,8 @@ static void measurementTaskWrapper(void *pvParameters)
 
 void Device::setup()
 {
+  assert(!this->name.isEmpty());
+
   this->gpioProvider->digitalWrite(this->pins.networkLed, LOW);
 
   Serial.begin(115200);

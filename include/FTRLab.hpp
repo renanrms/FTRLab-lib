@@ -15,6 +15,6 @@
  * Para instruções mais detalhadas veja exemplos da biblioteca em:
  * https://registry.platformio.org/libraries/renanrms/FTRLab/examples
  */
-extern Device device;
+extern Device &device;
 
 #endif

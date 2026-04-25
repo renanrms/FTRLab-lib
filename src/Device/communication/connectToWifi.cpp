@@ -20,7 +20,7 @@ void Device::connectToWifi()
   {
     Serial.print("\nTrying connection to " + ssid + " ");
 
-    for (int attempts = 0; attempts < 3 && this->networkProvider->status() != WL_CONNECTED; attempts++)
+    for (int attempts = 0; attempts < 3 && !this->networkProvider->isConnected(); attempts++)
     {
       this->networkProvider->begin(ssid.c_str(), password.c_str());
       this->networkProvider->waitForConnectResult();
@@ -28,18 +28,18 @@ void Device::connectToWifi()
     }
     Serial.println("");
 
-    if (this->networkProvider->status() == WL_CONNECTED)
+    if (this->networkProvider->isConnected())
     {
       Serial.println("Connection established. ");
       this->gpioProvider->digitalWrite(this->pins.networkLed, HIGH);
     }
     else
     {
-      Serial.println("Connection failed. Wifi status code: " + String(this->networkProvider->status()));
+      Serial.println("Connection failed.");
     }
   }
 
-  if (this->networkProvider->status() != WL_CONNECTED)
+  if (!this->networkProvider->isConnected())
   {
     this->doSmartConfig();
   }

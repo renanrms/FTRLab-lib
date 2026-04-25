@@ -2,8 +2,7 @@
 
 void Device::doSmartConfig()
 {
-  this->networkProvider->mode(WIFI_AP_STA);
-  this->networkProvider->beginSmartConfig();
+  this->networkProvider->startSmartConfig();
 
   Serial.print("Waiting for SmartConfig ");
   while (!this->networkProvider->smartConfigDone())

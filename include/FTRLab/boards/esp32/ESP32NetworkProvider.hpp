@@ -17,7 +17,7 @@ public:
 
   // ── Conexão WiFi ─────────────────────────────────────────────────────────
 
-  int status() override { return ::WiFi.status(); }
+  bool isConnected() override { return ::WiFi.status() == WL_CONNECTED; }
 
   int begin(const char *ssid, const char *password) override
   {
@@ -26,9 +26,11 @@ public:
 
   int waitForConnectResult() override { return ::WiFi.waitForConnectResult(); }
 
-  void mode(int m) override { ::WiFi.mode((WiFiMode_t)m); }
-
-  bool beginSmartConfig() override { return ::WiFi.beginSmartConfig(); }
+  void startSmartConfig() override
+  {
+    ::WiFi.mode(WIFI_AP_STA);
+    ::WiFi.beginSmartConfig();
+  }
 
   bool smartConfigDone() override { return ::WiFi.smartConfigDone(); }
 

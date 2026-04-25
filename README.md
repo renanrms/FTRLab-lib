@@ -63,19 +63,11 @@ Para fins de demonstração, o comando para utilizar o exemplo `distance-ultraso
 pio run -d examples/distance-ultrasound/ --target upload -e esp32dev_local_lib
 ```
 
-Para monitorar a interface serial do dispositivo:
+Para monitorar a interface serial do dispositivo (precisa ser na pasta):
 
 ```shell
 pio device monitor
 ```
-
-Além disso, quando a lib já estiver instalada, é necessário a desinstalar antes de cada upload para forçar a reinstalação e posteriormente o build com a versão local mais recente.
-
-```shell
-pio pkg uninstall -l FTRLab
-```
-
-TODO: Verificar se este comando ainda funciona e se e necessário.
 
 ## Testes automatizados
 

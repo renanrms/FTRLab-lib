@@ -16,8 +16,8 @@ public:
 
   // ── Conexão WiFi ─────────────────────────────────────────────────────────
 
-  /* Retorna o status atual da conexão (WL_CONNECTED etc.). */
-  virtual int status() = 0;
+  /* Retorna true se a conexão WiFi está estabelecida. */
+  virtual bool isConnected() = 0;
 
   /* Inicia conexão a uma rede WiFi. Retorna o status resultante. */
   virtual int begin(const char *ssid, const char *password) = 0;
@@ -25,11 +25,8 @@ public:
   /* Aguarda o resultado da tentativa de conexão. */
   virtual int waitForConnectResult() = 0;
 
-  /* Define o modo WiFi (WIFI_STA, WIFI_AP_STA, etc.). */
-  virtual void mode(int m) = 0;
-
   /* Inicia o provisionamento via EspTouch SmartConfig. */
-  virtual bool beginSmartConfig() = 0;
+  virtual void startSmartConfig() = 0;
 
   /* Verifica se o provisionamento SmartConfig foi concluído. */
   virtual bool smartConfigDone() = 0;

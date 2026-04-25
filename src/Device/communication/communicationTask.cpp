@@ -6,7 +6,7 @@ void Device::communicationTask()
 
   while (true)
   {
-    if (this->networkProvider->status() != WL_CONNECTED)
+    if (!this->networkProvider->isConnected())
     {
       this->gpioProvider->digitalWrite(this->pins.networkLed, LOW);
       this->connectToWifi();
@@ -18,7 +18,7 @@ void Device::communicationTask()
       this->setupMdns();
     }
 
-    while (this->networkProvider->status() == WL_CONNECTED && !this->networkProvider->clientConnected())
+    while (this->networkProvider->isConnected() && !this->networkProvider->clientConnected())
     {
       this->networkProvider->acceptClient();
       delay(200);
@@ -36,7 +36,7 @@ void Device::communicationTask()
       this->discoveryServiceProvider->end();
     }
 
-    while (this->networkProvider->status() == WL_CONNECTED && this->networkProvider->clientConnected())
+    while (this->networkProvider->isConnected() && this->networkProvider->clientConnected())
     {
       int64_t lastTime = this->timeProvider->micros();
 
@@ -52,7 +52,7 @@ void Device::communicationTask()
         delayMicroseconds(remainingTime);
     }
 
-    if (this->networkProvider->status() == WL_CONNECTED)
+    if (this->networkProvider->isConnected())
     {
       Serial.println("Connection to client ended.");
       this->setupMdns();

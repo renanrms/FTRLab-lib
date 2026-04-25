@@ -1,5 +1,6 @@
 #include <unity.h>
 #include "FTRLab/Device.hpp"
+#include "FTRLab/DeviceBuilder.hpp"
 #include "MockNetworkProvider.hpp"
 #include "MockDiscoveryServiceProvider.hpp"
 #include "MockKeyValueStoreProvider.hpp"
@@ -11,13 +12,14 @@ static Device *device = nullptr;
 
 void setUp(void)
 {
-  device = new Device(
-      new MockNetworkProvider(),
-      new MockDiscoveryServiceProvider(),
-      new MockKeyValueStoreProvider(),
-      new MockTickerProvider(),
-      new MockTimeProvider(),
-      new MockGpioProvider());
+  device = DeviceBuilder()
+               .withNetworkProvider(new MockNetworkProvider())
+               .withDiscoveryServiceProvider(new MockDiscoveryServiceProvider())
+               .withKeyValueStoreProvider(new MockKeyValueStoreProvider())
+               .withTickerProvider(new MockTickerProvider())
+               .withTimeProvider(new MockTimeProvider())
+               .withGpioProvider(new MockGpioProvider())
+               .build();
 }
 
 void tearDown(void)

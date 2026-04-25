@@ -36,7 +36,7 @@ public:
   String lastPrinted;
 
   // ── Implementação ─────────────────────────────────────────────────────────
-  int status() override { return wifiStatus; }
+  bool isConnected() override { return wifiStatus == WL_CONNECTED; }
 
   int begin(const char *ssid, const char *password) override
   {
@@ -47,8 +47,7 @@ public:
   }
 
   int waitForConnectResult() override { return wifiStatus; }
-  void mode(int) override {}
-  bool beginSmartConfig() override { return true; }
+  void startSmartConfig() override {}
   bool smartConfigDone() override { return smartConfigDone_; }
   String SSID() override { return ssid_; }
   String psk() override { return psk_; }

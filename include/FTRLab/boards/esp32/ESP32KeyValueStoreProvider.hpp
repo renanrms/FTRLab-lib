@@ -12,20 +12,35 @@
 class ESP32KeyValueStoreProvider : public IKeyValueStoreProvider
 {
 public:
-  bool isKey(const char *key) override { return prefs.isKey(key); }
+  bool isKey(const char *key) override
+  {
+    return open().isKey(key);
+  }
 
   String getString(const char *key, String defaultValue = String()) override
   {
-    return prefs.getString(key, defaultValue);
+    return open().getString(key, defaultValue);
   }
 
   bool putString(const char *key, const char *value) override
   {
-    return prefs.putString(key, value);
+    return open().putString(key, value);
   }
 
 private:
   ::Preferences prefs;
+  bool opened = false;
+
+  // Abre o namespace na primeira chamada, quando nvs_flash_init já foi executado.
+  ::Preferences &open()
+  {
+    if (!opened)
+    {
+      prefs.begin("ftrlab", false);
+      opened = true;
+    }
+    return prefs;
+  }
 };
 
 #endif

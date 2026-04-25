@@ -32,13 +32,7 @@
 class Device
 {
 public:
-  Device(
-      INetworkProvider *networkProvider,
-      IDiscoveryServiceProvider *discoveryServiceProvider,
-      IKeyValueStoreProvider *keyValueStoreProvider,
-      ITickerProvider *tickerProvider,
-      ITimeProvider *timeProvider,
-      IGpioProvider *gpioProvider);
+  Device();
 
   /* Configura o nome do dispositivo. */
   void setName(String name);
@@ -56,7 +50,7 @@ public:
   void setTargetSendingFrequency(float frequency);
 
   /* Substitui o armazenamento de credenciais WiFi após a construção. */
-  void setPreferencesStore(IKeyValueStoreProvider *preferencesStore);
+  void setKeyValueStoreProvider(IKeyValueStoreProvider *preferencesStore);
 
   /* Substitui um provider após a construção (útil em testes). */
   void setNetworkProvider(INetworkProvider *networkProvider);

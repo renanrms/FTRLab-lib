@@ -3,6 +3,7 @@
 void Device::setNetworkProvider(INetworkProvider *networkProvider)
 {
   this->networkProvider = networkProvider;
+  this->macAddress = networkProvider->macAddress();
 }
 
 void Device::setDiscoveryServiceProvider(IDiscoveryServiceProvider *discoveryProvider)
