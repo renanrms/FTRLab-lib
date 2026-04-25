@@ -53,19 +53,17 @@ python -m esptool --chip esp32 erase_flash
 
 ## Desenvolvimento da Lib
 
-As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos. Neste caso a instalação da CLI do Platformio será essencial.
+Parar verificar o funcionamento de mudanças implementadas na lib, é recomendado
+fazer a compilação e upload de um firmware de exemplo com a biblioteca local em
+um dispositivo físico. Neste caso a instalação da CLI do Platformio será essencial.
 
-Para se utilizar a lib na versão local sendo editada, ao invés de baixar a versão publicada, utilize um caminho local na propriedade `lib_deps` do `platformio.ini`. Além disso, pode ser feito o build com modo de debug para ver erros de execução com mensagens mais completas. Nos exemplos da pasta examples, ficaria assim:
+Para fins de demonstração, o comando para utilizar o exemplo `distance-ultrasound` será:
 
-```
-[env:esp32dev]
-...
-monitor_filters = esp32_exception_decoder
-lib_deps = ../../
-build_type = debug
+```shell
+pio run -d examples/distance-ultrasound/ --target upload -e esp32dev_local_lib
 ```
 
-Também é muito útil ter endereços decodificados para linhas quando ocorre um erro e o dispositivo imprime um stack trace. Para isso `esp32_exception_decoder` deve estar listado na propriedade `monitor_filters`, como indicado acima. O serial monitor deve ser chamado na pasta que contém este platformio.ini com o filtro, o que pode ser feito navegando até o diretório e usando o comando:
+Para monitorar a interface serial do dispositivo:
 
 ```shell
 pio device monitor
@@ -76,3 +74,10 @@ Além disso, quando a lib já estiver instalada, é necessário a desinstalar an
 ```shell
 pio pkg uninstall -l FTRLab
 ```
+
+TODO: Verificar se este comando ainda funciona e se e necessário.
+
+## Testes automatizados
+
+    ✅ Testes nativos: pio test -e native
+    ✅ Hardware ESP32: pio test -e esp32dev (requer hardware)

@@ -4,42 +4,42 @@ void Device::connectToWifi()
 {
   String ssid, password;
 
-  if (digitalRead(this->pins.networkButton) == LOW)
+  if (this->gpioProvider->digitalRead(this->pins.networkButton) == LOW)
   {
     this->doSmartConfig();
     return;
   }
 
-  if (this->preferences->isKey("ssid") && this->preferences->isKey("password"))
+  if (this->keyValueStoreProvider->isKey("ssid") && this->keyValueStoreProvider->isKey("password"))
   {
-    ssid = this->preferences->getString("ssid");
-    password = this->preferences->getString("password");
+    ssid = this->keyValueStoreProvider->getString("ssid");
+    password = this->keyValueStoreProvider->getString("password");
   }
 
   if (!ssid.isEmpty())
   {
     Serial.print("\nTrying connection to " + ssid + " ");
 
-    for (int attempts = 0; attempts < 3 && WiFi.status() != WL_CONNECTED; attempts++)
+    for (int attempts = 0; attempts < 3 && this->networkProvider->status() != WL_CONNECTED; attempts++)
     {
-      WiFi.begin(ssid.c_str(), password.c_str());
-      WiFi.waitForConnectResult();
+      this->networkProvider->begin(ssid.c_str(), password.c_str());
+      this->networkProvider->waitForConnectResult();
       Serial.print(".");
     }
     Serial.println("");
 
-    if (WiFi.status() == WL_CONNECTED)
+    if (this->networkProvider->status() == WL_CONNECTED)
     {
       Serial.println("Connection established. ");
-      digitalWrite(this->pins.networkLed, HIGH);
+      this->gpioProvider->digitalWrite(this->pins.networkLed, HIGH);
     }
     else
     {
-      Serial.println("Connection failed. Wifi status code: " + String(WiFi.status()));
+      Serial.println("Connection failed. Wifi status code: " + String(this->networkProvider->status()));
     }
   }
 
-  if (WiFi.status() != WL_CONNECTED)
+  if (this->networkProvider->status() != WL_CONNECTED)
   {
     this->doSmartConfig();
   }

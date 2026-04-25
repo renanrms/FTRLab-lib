@@ -17,5 +17,8 @@
   "rewrap.autoWrap.enabled": true,
   "rewrap.wrappingColumn": 80,
   "rewrap.reformat": false,
-  "rewrap.doubleSentenceSpacing": false
+  "rewrap.doubleSentenceSpacing": false,
+  "chat.tools.terminal.autoApprove": {
+    "pio": true
+  }
 }

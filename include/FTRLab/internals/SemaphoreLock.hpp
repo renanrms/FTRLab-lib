@@ -2,7 +2,9 @@
 #define FTRLAB_SEMAPHORE_LOCK_H "FTRLAB_SEMAPHORE_LOCK_H"
 
 #include <Arduino.h>
+#ifdef ARDUINO
 #include <freertos/semphr.h>
+#endif
 
 class SemaphoreLock
 {

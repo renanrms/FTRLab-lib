@@ -1,6 +1,6 @@
 #include "FTRLab/Device.hpp"
 
-void Device::setPreferencesStore(Preferences *preferencesStore)
+void Device::setPreferencesStore(IKeyValueStoreProvider *preferencesStore)
 {
-  this->preferences = preferencesStore;
+  this->keyValueStoreProvider = preferencesStore;
 }

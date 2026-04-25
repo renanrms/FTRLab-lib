@@ -1,18 +1,18 @@
 #include "FTRLab/Device.hpp"
 
-void communicationTaskWrapper(void *pvParameters)
+static void communicationTaskWrapper(void *pvParameters)
 {
-  device.communicationTask();
+  static_cast<Device *>(pvParameters)->communicationTask();
 }
 
-void measurementTaskWrapper(void *pvParameters)
+static void measurementTaskWrapper(void *pvParameters)
 {
-  device.measurementTask();
+  static_cast<Device *>(pvParameters)->measurementTask();
 }
 
 void Device::setup()
 {
-  digitalWrite(this->pins.networkLed, LOW);
+  this->gpioProvider->digitalWrite(this->pins.networkLed, LOW);
 
   Serial.begin(115200);
 
@@ -22,20 +22,10 @@ void Device::setup()
       communicationTaskWrapper,
       "COMM",
       10000,
-      NULL,
+      this,
       tskIDLE_PRIORITY,
       &this->communicationHandle,
       PRO_CPU_NUM);
 
-  // xTaskCreatePinnedToCore(
-  //     measurementTaskWrapper,
-  //     "MEAS",
-  //     10000,
-  //     NULL,
-  //     configMAX_PRIORITIES,
-  //     &this->measurementHandle,
-  //     PRO_CPU_NUM);
-
-  // this->communicationTask();
   this->measurementTask();
 }

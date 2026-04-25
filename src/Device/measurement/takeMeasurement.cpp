@@ -1,5 +1,4 @@
 #include "FTRLab/Device.hpp"
-#include "FTRLab/internals/SemaphoreLock.hpp"
 
 void Device::takeMeasurement(Sensor *sensor, unsigned index)
 {
@@ -8,9 +7,9 @@ void Device::takeMeasurement(Sensor *sensor, unsigned index)
 
   try
   {
-    t1 = NTP.micros();
+    t1 = this->timeProvider->micros();
     String measure = sensor->takeMeasure();
-    t2 = NTP.micros();
+    t2 = this->timeProvider->micros();
 
     timestamp = ((double)(t1 + t2) / 2) / 1000000.0;
 
@@ -18,13 +17,11 @@ void Device::takeMeasurement(Sensor *sensor, unsigned index)
     {
       delay(10);
     }
-    // SemaphoreLock lock = SemaphoreLock(this->measurementsSemaphore);
     this->measurements.push({index, timestamp, measure});
     xSemaphoreGive(this->measurementsSemaphore);
-    // lock.~SemaphoreLock();
   }
   catch (std::exception error)
   {
-    Serial.println("Measurement error from sensor " + String(index) + ".");
+    Serial.println("Measurement error from sensor " + String((unsigned int)index) + ".");
   }
 }

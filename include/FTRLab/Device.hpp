@@ -2,20 +2,20 @@
 #define FTRLAB_DEVICE_H "FTRLAB_DEVICE_H"
 
 #include <Arduino.h>
-
 #include <queue>
 #include <vector>
-
-#include <WiFi.h>
-#include <ESPmDNS.h>
-#include <ESPNtpClient.h>
-#include <Ticker.h>
-#include <Preferences.h>
 
 #include "constants.hpp"
 #include "Sensor.hpp"
 #include "BatteryInfo.hpp"
 #include "Measurement.hpp"
+
+#include "interfaces/INetworkProvider.hpp"
+#include "interfaces/IDiscoveryServiceProvider.hpp"
+#include "interfaces/IKeyValueStoreProvider.hpp"
+#include "interfaces/ITickerProvider.hpp"
+#include "interfaces/ITimeProvider.hpp"
+#include "interfaces/IGpioProvider.hpp"
 
 /**
  * Classe Device
@@ -25,86 +25,97 @@
  * Não deve ser criada uma segunda instância desta classe, uma vez que manipula
  * recursos globais do microcontrolador, como conexão de rede. Utilize-a através
  * da instância declarada globalmente.
+ *
+ * Os providers encapsulam todas as dependências de hardware. Passe implementações
+ * reais (ESP32*Provider) para uso em hardware ou mocks para testes unitários.
  */
 class Device
 {
 public:
-  Device();
-  /* Configura o nome do dispositivo */
+  Device(
+      INetworkProvider *networkProvider,
+      IDiscoveryServiceProvider *discoveryServiceProvider,
+      IKeyValueStoreProvider *keyValueStoreProvider,
+      ITickerProvider *tickerProvider,
+      ITimeProvider *timeProvider,
+      IGpioProvider *gpioProvider);
+
+  /* Configura o nome do dispositivo. */
   void setName(String name);
-  /* Adiciona a instância de um sensor ao dispositivo para que fique disponível
-  para utilização. */
+
+  /* Adiciona um sensor ao dispositivo. */
   void addSensor(Sensor *sensor);
-  /* Configura pinos as para funções básicas do dispositivo. */
+
+  /* Configura os pinos para funções básicas do dispositivo. */
   void setDevicePins(uint8_t networkButton, uint8_t networkLed);
-  /* define frequência de amostragem. */
+
+  /* Define a frequência de amostragem em Hz. */
   void setTargetSampleRate(float frequency);
-  /* define frequência de amostragem. */
+
+  /* Define a frequência de envio em Hz. */
   void setTargetSendingFrequency(float frequency);
-  /* Configura o armazenamento utilizado com a biblioteca preferences.*/
-  void setPreferencesStore(Preferences *preferencesStore);
-  /* Faz toda a inicialização do dispositivo, iniciando as tarefas de medição e
-  comunicação. */
+
+  /* Substitui o armazenamento de credenciais WiFi após a construção. */
+  void setPreferencesStore(IKeyValueStoreProvider *preferencesStore);
+
+  /* Substitui um provider após a construção (útil em testes). */
+  void setNetworkProvider(INetworkProvider *networkProvider);
+  void setDiscoveryServiceProvider(IDiscoveryServiceProvider *discoveryProvider);
+  void setTickerProvider(ITickerProvider *tickerProvider);
+  void setTimeProvider(ITimeProvider *timeProvider);
+  void setGpioProvider(IGpioProvider *gpioProvider);
+
+  /* Inicializa o dispositivo e inicia as tarefas de medição e comunicação. */
   void setup();
+
   /* Força o envio de uma atualização mDNS. */
   void forceMdnsUpdate();
-  /* Task de comunicação. Não deve ser chamada diretamente, pois faz parte do
-  método setup. */
+
+  /* Tasks chamadas internamente pelo setup(). */
   void communicationTask();
-  /* Task de medição. Não deve ser chamada diretamente, pois faz parte do método
-  setup. */
   void measurementTask();
 
-private:
+  void printDeviceInfo();
+
   String name;
   String chipId;
-  String macAddress;
-  BatteryInfo *batteryInfo = NULL;
-  bool timeSynced = false;
-
-  WiFiServer server = WiFiServer(PORT);
-  WiFiClient client;
+  BatteryInfo *batteryInfo = nullptr;
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
+  int64_t targetTakeingPeriod;
+  SemaphoreHandle_t measurementsSemaphore;
+  void takeMeasurement(Sensor *sensor, unsigned index);
+  void takeAllMeasurements();
 
+  int64_t targetSendingPeriod;
+  unsigned int sendMeasurementsBatch();
+  unsigned int sendMeasurements();
+
+  INetworkProvider *networkProvider;
+  IDiscoveryServiceProvider *discoveryServiceProvider;
+  IKeyValueStoreProvider *keyValueStoreProvider;
+  ITickerProvider *tickerProvider;
+  ITimeProvider *timeProvider;
+  IGpioProvider *gpioProvider;
+
+  TaskHandle_t communicationHandle;
+  TaskHandle_t measurementHandle;
+
+  String macAddress;
+  bool timeSynced = false;
   struct
   {
     uint8_t networkButton;
     uint8_t networkLed;
   } pins;
 
-  Ticker mdnsUpdateTimer;
-  SemaphoreHandle_t measurementsSemaphore;
-  Preferences *preferences = NULL;
-  TaskHandle_t communicationHandle;
-  TaskHandle_t measurementHandle;
-
-  int64_t targetTakeingPeriod;
-  int64_t targetSendingPeriod;
-
-  void takeMeasurement(Sensor *sensor, unsigned index);
-  void takeAllMeasurements();
-  unsigned int sendMeasurementsBatch();
-  unsigned int sendMeasurements();
   void connectToWifi();
   void doSmartConfig();
   void setupMdns();
   void setupNTP();
   void updateMdnsTxtData();
-  void printDeviceInfo();
   void printNetworkInfo();
 };
-
-/**
- * Instância de dispositivo FTRLab disponível globalmente.
- *
- * Utilize as propriedades e os métodos públicos para controlar o funcionamento do dispositivo.
- * Crie e adicione sensores.
- *
- * Para instruções mais detalhadas veja exemplos da biblioteca em:
- * https://registry.platformio.org/libraries/renanrms/FTRLab/examples
- */
-extern Device device;
 
 #endif
