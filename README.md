@@ -1,4 +1,5 @@
 <a href="https://registry.platformio.org/libraries/renanrms/FTRLab"><img src="https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg" alt="PlatformIO Registry" /></a>
+<a href="https://github.com/renanrms/FTRLab-lib/actions/workflows/ci.yml"><img src="https://github.com/renanrms/FTRLab-lib/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
 
 # Biblioteca FTRLab
 

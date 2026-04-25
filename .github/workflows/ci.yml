@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-host:
+    name: Unit tests (native)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ runner.os }}-native-${{ hashFiles('platformio.ini') }}
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Run host tests
+        run: pio test -e native
+
+  build-examples:
+    name: Build example / ${{ matrix.example }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        example: [distance-laser, distance-ultrasound, esp32BuiltinSensors]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ runner.os }}-${{ matrix.example }}-${{ hashFiles(format('examples/{0}/platformio.ini', matrix.example)) }}
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Build example
+        working-directory: examples/${{ matrix.example }}
+        run: pio run -e esp32dev_local_lib
+
+  # test-target:
+  #   name: Integration tests (ESP32 hardware)
+  #   runs-on: self-hosted          # runner com ESP32 conectado via USB
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Run target tests
+  #       run: pio test -e esp32dev_test
