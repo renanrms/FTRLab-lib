@@ -1,5 +1,5 @@
 #ifndef FTRLAB_DEVICE_H
-#define FTRLAB_DEVICE_H "FTRLAB_DEVICE_H"
+#define FTRLAB_DEVICE_H
 
 #include <Arduino.h>
 #include <queue>
@@ -50,7 +50,7 @@ public:
   void setTargetSendingFrequency(float frequency);
 
   /* Substitui o armazenamento de credenciais WiFi após a construção. */
-  void setKeyValueStoreProvider(IKeyValueStoreProvider *preferencesStore);
+  void setKeyValueStoreProvider(IKeyValueStoreProvider *provider);
 
   /* Substitui um provider após a construção (útil em testes). */
   void setNetworkProvider(INetworkProvider *networkProvider);
@@ -77,7 +77,7 @@ public:
 
   std::vector<Sensor *> sensors;
   std::queue<Measurement> measurements;
-  int64_t targetTakeingPeriod;
+  int64_t targetTakingPeriod;
   SemaphoreHandle_t measurementsSemaphore;
   void takeMeasurement(Sensor *sensor, unsigned index);
   void takeAllMeasurements();
@@ -94,7 +94,6 @@ public:
   IGpioProvider *gpioProvider;
 
   TaskHandle_t communicationHandle;
-  TaskHandle_t measurementHandle;
 
   String macAddress;
   bool timeSynced = false;

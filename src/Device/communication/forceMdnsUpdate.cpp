@@ -1,4 +1,4 @@
-#include "FTRLab.hpp"
+#include "FTRLab/Device.hpp"
 
 void Device::forceMdnsUpdate()
 {

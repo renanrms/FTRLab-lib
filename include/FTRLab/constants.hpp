@@ -1,5 +1,5 @@
 #ifndef FTRLAB_CONSTANTS_H
-#define FTRLAB_CONSTANTS_H "FTRLAB_CONSTANTS_H"
+#define FTRLAB_CONSTANTS_H
 
 #include <Arduino.h>
 
@@ -18,11 +18,8 @@ const String PROTOCOL = "_tcp";
 const String SERVICE_NAME = "_ftr-lab";
 
 const unsigned PAYLOAD_MAX_LENGTH = 1400;
-// const unsigned MEASUREMENT_OVERHEAD_LENGTH = 21;
-const unsigned MEASUREMENT_MAX_LENGTH = 100; // Valor majorado
+const unsigned MEASUREMENT_MAX_LENGTH = 100;
 const unsigned MEASUREMENT_MAX_SIZE = MEASUREMENT_MAX_LENGTH + 1;
-// const unsigned MEASURE_OVERHEAD_LENGTH = 100; // Valor majorado
-// const unsigned MEASURE_MAX_LENGTH = MEASUREMENT_MAX_LENGTH - MEASURE_OVERHEAD_LENGTH;
 const unsigned BATTERY_INFO_MAX_LENGTH = 38;
 const unsigned BATTERY_INFO_MAX_SIZE = BATTERY_INFO_MAX_LENGTH + 1;
 

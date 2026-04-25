@@ -10,8 +10,12 @@
  *
  * Uso:
  *   Device* d = DeviceBuilder()
- *       .withNetworkProvider(...)
- *       .withName("Sensor")
+ *       .withNetworkProvider(new MyNetworkProvider())
+ *       .withDiscoveryServiceProvider(new MyDiscoveryProvider())
+ *       .withKeyValueStoreProvider(new MyKeyValueStoreProvider())
+ *       .withTickerProvider(new MyTickerProvider())
+ *       .withTimeProvider(new MyTimeProvider())
+ *       .withGpioProvider(new MyGpioProvider())
  *       .build();
  */
 class DeviceBuilder

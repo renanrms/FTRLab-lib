@@ -1,5 +1,5 @@
 #ifndef FTRLAB_MEASUREMENT_H
-#define FTRLAB_MEASUREMENT_H "FTRLAB_MEASUREMENT_H"
+#define FTRLAB_MEASUREMENT_H
 
 #include "constants.hpp"
 

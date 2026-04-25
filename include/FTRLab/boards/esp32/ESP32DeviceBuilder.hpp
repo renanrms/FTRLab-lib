@@ -13,10 +13,7 @@
  * Builder pré-configurado com os providers do ESP32.
  *
  * Uso:
- *   Device* d = ESP32DeviceBuilder()
- *       .withName("Sensor de Distância")
- *       .withDevicePins(5, 2)
- *       .build();
+ *   Device* d = ESP32DeviceBuilder().build();
  */
 class ESP32DeviceBuilder : public DeviceBuilder
 {

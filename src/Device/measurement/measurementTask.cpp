@@ -12,7 +12,7 @@ void Device::measurementTask()
 
       this->takeAllMeasurements();
 
-      int64_t remainingTime = this->targetTakeingPeriod - (this->timeProvider->micros() - lastTime);
+      int64_t remainingTime = this->targetTakingPeriod - (this->timeProvider->micros() - lastTime);
       if (remainingTime > 0)
         delayMicroseconds(remainingTime);
     }
