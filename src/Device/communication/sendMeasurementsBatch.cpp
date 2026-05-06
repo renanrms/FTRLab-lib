@@ -33,8 +33,9 @@ unsigned int Device::sendMeasurementsBatch()
 
   xSemaphoreGive(this->measurementsSemaphore);
 
-  // Remove vírgula sobrando e fecha o payload
-  message = message.substring(0, message.length() - 1);
+  // Remove vírgula sobrando (só existe se ao menos uma medição foi adicionada) e fecha o payload
+  if (measurementsAdded > 0)
+    message = message.substring(0, message.length() - 1);
   message += "]}\n";
 
   this->networkProvider->clientPrint(message);

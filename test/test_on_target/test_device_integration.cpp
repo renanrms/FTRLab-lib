@@ -11,15 +11,20 @@ void setUp(void)
 
 void tearDown(void)
 {
-  INetworkProvider *network              = device->networkProvider;
-  IDiscoveryServiceProvider *discovery   = device->discoveryServiceProvider;
-  IKeyValueStoreProvider *keyValueStore  = device->keyValueStoreProvider;
-  ITickerProvider *ticker                = device->tickerProvider;
-  ITimeProvider *timeProvider            = device->timeProvider;
-  IGpioProvider *gpio                    = device->gpioProvider;
-  delete device; device = nullptr;
-  delete network; delete discovery; delete keyValueStore;
-  delete ticker; delete timeProvider; delete gpio;
+  INetworkProvider *network = device->networkProvider;
+  IDiscoveryServiceProvider *discovery = device->discoveryServiceProvider;
+  IKeyValueStoreProvider *keyValueStore = device->keyValueStoreProvider;
+  ITickerProvider *ticker = device->tickerProvider;
+  ITimeProvider *timeProvider = device->timeProvider;
+  IGpioProvider *gpio = device->gpioProvider;
+  delete device;
+  device = nullptr;
+  delete network;
+  delete discovery;
+  delete keyValueStore;
+  delete ticker;
+  delete timeProvider;
+  delete gpio;
 }
 
 // ─── Key-value store ──────────────────────────────────────────────────────────
@@ -47,12 +52,13 @@ void test_gpio_set_pin_modes_without_crash()
   TEST_PASS();
 }
 
-void test_gpio_digital_write_without_crash()
+void test_gpio_digital_write_reads_back_correct_value()
 {
   device->gpioProvider->pinMode(2, OUTPUT);
   device->gpioProvider->digitalWrite(2, HIGH);
+  TEST_ASSERT_EQUAL(HIGH, device->gpioProvider->digitalRead(2));
   device->gpioProvider->digitalWrite(2, LOW);
-  TEST_PASS();
+  TEST_ASSERT_EQUAL(LOW, device->gpioProvider->digitalRead(2));
 }
 
 // ─── Entry point (Arduino framework) ─────────────────────────────────────────
@@ -66,7 +72,7 @@ void setup()
   RUN_TEST(test_key_value_store_persists_and_retrieves_string);
   RUN_TEST(test_key_value_store_returns_default_for_missing_key);
   RUN_TEST(test_gpio_set_pin_modes_without_crash);
-  RUN_TEST(test_gpio_digital_write_without_crash);
+  RUN_TEST(test_gpio_digital_write_reads_back_correct_value);
 
   UNITY_END();
 }

@@ -12,7 +12,7 @@ typedef struct
   operator String() const
   {
     char measurementString[MEASUREMENT_MAX_SIZE + 1];
-    snprintf(measurementString, MEASUREMENT_MAX_SIZE + 1, "[\"%u\",%f,%s]", index, timestamp, measure);
+    snprintf(measurementString, MEASUREMENT_MAX_SIZE + 1, "[\"%u\",%f,%s]", index, timestamp, measure.c_str());
     return String(measurementString);
   }
 } Measurement;

@@ -125,6 +125,7 @@ public:
   }
 
   const char *c_str() const { return data.c_str(); }
+  operator const char *() const { return data.c_str(); }
   int length() const { return (int)data.length(); }
   bool isEmpty() const { return data.empty(); }
 
