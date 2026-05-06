@@ -74,3 +74,24 @@ pio device monitor
 
     ✅ Testes nativos: pio test -e native
     ✅ Hardware ESP32: pio test -e esp32dev (requer hardware)
+
+## Cobertura de testes
+
+O relatório é gerado pela ferramenta [gcovr](https://gcovr.com). Instale-a no ambiente virtual do PlatformIO antes do primeiro uso:
+
+```shell
+~/.platformio/penv/bin/pip install gcovr
+```
+
+Para gerar o relatório, execute os testes e em seguida o target `coverage`:
+
+```shell
+pio test -e native
+pio run -t coverage -e native
+```
+
+O relatório HTML será gerado em `coverage/index.html`. Abra-o no navegador para visualizar a cobertura por arquivo e por linha do código-fonte:
+
+```shell
+xdg-open coverage/index.html
+```
