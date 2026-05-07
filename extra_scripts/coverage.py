@@ -21,6 +21,8 @@ def generate_coverage(source, target, env):
         "--root", ".",
         "--object-directory", build_dir,
         "--filter", "src/",
+        "--gcov-ignore-errors=source_not_found",
+        "--gcov-ignore-errors=no_working_dir_found",
         "--html-details", "coverage/index.html",
         "--print-summary",
     ])

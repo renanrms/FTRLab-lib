@@ -72,10 +72,19 @@ pio device monitor
 
 ## Testes automatizados
 
-    ✅ Testes nativos: pio test -e native
-    ✅ Hardware ESP32: pio test -e esp32dev (requer hardware)
+Para rodar os testes unitários localmente (não requer hardware):
 
-## Cobertura de testes
+```shell
+pio test -e native
+```
+
+Para rodar os testes de integração no hardware (requer ESP32 conectado):
+
+```shell
+pio test -e esp32dev_test
+```
+
+### Cobertura de testes
 
 O relatório é gerado pela ferramenta [gcovr](https://gcovr.com). Instale-a no ambiente virtual do PlatformIO antes do primeiro uso:
 
@@ -86,12 +95,47 @@ O relatório é gerado pela ferramenta [gcovr](https://gcovr.com). Instale-a no 
 Para gerar o relatório, execute os testes e em seguida o target `coverage`:
 
 ```shell
-pio test -e native
-pio run -t coverage -e native
+pio test
+pio run -t coverage
 ```
 
 O relatório HTML será gerado em `coverage/index.html`. Abra-o no navegador para visualizar a cobertura por arquivo e por linha do código-fonte:
 
 ```shell
 xdg-open coverage/index.html
+```
+
+## Pipeline local de CI
+
+O pipeline de CI usa [GitHub Actions](https://github.com/renanrms/FTRLab-lib/actions). Para rodá-lo localmente antes de subir, instale o [act](https://nektosact.com) — ele simula o runner do GitHub usando Docker:
+
+```shell
+curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+```
+
+Na primeira execução, configure a imagem padrão (Medium é suficiente):
+
+```shell
+mkdir -p ~/.config/act
+echo '-P ubuntu-latest=catthehacker/ubuntu:act-latest' > ~/.config/act/actrc
+```
+
+Certifique-se de que seu usuário tem permissão para usar o Docker:
+
+```shell
+sudo usermod -aG docker $USER
+# feche e reabra a sessão para o grupo ter efeito
+```
+
+Com tudo configurado, rode o pipeline completo com:
+
+```shell
+pio run -t ci
+```
+
+Ou diretamente via `act` para rodar jobs específicos:
+
+```shell
+act push --job test-host
+act push --job build-examples
 ```
