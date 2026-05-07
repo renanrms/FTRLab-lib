@@ -25,14 +25,14 @@ void setUp(void)
 
 void tearDown(void)
 {
-  // Save pointers before deleting device to avoid accessing freed memory
-  INetworkProvider *network           = device->networkProvider;
+  INetworkProvider *network            = device->networkProvider;
   IDiscoveryServiceProvider *discovery = device->discoveryServiceProvider;
   IKeyValueStoreProvider *keyValueStore = device->keyValueStoreProvider;
-  ITickerProvider *ticker             = device->tickerProvider;
-  ITimeProvider *timeProvider         = device->timeProvider;
-  IGpioProvider *gpio                 = device->gpioProvider;
-  delete device; device = nullptr;
+  ITickerProvider *ticker              = device->tickerProvider;
+  ITimeProvider *timeProvider          = device->timeProvider;
+  IGpioProvider *gpio                  = device->gpioProvider;
+  Device::resetInstance();
+  device = nullptr;
   delete network; delete discovery; delete keyValueStore;
   delete ticker; delete timeProvider; delete gpio;
 }

@@ -1,4 +1,5 @@
 #include "FTRLab.hpp"
+#include "FTRLab/boards/esp32/ESP32DeviceBuilder.hpp"
 
 #include "sensors/VL53L0X.cpp"
 
@@ -17,15 +18,17 @@ enum PINS
 
 void setup()
 {
+  Device *device = ESP32DeviceBuilder().build();
+
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("Distância VL53X0L");
-  device.addSensor(new VL53L0X(PINS::SENSOR_SDA, PINS::SENSOR_SCL));
-  device.setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
+  device->setName("Distância VL53X0L");
+  device->addSensor(new VL53L0X(PINS::SENSOR_SDA, PINS::SENSOR_SCL));
+  device->setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
 
   // Configurações opcionais
-  device.setTargetSampleRate(30);
+  device->setTargetSampleRate(30);
 
-  device.setup();
+  device->setup();
 }
 
 // A função loop é obrigatória, mas o código dentro dela não será alcançado.

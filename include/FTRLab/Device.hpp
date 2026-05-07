@@ -18,21 +18,20 @@
 #include "interfaces/IGpioProvider.hpp"
 
 /**
- * Classe Device
+ * Classe Device — Singleton
  *
  * Manipula todo o funcionamento do dispositivo FTRLab.
- *
- * Não deve ser criada uma segunda instância desta classe, uma vez que manipula
- * recursos globais do microcontrolador, como conexão de rede. Utilize-a através
- * da instância declarada globalmente.
- *
- * Os providers encapsulam todas as dependências de hardware. Passe implementações
- * reais (ESP32*Provider) para uso em hardware ou mocks para testes unitários.
+ * Garante uma única instância via getInstance(), criada pelo DeviceBuilder.
  */
 class Device
 {
 public:
   Device();
+
+  static Device *getInstance();
+
+  /* Reseta a instância singleton (uso exclusivo em testes). */
+  static void resetInstance();
 
   /* Configura o nome do dispositivo. */
   void setName(String name);
@@ -109,6 +108,9 @@ public:
   void setupNTP();
   void updateMdnsTxtData();
   void printNetworkInfo();
+
+private:
+  static Device *instance_;
 };
 
 #endif

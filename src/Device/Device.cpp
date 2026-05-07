@@ -1,6 +1,21 @@
 #include "FTRLab/Device.hpp"
 #include "FTRLab/internals/getChipId.hpp"
 
+Device *Device::instance_ = nullptr;
+
+Device *Device::getInstance()
+{
+  if (instance_ == nullptr)
+    instance_ = new Device();
+  return instance_;
+}
+
+void Device::resetInstance()
+{
+  delete instance_;
+  instance_ = nullptr;
+}
+
 Device::Device()
     : networkProvider(nullptr),
       discoveryServiceProvider(nullptr),

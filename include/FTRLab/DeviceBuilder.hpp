@@ -66,7 +66,7 @@ public:
     assert(timeProvider_ != nullptr);
     assert(gpioProvider_ != nullptr);
 
-    Device *device = new Device();
+    Device *device = Device::getInstance();
     device->setNetworkProvider(networkProvider_);
     device->setDiscoveryServiceProvider(discoveryServiceProvider_);
     device->setKeyValueStoreProvider(keyValueStoreProvider_);

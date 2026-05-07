@@ -1,4 +1,5 @@
 #include "FTRLab.hpp"
+#include "FTRLab/boards/esp32/ESP32DeviceBuilder.hpp"
 
 #include "sensors/HallEffectSensor.cpp"
 #include "sensors/TemperatureSensor.cpp"
@@ -15,16 +16,18 @@ enum PINS
 
 void setup()
 {
+  Device *device = ESP32DeviceBuilder().build();
+
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("ESP32 Built-in");
-  device.addSensor(new HallEffectSensor());
-  device.addSensor(new TemperatureSensor());
-  device.setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
+  device->setName("ESP32 Built-in");
+  device->addSensor(new HallEffectSensor());
+  device->addSensor(new TemperatureSensor());
+  device->setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
 
   // Configurações opcionais
-  device.setTargetSampleRate(40);
+  device->setTargetSampleRate(40);
 
-  device.setup();
+  device->setup();
 }
 
 // A função loop é obrigatória, mas o código dentro dela não será alcançado.
