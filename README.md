@@ -61,7 +61,7 @@ um dispositivo físico. Neste caso a instalação da CLI do Platformio será ess
 Para fins de demonstração, o comando para utilizar o exemplo `distance-ultrasound` será:
 
 ```shell
-pio run -d examples/distance-ultrasound/ --target upload -e esp32dev_local_lib
+pio run -d examples/distance-ultrasound/ --target upload -e esp32dev_debug
 ```
 
 Para monitorar a interface serial do dispositivo (precisa ser na pasta):
@@ -81,7 +81,7 @@ pio test -e native
 Para rodar os testes de integração no hardware (requer ESP32 conectado):
 
 ```shell
-pio test -e esp32dev_test
+pio test -e esp32dev
 ```
 
 ### Cobertura de testes
