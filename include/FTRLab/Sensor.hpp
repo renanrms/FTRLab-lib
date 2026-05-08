@@ -1,5 +1,5 @@
 #ifndef FTRLAB_SENSOR_H
-#define FTRLAB_SENSOR_H "FTRLAB_SENSOR_H"
+#define FTRLAB_SENSOR_H
 
 /**
  * Classe abstrata Sensor

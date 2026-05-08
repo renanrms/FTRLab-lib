@@ -6,15 +6,13 @@ void Device::measurementTask()
 
   while (true)
   {
-    int64_t lastTime = NTP.micros();
-    int64_t remainingTime = 0;
-    while (this->client.connected())
+    while (this->networkProvider->clientConnected())
     {
-      lastTime = NTP.micros();
+      int64_t lastTime = this->timeProvider->micros();
 
       this->takeAllMeasurements();
 
-      remainingTime = this->targetTakeingPeriod - (NTP.micros() - lastTime);
+      int64_t remainingTime = this->targetTakingPeriod - (this->timeProvider->micros() - lastTime);
       if (remainingTime > 0)
         delayMicroseconds(remainingTime);
     }

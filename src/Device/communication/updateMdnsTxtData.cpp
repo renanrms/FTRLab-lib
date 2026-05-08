@@ -2,17 +2,25 @@
 
 void Device::updateMdnsTxtData()
 {
-  MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "name", this->name);
-  MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "available", client.connected() ? "false" : "true");
-  MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "timeSynced", this->timeSynced ? "true" : "false");
+  this->discoveryServiceProvider->addServiceTxt(SERVICE_NAME.c_str(), PROTOCOL.c_str(), "name", this->name.c_str());
+  this->discoveryServiceProvider->addServiceTxt(SERVICE_NAME.c_str(), PROTOCOL.c_str(), "available",
+                                                this->networkProvider->clientConnected() ? "false" : "true");
+  this->discoveryServiceProvider->addServiceTxt(SERVICE_NAME.c_str(), PROTOCOL.c_str(), "timeSynced",
+                                                this->timeSynced ? "true" : "false");
 
-  if (this->batteryInfo != NULL)
+  if (this->batteryInfo != nullptr)
   {
-    MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "battery", *(this->batteryInfo));
+    this->discoveryServiceProvider->addServiceTxt(SERVICE_NAME.c_str(), PROTOCOL.c_str(), "battery",
+                                                  String(*(this->batteryInfo)).c_str());
   }
 
   for (unsigned index = 0; index < this->sensors.size(); index++)
   {
-    MDNS.addServiceTxt(SERVICE_NAME, PROTOCOL, "sensor[" + String(index) + "]", "{\"index\":" + String(index) + ",\"quantity\":\"" + this->sensors[index]->quantity + "\",\"method\":\"" + this->sensors[index]->method + "\"}");
+    String sensorJson = "{\"index\":" + String((unsigned int)index) +
+                        ",\"quantity\":\"" + this->sensors[index]->quantity +
+                        "\",\"method\":\"" + this->sensors[index]->method + "\"}";
+    String key = "sensor[" + String((unsigned int)index) + "]";
+    this->discoveryServiceProvider->addServiceTxt(SERVICE_NAME.c_str(), PROTOCOL.c_str(),
+                                                  key.c_str(), sensorJson.c_str());
   }
 }

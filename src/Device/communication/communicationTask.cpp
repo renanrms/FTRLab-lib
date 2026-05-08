@@ -1,5 +1,4 @@
 #include "FTRLab/Device.hpp"
-#include "FTRLab/internals/forceMdnsUpdateWrapper.hpp"
 
 void Device::communicationTask()
 {
@@ -7,52 +6,53 @@ void Device::communicationTask()
 
   while (true)
   {
-    if (WiFi.status() != WL_CONNECTED)
+    if (!this->networkProvider->isConnected())
     {
-      digitalWrite(this->pins.networkLed, LOW);
+      this->gpioProvider->digitalWrite(this->pins.networkLed, LOW);
       this->connectToWifi();
-      digitalWrite(this->pins.networkLed, HIGH);
+      this->gpioProvider->digitalWrite(this->pins.networkLed, HIGH);
 
       this->printNetworkInfo();
       this->setupNTP();
-      this->server.begin();
+      this->networkProvider->serverBegin();
       this->setupMdns();
     }
 
-    while (WiFi.status() == WL_CONNECTED && !this->client.connected())
+    while (this->networkProvider->isConnected() && !this->networkProvider->clientConnected())
     {
-      this->client = this->server.available(); // Disponibiliza o servidor para o cliente se conectar.
+      this->networkProvider->acceptClient();
       delay(200);
     }
 
-    if (this->client.connected())
+    if (this->networkProvider->clientConnected())
     {
-      Serial.println("Connection established to client " + this->client.remoteIP().toString() + ":" + String(this->client.remotePort()));
-
-      // this->client.setNoDelay(true);
+      Serial.println("Connection established to client " +
+                     this->networkProvider->clientRemoteIP() + ":" +
+                     String(this->networkProvider->clientRemotePort()));
 
       this->forceMdnsUpdate();
       delay(1000);
-      this->mdnsUpdateTimer.detach();
-      MDNS.end();
+      this->tickerProvider->detach();
+      this->discoveryServiceProvider->end();
     }
 
-    while (WiFi.status() == WL_CONNECTED && this->client.connected())
+    while (this->networkProvider->isConnected() && this->networkProvider->clientConnected())
     {
-      int64_t lastTime = NTP.micros();
+      int64_t lastTime = this->timeProvider->micros();
 
       unsigned long measurementsSent = this->sendMeasurements();
 
-      int64_t sendingTime = (NTP.micros() - lastTime);
+      int64_t sendingTime = (this->timeProvider->micros() - lastTime);
       int64_t remainingTime = this->targetSendingPeriod - sendingTime;
 
-      Serial.println("Sent " + String(measurementsSent) + " measurements in " + String((this->targetSendingPeriod - remainingTime) / 1000.0, 3) + " ms");
+      Serial.println("Sent " + String((unsigned long)measurementsSent) + " measurements in " +
+                     String((double)(this->targetSendingPeriod - remainingTime) / 1000.0, 3) + " ms");
 
       if (remainingTime > 0)
         delayMicroseconds(remainingTime);
     }
 
-    if (WiFi.status() == WL_CONNECTED)
+    if (this->networkProvider->isConnected())
     {
       Serial.println("Connection to client ended.");
       this->setupMdns();

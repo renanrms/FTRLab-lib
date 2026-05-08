@@ -2,23 +2,22 @@
 
 void Device::doSmartConfig()
 {
-  WiFi.mode(WIFI_AP_STA);
-  WiFi.beginSmartConfig();
+  this->networkProvider->startSmartConfig();
 
   Serial.print("Waiting for SmartConfig ");
-  while (!WiFi.smartConfigDone())
+  while (!this->networkProvider->smartConfigDone())
   {
-    digitalWrite(this->pins.networkLed, LOW);
+    this->gpioProvider->digitalWrite(this->pins.networkLed, LOW);
     delay(500);
-    digitalWrite(this->pins.networkLed, HIGH);
+    this->gpioProvider->digitalWrite(this->pins.networkLed, HIGH);
     delay(500);
     Serial.print(".");
   }
   Serial.println("");
 
   Serial.println("Connection established. ");
-  digitalWrite(this->pins.networkLed, HIGH);
+  this->gpioProvider->digitalWrite(this->pins.networkLed, HIGH);
 
-  this->preferences->putString("ssid", WiFi.SSID());
-  this->preferences->putString("password", WiFi.psk());
+  this->keyValueStoreProvider->putString("ssid", this->networkProvider->SSID().c_str());
+  this->keyValueStoreProvider->putString("password", this->networkProvider->psk().c_str());
 }

@@ -1,8 +1,7 @@
 #include "FTRLab.hpp"
+#include "FTRLab/boards/esp32/ESP32DeviceBuilder.hpp"
 
 #include "sensors/HCSR04.cpp"
-
-Preferences ftrlabPreferences;
 
 /**
  * Pinos GPIO utilizados no dispositivo.
@@ -11,7 +10,7 @@ Preferences ftrlabPreferences;
 enum PINS
 {
   CONFIGURATION_BUTTON = 5,
-  STATUS_LED = 18,
+  STATUS_LED = 2,
   // Adicione aqui outros pinos utilizados pela placa
   TRIGGER = 12,
   ECHO = 13,
@@ -19,18 +18,17 @@ enum PINS
 
 void setup()
 {
+  Device *device = ESP32DeviceBuilder().build();
+
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("Distância HC-SR04");
-  device.addSensor(new HCSR04(PINS::TRIGGER, PINS::ECHO));
-  device.setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
+  device->setName("Distância HC-SR04");
+  device->addSensor(new HCSR04(PINS::TRIGGER, PINS::ECHO));
+  device->setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
 
   // Configurações opcionais
-  device.setTargetSampleRate(80);
+  device->setTargetSampleRate(80);
 
-  // Setup do dispositivo (não alterar)
-  ftrlabPreferences.begin("FRTLab");
-  device.setPreferencesStore(&ftrlabPreferences);
-  device.setup();
+  device->setup();
 }
 
 // A função loop é obrigatória, mas o código dentro dela não será alcançado.

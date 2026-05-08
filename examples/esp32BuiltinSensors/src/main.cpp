@@ -1,9 +1,8 @@
 #include "FTRLab.hpp"
+#include "FTRLab/boards/esp32/ESP32DeviceBuilder.hpp"
 
 #include "sensors/HallEffectSensor.cpp"
 #include "sensors/TemperatureSensor.cpp"
-
-Preferences ftrlabPreferences;
 
 /**
  * Pinos GPIO utilizados no dispositivo.
@@ -12,24 +11,23 @@ Preferences ftrlabPreferences;
 enum PINS
 {
   CONFIGURATION_BUTTON = 5,
-  STATUS_LED = 18,
+  STATUS_LED = 2,
 };
 
 void setup()
 {
+  Device *device = ESP32DeviceBuilder().build();
+
   // Configuração de sensores, informações e pinos escolhidos para o dispositivo
-  device.setName("ESP32 Built-in");
-  device.addSensor(new HallEffectSensor());
-  device.addSensor(new TemperatureSensor());
-  device.setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
+  device->setName("ESP32 Built-in");
+  device->addSensor(new HallEffectSensor());
+  device->addSensor(new TemperatureSensor());
+  device->setDevicePins(PINS::CONFIGURATION_BUTTON, PINS::STATUS_LED);
 
   // Configurações opcionais
-  device.setTargetSampleRate(40);
+  device->setTargetSampleRate(40);
 
-  // Setup do dispositivo (não alterar)
-  ftrlabPreferences.begin("FRTLab");
-  device.setPreferencesStore(&ftrlabPreferences);
-  device.setup();
+  device->setup();
 }
 
 // A função loop é obrigatória, mas o código dentro dela não será alcançado.

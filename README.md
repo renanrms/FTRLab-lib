@@ -1,4 +1,6 @@
 <a href="https://registry.platformio.org/libraries/renanrms/FTRLab"><img src="https://badges.registry.platformio.org/packages/renanrms/library/FTRLab.svg" alt="PlatformIO Registry" /></a>
+<a href="https://github.com/renanrms/FTRLab-lib/actions/workflows/ci.yml"><img src="https://github.com/renanrms/FTRLab-lib/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+<a href="https://codecov.io/gh/renanrms/FTRLab-lib"><img src="https://codecov.io/gh/renanrms/FTRLab-lib/graph/badge.svg" alt="Coverage" /></a>
 
 # Biblioteca FTRLab
 
@@ -53,26 +55,88 @@ python -m esptool --chip esp32 erase_flash
 
 ## Desenvolvimento da Lib
 
-As recomendações para desenvolvimento da lib são muito semelhantes às de utilização. É necessário fazer a compilação e upload de um firmware que utilize a biblioteca para verificar seu funcionamento enquanto a lib é editada, o que pode ser feito com um dos exemplos. Neste caso a instalação da CLI do Platformio será essencial.
+Parar verificar o funcionamento de mudanças implementadas na lib, é recomendado
+fazer a compilação e upload de um firmware de exemplo com a biblioteca local em
+um dispositivo físico. Neste caso a instalação da CLI do Platformio será essencial.
 
-Para se utilizar a lib na versão local sendo editada, ao invés de baixar a versão publicada, utilize um caminho local na propriedade `lib_deps` do `platformio.ini`. Além disso, pode ser feito o build com modo de debug para ver erros de execução com mensagens mais completas. Nos exemplos da pasta examples, ficaria assim:
+Para fins de demonstração, o comando para utilizar o exemplo `distance-ultrasound` será:
 
-```
-[env:esp32dev]
-...
-monitor_filters = esp32_exception_decoder
-lib_deps = ../../
-build_type = debug
+```shell
+pio run -d examples/distance-ultrasound/ --target upload -e esp32dev_debug
 ```
 
-Também é muito útil ter endereços decodificados para linhas quando ocorre um erro e o dispositivo imprime um stack trace. Para isso `esp32_exception_decoder` deve estar listado na propriedade `monitor_filters`, como indicado acima. O serial monitor deve ser chamado na pasta que contém este platformio.ini com o filtro, o que pode ser feito navegando até o diretório e usando o comando:
+Para monitorar a interface serial do dispositivo (precisa ser na pasta):
 
 ```shell
 pio device monitor
 ```
 
-Além disso, quando a lib já estiver instalada, é necessário a desinstalar antes de cada upload para forçar a reinstalação e posteriormente o build com a versão local mais recente.
+## Testes automatizados
+
+Para rodar os testes unitários localmente (não requer hardware):
 
 ```shell
-pio pkg uninstall -l FTRLab
+pio test -e native
+```
+
+Para rodar os testes de integração no hardware (requer ESP32 conectado):
+
+```shell
+pio test -e esp32dev
+```
+
+### Cobertura de testes
+
+O relatório é gerado pela ferramenta [gcovr](https://gcovr.com). Instale-a no ambiente virtual do PlatformIO antes do primeiro uso:
+
+```shell
+~/.platformio/penv/bin/pip install gcovr
+```
+
+Para gerar o relatório, execute os testes e em seguida o target `coverage`:
+
+```shell
+pio test
+pio run -t coverage
+```
+
+O relatório HTML será gerado em `coverage/index.html`. Abra-o no navegador para visualizar a cobertura por arquivo e por linha do código-fonte:
+
+```shell
+xdg-open coverage/index.html
+```
+
+## Pipeline local de CI
+
+O pipeline de CI usa [GitHub Actions](https://github.com/renanrms/FTRLab-lib/actions). Para rodá-lo localmente antes de subir, instale o [act](https://nektosact.com) — ele simula o runner do GitHub usando Docker:
+
+```shell
+curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+```
+
+Na primeira execução, configure a imagem padrão (Medium é suficiente):
+
+```shell
+mkdir -p ~/.config/act
+echo '-P ubuntu-latest=catthehacker/ubuntu:act-latest' > ~/.config/act/actrc
+```
+
+Certifique-se de que seu usuário tem permissão para usar o Docker:
+
+```shell
+sudo usermod -aG docker $USER
+# feche e reabra a sessão para o grupo ter efeito
+```
+
+Com tudo configurado, rode o pipeline completo com:
+
+```shell
+pio run -t ci
+```
+
+Ou diretamente via `act` para rodar jobs específicos:
+
+```shell
+act push --job test-host
+act push --job build-examples
 ```

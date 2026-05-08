@@ -1,5 +1,5 @@
 #ifndef FTRLAB_BATTERY_INFO_H
-#define FTRLAB_BATTERY_INFO_H "FTRLAB_BATTERY_INFO_H"
+#define FTRLAB_BATTERY_INFO_H
 
 #include "constants.hpp"
 
