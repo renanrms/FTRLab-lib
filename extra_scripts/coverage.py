@@ -1,11 +1,16 @@
-Import("env")
-import os
 import subprocess
+import shutil
+import os
+Import("env")
 
 
 def generate_coverage(source, target, env):
     build_dir = env.subst("$BUILD_DIR")
-    gcovr_path = os.path.expanduser("~/.platformio/penv/bin/gcovr")
+
+    # Prefere gcovr do venv do PlatformIO; cai no PATH se não encontrar
+    gcovr_pio = os.path.expanduser("~/.platformio/penv/bin/gcovr")
+    gcovr_path = gcovr_pio if os.path.isfile(
+        gcovr_pio) else (shutil.which("gcovr") or "gcovr")
 
     gcda_files = [
         f for root, _, files in os.walk(build_dir)
@@ -24,11 +29,13 @@ def generate_coverage(source, target, env):
         "--gcov-ignore-errors=source_not_found",
         "--gcov-ignore-errors=no_working_dir_found",
         "--html-details", "coverage/index.html",
+        "--cobertura", "coverage/coverage.xml",
         "--print-summary",
     ])
 
     if result.returncode == 0:
         print("\nRelatório HTML gerado em: coverage/index.html")
+        print("Relatório XML gerado em:  coverage/coverage.xml")
 
 
 env.AddCustomTarget(
@@ -36,5 +43,5 @@ env.AddCustomTarget(
     dependencies=None,
     actions=generate_coverage,
     title="Coverage Report",
-    description="Gera relatório HTML de cobertura (execute 'pio test -e native' antes)",
+    description="Gera relatório de cobertura HTML e XML (execute 'pio test -e native' antes)",
 )
