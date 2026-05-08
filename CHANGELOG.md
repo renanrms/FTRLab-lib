@@ -5,6 +5,30 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [Não Lançado]
+
+### Adicionado
+
+- Implementa testes unitários no host: alguns simples apenas testando os mocks, outros testando métodos e funções. Cobertura de testes de 45.4% , em linhas de código, e 69.7% , em funções.
+- Cria fluxo de integração contínua com testes em host (apenas testes unitários sem hardware)
+- Adiciona badges para visualizar estado do pipeline e da cobertura de testes no README.
+- Scripts adicionados à configuração do projeto para facilitar a utilização das ferramentas localmente.
+  - Script para geração do relatório de cobertura de testes.
+  - Script para teste do pipeline de CI localmente.
+
+### Corrigido
+
+- Através dos testes unitários (no host) foi resolvido um bug "invisível" através de testes em corner case: device.sendMeasurementsBatch() falhava com fila de medições vazia, o que a princípio não ocorre em produção, mas a solução deixa o código mais robusto.
+
+### Alterado
+
+- Princípios SOLID.
+- Pattern Singleton: Instância única do `Device` garantida.
+- Pattern Builder: Criação do dispositivo com injeção das dependência por métodos setters. DeviceBuilder orquestra a criação.
+- Pattern Adapter (ou Strategy): As classes dependentes de hardware são feitas com implementação de interfaces bem definidas.
+- Simplifica o build dos exmeplos com a biblioteca local em desenvolvimento: cria um ambiente próprio (esp32dev_debug), utilizado a biblioteca local por meio de link simbólico.
+- Resolvida a barreira de encapsular a dependência Preferences, removendo a necessidade de fazer a instância no código dos exemplos.
+
 ## [0.5.2] - 2023-11-06
 
 ### Adicionado
